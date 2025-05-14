@@ -13,12 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Tabs\Tab;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ProductsRelationManager extends RelationManager
@@ -49,32 +44,10 @@ class ProductsRelationManager extends RelationManager
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull(),
-                                Select::make('subcategory_id')
-                                    ->label('Подкатегория')
-                                    ->relationship('subcategory', 'name')
-                                    ->required()
-                                    ->createOptionForm(function (Form $form) {
-                                        return $form->schema([
-                                            Forms\Components\TextInput::make('name')
-                                                ->label('Название категории')
-                                                ->required(),
-                                            Select::make('category')
-                                                ->label('Категория')
-                                                ->relationship('category', 'name')
-                                                ->required()
-                                        ]);
-                                    })
-                                    ->editOptionForm(function (Form $form) {
-                                        return $form->schema([
-                                            Forms\Components\TextInput::make('name')
-                                                ->label('Название категории')
-                                                ->required(),
-                                            Select::make('product_type_id')
-                                                ->label('Тип оборудования')
-                                                ->relationship('productType', 'name')
-                                                ->required()
-                                        ]);
-                                    }),
+                                \Filament\Forms\Components\Hidden::make('subcategory_id')
+                                    ->default(fn($livewire) => $livewire->getOwnerRecord()->id)
+                                    ->dehydrated(true)
+                                    ->required(),
                             ]),
                         Tab::make('Цена')
                             ->schema([

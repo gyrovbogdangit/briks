@@ -12,6 +12,8 @@
     },
     "dependencies": {
         "@fancyapps/fancybox": "^3.5.7",
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.6",
         "jquery": "3.6",
         "jquery-ui": "1.13",
         "jscrollpane": "^2.2.3-rc.2",

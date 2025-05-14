@@ -46,7 +46,7 @@ class QuickFilterResource extends Resource
                     ->maxLength(255)
                     ->columnSpanFull(),
                 Select::make('product_type_id')
-                    ->label('Тип оборудования')
+                    ->label('Тип товара')
                     ->relationship('productType', 'name')
                     ->reactive()
                     ->required()
@@ -132,7 +132,7 @@ class QuickFilterResource extends Resource
                     ->label('Название фильтра')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('productType.name')
-                    ->label("Тип оборудования")
+                    ->label("Тип товара")
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subcategory.name')
@@ -158,7 +158,7 @@ class QuickFilterResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('productType')
-                    ->label('Тип оборудования')
+                    ->label('Тип товара')
                     ->relationship('productType', 'name')
                     ->multiple()
                     ->searchable()

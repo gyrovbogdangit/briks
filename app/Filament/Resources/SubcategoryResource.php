@@ -23,18 +23,18 @@ class SubcategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-tag';
 
-    protected static ?string $navigationLabel = 'Оборудование';
+    protected static ?string $navigationLabel = 'Подкатегории';
 
     protected static ?string $navigationGroup = 'Каталог';
 
     public static function getModelLabel(): string
     {
-        return 'Оборудование';
+        return 'Подкатегория';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Оборудование';
+        return 'Подкатегории';
     }
 
     public static function form(Form $form): Form
@@ -61,7 +61,7 @@ class SubcategoryResource extends Resource
                                                 ->label('Название категории')
                                                 ->required(),
                                             Select::make('product_type_id')
-                                                ->label('Тип оборудования')
+                                                ->label('Тип товара')
                                                 ->relationship('productType', 'name')
                                                 ->required()
                                         ]);
@@ -72,7 +72,7 @@ class SubcategoryResource extends Resource
                                                 ->label('Название категории')
                                                 ->required(),
                                             Select::make('product_type_id')
-                                                ->label('Тип оборудования')
+                                                ->label('Тип товара')
                                                 ->relationship('productType', 'name')
                                                 ->required()
                                         ]);
@@ -123,7 +123,7 @@ class SubcategoryResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('category.productType.name')
-                    ->label('Тип оборудования')
+                    ->label('Тип товара')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),

@@ -1,44 +1,70 @@
-<div class="wrap-filters">
-    <button class="filter-btn btn" type="button"><i class="icon-filter"></i><span>Фильтрация</span></button>
-    <button class="filter-btn-second btn" type="button"><i class="icon-filter"></i><span>Фильтрация</span></button>
-    <form class="w-filters scroll">
-        <input type="text" hidden name="page-size" value="{{ $filter->pageSize }}">
-        <input type="text" hidden name="sort-by" value="{{ $filter->sortBy }}">
-        <input type="text" hidden name="show-products" value="{{ $filter->showProducts }}">
-        @if (count($categories) > 0)
-            <div class="filter-category">
-                <div class="filter-category__title">Категория</div>
-                <div class="filter-category__wrap-list wrap-category-list">
-                    <div class="filter-category__list category-list open filters">
-                        @foreach ($categories as $category)
-                            <div class="filters__item {{ $filter->category->slug === $category->slug ? 'active' : '' }}"
-                                style="margin-inline-start: 10px">
-                                <label class="category-list__item filters__title"
-                                    style="font-weight: 500; margin-bottom: 10px">
-                                    <span>
-                                        <div style="width:90%">{{ $category->name }}</div>
-                                    </span>
-                                </label>
-                                <div class="category-list__subcategories">
-                                    @foreach ($category->subcategories as $subcategory)
-                                        <a class="category-list__item"
+<div class="filters-sidebar col-md-3" style="height: 100%">
+    <div>
+        <h2 class="fs-4 mb-3">Фильтры</h2>
+        <div class="categories">
+            <ul class="list-group">
+                @foreach ($categories as $category)
+                    <li class="list-group-item">
+                        <a class="category-link" data-bs-toggle="collapse"
+                            href="#category-{{ $category->slug }}-subcategories" role="button"
+                            aria-expanded="{{ $filter->category->slug === $category->slug ? 'true' : 'false' }}"
+                            aria-controls="category-{{ $category->slug }}-subcategories">
+                            {{ $category->name }}
+                        </a>
+                        @if (count($category->subcategories))
+                            <ul class="collapse list-group ms-3 {{ $filter->category->slug === $category->slug ? 'show' : '' }}"
+                                id="category-{{ $category->slug }}-subcategories">
+                                @foreach ($category->subcategories as $subcategory)
+                                    <li class="list-group-item">
+                                        <a class="category-list__item d-flex align-items-center"
                                             href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}">
-                                            <input type="checkbox" class="category-list__checkbox"
+                                            <input type="checkbox" class="category-list__checkbox me-2"
                                                 @checked($subcategory->slug === $filter->subcategory->slug) @disabled($subcategory->products_count === 0)>
                                             <span class="category-list__txt">{{ $subcategory->name }}
                                                 <span
                                                     class="category-list__numbs">({{ $subcategory->products_count }})</span>
                                             </span>
                                         </a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        @endif
-        <div class="filters scroll">
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <hr />
+
+        <div class="categories">
+            <ul class="list-group">
+                @foreach ($attributes as $attribute)
+                    @if (count($attribute->values) > 1)
+                        <li class="list-group-item {{ $filter->attributeExists($attribute->slug) ? 'show' : '' }}"">
+                            <a class="category-link" data-bs-toggle="collapse"
+                                href="#brandsSubcategories{{ $attribute->id }}" role="button" aria-expanded="true"
+                                aria-controls="brandsSubcategories">
+                                {{ $attribute->name }}
+                            </a>
+                            <ul class="collapse list-group ms-3 show" id="brandsSubcategories{{ $attribute->id }}">
+                                @foreach ($attribute->values as $value)
+                                    <li class="list-group-item">
+                                        <input type="checkbox" class="filter-checkbox me-2"
+                                            name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
+                                            id="filter-{{ $attribute->id }}-{{ $value->id }}"
+                                            data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug))
+                                            @disabled($value->products_count === 0) />{{ $value->value }}<span
+                                            class="muted-text">({{ $value->products_count }})</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        <hr />
+                    @endif
+                @endforeach
+            </ul>
+
+            {{--   <div class="filters scroll">
             @foreach ($attributes as $attribute)
                 @if (count($attribute->values) > 1)
                     <div class="filters__item {{ $filter->attributeExists($attribute->slug) ? 'active' : '' }}">
@@ -50,8 +76,9 @@
                                 <label class="filters-list__item">
                                     <input type="checkbox" class="filters-list__checkbox"
                                         name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
-                                        id="filter-{{ $attribute->id }}" data-filter-id="{{ $value->slug }}"
-                                        @checked($filter->inAttributeValues($attribute->slug, $value->slug)) @disabled($value->products_count === 0)>
+                                        id="filter-{{ $attribute->id }}-{{ $value->id }}"
+                                        data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug))
+                                        @disabled($value->products_count === 0)>
                                     <span class="filters-list__txt">{{ $value->value }} <span
                                             class="filters-list__numbs">({{ $value->products_count }})</span></span>
                                 </label>
@@ -60,8 +87,8 @@
                     </div>
                 @endif
             @endforeach
-
-            @if ($maxPrice && $maxPrice !== $minPrice)
+ --}}
+            {{--  @if ($maxPrice && $maxPrice !== $minPrice)
                 <div class="filters__item filters__item--prices">
                     <div class="filters__title">Цена, руб.</div>
                     <div class="filters__block">
@@ -85,9 +112,8 @@
                         </div>
                     </div>
                 </div>
-            @endif
-
+            @endif --}}
         </div>
-        <button class="btn">Применить</button>
-    </form>
+        <button class="btn btn-primary btn-show mt-3 w-100">Применить фильтры</button>
+    </div>
 </div>

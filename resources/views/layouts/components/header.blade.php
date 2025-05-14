@@ -1,146 +1,49 @@
-<header class="wrap-header">
-    <div class="header">
-        <div class="header__left">
-            <a class="header__catalog-btn btn btn--white js-open-menu" href="#catalog-menu"
-                data-menu="#catalog-menu">Каталог товаров</a>
-            <div class="header__faq-actions faq-actions">
-                <div class="faq-actions__item">
-                    <div class="faq-actions__icon"><i class="icon-geo"></i></div>
-                    <div class="faq-actions__content">
-                        <div class="faq-actions__title">
-                            <livewire:city-name />
-                        </div>
-                        <button class="faq-actions__data" type="button" data-fancybox=""
-                            data-src="#city">изменить</button>
-                    </div>
-                </div>
-                <div class="faq-actions__item">
-                    <div class="faq-info">
-                        <div class="faq-info__icon"><i class="icon-phone"></i></div>
-                        <div class="faq-info__content">
-                            <a href="tel:{{ $phoneNumbers->first()->formattedLinkNumber() }}"
-                                class="faq-info__title">{{ $phoneNumbers->first()->formattedNumber() }}</a>
-                            <div class="faq-info__data">{!! $phoneNumbers->first()->data !!}</div>
-                        </div>
-                    </div>
-                    <div class="hidden-info faq-info">
-                        @for ($i = 1; $i < count($phoneNumbers); $i++)
-                            <div class="hidden-info__item">
-                                <div class="faq-info__icon"><i class="icon-phone"></i></div>
-                                <div class="faq-info__content">
-                                    <a href="tel:{{ $phoneNumbers[$i]->formattedLinkNumber() }}"
-                                        class="faq-info__title">{{ $phoneNumbers[$i]->formattedNumber() }}</a>
-                                    <div class="faq-info__data">{!! $phoneNumbers[$i]->data !!}</div>
-                                </div>
-                            </div>
-                        @endfor
-                        <div class="hidden-info__item">
-                            <button class="hidden-info__btn btn" type="button" data-fancybox
-                                data-src="#request-call">Звонок специалиста</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-actions__item">
-                    <div class="faq-info">
-                        <div class="faq-info__icon"><i class="icon-mail"></i></div>
-                        <div class="faq-info__content">
-                            <a href="mailto:{{ $emails->first()->email }}"
-                                class="faq-info__title">{{ $emails->first()->email }}</a>
-                            <div class="faq-info__data">{{ $emails->first()->data }}</div>
-                        </div>
-                    </div>
-                    <div class="hidden-info faq-info">
-                        @for ($i = 1; $i < count($emails); $i++)
-                            <div class="hidden-info__item">
-                                <div class="faq-info__icon"><i class="icon-mail"></i></div>
-                                <div class="faq-info__content">
-                                    <a href="mailto:{{ $emails[$i]->email }}"
-                                        class="faq-info__title">{{ $emails[$i]->email }}</a>
-                                    <div class="faq-info__data">{{ $emails[$i]->data }}</div>
-                                </div>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
-            </div>
+<div class="top-nav py-2">
+    <div class="container d-flex justify-content-between align-items-center fw-bolder">
+        <div>
+            <span class="me-3"><i class="fas fa-map-marker-alt"></i> Ваш город: Москва</span>
+            <a href="#">Акции</a>
+            <a href="#">Доставка</a>
+            <a href="#">Оплата</a>
+            <a href="#">Контакты</a>
         </div>
-        <a href="{{ route('home') }}" class="header__logo logo">
-            <picture class="logo__picture">
-                <source srcset="{{ asset('img/logo.svg') }}" media="(min-width: 601px)">
-                <img src="{{ asset('img/logo-mini.svg') }}" alt="ruCaf" class="logo__img">
-            </picture>
-        </a>
-        <div class="header__right">
-            <ul class="header__menu header-menu">
-                @foreach ($pages as $page)
-                    <li class="header-menu__item"><a href="{{ route('page', ['page' => $page->slug]) }}"
-                            class="header-menu__link">{{ $page->title }}</a>
-                    </li>
-                @endforeach
-            </ul>
-
-            <livewire:header-actions />
+        <div>
+            <span class="me-3"><i class="fas fa-phone me-1"></i> +7 (495) 123-45-67</span>
+            <span><i class="fas fa-store me-1"></i> ул. 9 Января, 195, Воронеж</span>
         </div>
-
-        <livewire:confirm-city />
     </div>
-    <div class="header-bottom">
-        <ul class="header-bottom__menu category-menu">
-            @foreach ($productTypes->take(5) as $type)
-                <li class="category-menu__item"><a
-                        href="{{ route('products.index', ['productType' => $type, 'category' => $type->categories[0], 'subcategory' => $type->categories[0]->subcategories[0]]) }}"
-                        class="category-menu__link">{{ $type['name'] }}</a>
+</div>
+
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('home') }}">БРИКС</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="offcanvas"
+                        data-bs-target="#catalog-menu">Каталог</a>
                 </li>
-            @endforeach
-        </ul>
-    </div>
-
-    <div class="wrap-menu-mobile scroll">
-        <div class="header-func">
-            <div class="header-func__item">
-                <div class="header-func__icon"><i class="icon-geo"></i></div>
-                <div class="header-func__content">
-                    <div class="header-func__title">
-                        <livewire:city-name />
-                    </div>
-                    <button class="header-func__data" type="button" data-fancybox data-src="#city">изменить</button>
+            </ul>
+            <div class="d-flex align-items-center">
+                <div class="search-wrapper me-4">
+                    <input type="text" class="search-input" placeholder="Поиск..." />
+                    <i class="fas fa-search search-icon"></i>
                 </div>
-            </div>
-            <div class="header-func__item">
-                <div class="header-func__icon"><i class="icon-phone"></i></div>
-                <div class="header-func__content">
-                    <a class="header-func__title"
-                        href="tel:{{ $phoneNumbers->first()->formattedLinkNumber() }}">{{ $phoneNumbers->first()->formattedNumber() }}</a>
-                    <div class="header-func__data">{!! $phoneNumbers->first()->data !!}</div>
-                </div>
-            </div>
-            <div class="header-func__item">
-                <div class="header-func__icon"><i class="icon-mail"></i></div>
-                <div class="header-func__content">
-                    <a class="header-func__title"
-                        href="mailto:{{ $emails->first()->email }}">{{ $emails->first()->email }}</a>
-                    <div class="header-func__data">{{ $emails->first()->data }}</div>
-                </div>
+                <a href="#" class="icon-link"><i class="fas fa-heart"></i></a>
+                <a href="#" class="icon-link"><i class="fas fa-chart-simple"></i></a>
+                <a href="#" class="icon-link"><i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
-        <a class="header-catalog-btn btn" href="#catalog-menu">Каталог</a>
-        <nav class="wrap-header-menu">
-            <ul class="header-menu">
-                @foreach ($pages as $page)
-                    <li class="header-menu__item"><a href="{{ route('page', ['page' => $page->slug]) }}"
-                            class="header-menu__link">{{ $page->title }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </nav>
     </div>
+</nav>
 
-</header>
-
-<div style="display: none;" class="modal modal--no-price modal--bottom" id="city">
+{{-- <div style="display: none;" class="modal modal--no-price modal--bottom" id="city">
     <div class="modal-wrap">
         <div class="modal-title"><span>Изменить город</span><button class="modal-close-btn" type="button"
                 data-fancybox-close><i class="icon-close1"></i></button></div>
         <livewire:city-search />
     </div>
-</div>
+</div> --}}

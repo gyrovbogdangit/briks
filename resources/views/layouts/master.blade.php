@@ -7,28 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include('layouts.components.seo')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Unbounded:wght@700&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
     @yield('css')
     @livewireStyles
 </head>
 
-<body>
-    <div class="wrapper wrapper--page">
-        @include('layouts.components.header')
+<body class="bg-body-tertiary min-vh-100">
+    @include('layouts.components.header')
+    @yield('content')
 
-        @yield('content')
-
-        @include('layouts.components.footer')
-    </div>
+    @include('layouts.components.footer')
 
     @include('layouts.components.catalog-menu')
-
+    {{--
     <div style="display: none;" class="modal modal--bottom" id="request-call">
         <livewire:modal-request-call />
     </div>
 
-    <div class="overflow-bg"></div>
+    <div class="overflow-bg"></div> --}}
 
     @yield('js')
     @livewireScripts

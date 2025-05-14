@@ -23,18 +23,18 @@ class ProductTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-c-list-bullet';
 
-    protected static ?string $navigationLabel = 'Типы оборудования';
+    protected static ?string $navigationLabel = 'Типы товара';
 
     protected static ?string $navigationGroup = 'Каталог';
 
     public static function getModelLabel(): string
     {
-        return 'Типы оборудования';
+        return 'Тип товара';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Типы оборудования';
+        return 'Типы товара';
     }
 
     public static function form(Form $form): Form

@@ -1,57 +1,53 @@
-<footer class="wrap-footer">
-    <div class="wrap-footer-top">
-        <div class="footer-content footer-top">
-            <a class="footer-top__logo logo" href="{{ route('home') }}"><img src="{{ asset('img/logo.svg') }}"
-                    alt="ruCaf"></a>
-            <div class="footer-top__info info">
-                @foreach ($phoneNumbers as $phoneNumber)
-                    <div class="info__item">
-                        <div class="info__icon"><i class="icon-phone"></i></div>
-                        <div class="info__content">
-                            <a href="tel:{{ $phoneNumber->formattedLinkNumber() }}"
-                                class="info__title">{{ $phoneNumber->formattedNumber() }}</a>
-                            <div class="info__data">{!! $phoneNumber->data !!}</div>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="info__item">
-                    <button class="info__btn btn" type="button" data-fancybox data-src="#form-price">Звонок
-                        специалиста</button>
-                </div>
-            </div>
-            <nav class="footer-top__footer-menu footer-wrap-menu">
-                <button class="footer-menu-btn btn footer-menu-btn--menu" type="button"><i
-                        class="icon-menu1"></i><span>Меню</span></button>
-                <a class="footer-menu-btn btn footer-menu-btn--catalog" data-menu="#catalog-menu"><span>Каталог
-                        товаров</span></a>
-                <ul class="footer-menu">
-                    <li class="footer-menu__item"><a href="{{ route('catalog') }}" class="footer-menu__link">Каталог</a>
-                    </li>
-                    @foreach ($pages as $page)
-                        <li class="footer-menu__item"><a href="{{ route('page', ['page' => $page->slug]) }}"
-                                class="footer-menu__link">{{ $page->title }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <div class="wrap-footer-bottom">
-        <div class="footer-content footer-bottom">
-            <div class="footer-bottom__copy footer-copy">
-                <a href="{{ route('privacy') }}" class="footer-copy__link"><i class="icon-form"></i><span>Обработка
-                        данных</span></a>
-                <div class="footer-copy__copy">Copyright <br>&copy;2022</div>
-            </div>
-            <nav class="footer-bottom__wrap-footer-bottom-menu">
-                <ul class="footer-bottom-menu">
-                    @foreach ($productTypes as $type)
-                        <li class="footer-bottom-menu__item"><a
-                                href="{{ route('products.index', ['productType' => $type, 'category' => $type->categories[0], 'subcategory' => $type->categories[0]->subcategories[0]]) }}"
-                                class="footer-bottom-menu__link">{{ $type->name }}</a></li>
-                    @endforeach
-                </ul>
-            </nav>
-        </div>
-    </div>
-</footer>
+ <footer class="bg-dark text-light py-4 mt-5 mt-auto">
+     <div class="container">
+         <div class="row">
+             <div class="col-md-4 mb-3">
+                 <h5 class="fw-bold">О компании</h5>
+                 <p class="small fw-semibold">
+                     БРИКС — ведущий поставщик облицовочных материалов. Мы предлагаем
+                     широкий ассортимент качественных товаров для строительства и
+                     ремонта.
+                 </p>
+             </div>
+
+             <div class="col-md-4 mb-3">
+                 <h5 class="fw-bold">Быстрые ссылки</h5>
+                 <ul class="list-unstyled fw-semibold">
+                     <li>
+                         <a href="#" class="text-light text-decoration-none">Каталог</a>
+                     </li>
+                     <li>
+                         <a href="#" class="text-light text-decoration-none">Шоурумы</a>
+                     </li>
+                     <li>
+                         <a href="#" class="text-light text-decoration-none">О нас</a>
+                     </li>
+                     <li>
+                         <a href="#" class="text-light text-decoration-none">Контакты</a>
+                     </li>
+                 </ul>
+             </div>
+
+             <div class="col-md-4 mb-3">
+                 <h5 class="fw-bold">Контакты</h5>
+                 <ul class="list-unstyled fw-semibold">
+                     <li>
+                         <i class="fas fa-map-marker-alt me-2"></i>Москва, ул. Примерная,
+                         10
+                     </li>
+                     <li><i class="fas fa-phone me-2"></i>+7 (495) 123-45-67</li>
+                     <li><i class="fas fa-envelope me-2"></i>info@briks.ru</li>
+                 </ul>
+                 <div class="mt-3">
+                     <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                     <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                     <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+                 </div>
+             </div>
+         </div>
+         <hr class="bg-light" />
+         <div class="text-center small">
+             &copy; 2025 БРИКС. Все права защищены.
+         </div>
+     </div>
+ </footer>

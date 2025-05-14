@@ -20,12 +20,12 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
 }
 
 // Получение всех файлов из css, js и fonts
-const cssFiles = getAllFiles('resources/css');
+const scssFiles = getAllFiles('resources/scss');
 const jsFiles = getAllFiles('resources/js');
 const fontFiles = getAllFiles('resources/fonts');
 
 // Объединение всех путей
-const inputFiles = [...cssFiles, ...jsFiles, ...fontFiles];
+const inputFiles = [...scssFiles, ...jsFiles, ...fontFiles];
 
 export default defineConfig({
     plugins: [
