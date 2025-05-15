@@ -53,18 +53,6 @@
                             <td><span>{{ $attributeValue->value->value }}</span></td>
                         </tr>
                     @endforeach
-                    @isset($product->dimensions)
-                        <tr>
-                            <th><span>Габариты ШхВхГ, мм</span></th>
-                            <td><span>{{ $product->dimensions }}</span></td>
-                        </tr>
-                    @endisset
-                    @isset($product->dimensions)
-                        <tr>
-                            <th><span>Масса, кг</span></th>
-                            <td><span>{{ $product->mass }}</span></td>
-                        </tr>
-                    @endisset
                 </table>
             </div>
         </div>

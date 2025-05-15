@@ -29,133 +29,759 @@ class DatabaseSeeder extends Seeder
         return $rows;
     }
 
-    public function extractParams($modificationName, $charData)
-    {
-        // Пример: "Редуктор В-400-28-Т2"
-        preg_match('/Редуктор (\w)-(\d+)-(\d+)-(\w+)(\d+)/u', $modificationName, $matches);
-
-        if (!$matches) {
-            return null; // Неправильный формат
-        }
-
-        list(, $series, $distance, $ratio, $climate, $placement) = $matches;
-
-        // Проверка, что параметры существуют в основном файле
-        $validRatios = array_map('trim', explode(',', $charData['Передаточное отношение (число)']));
-        $validClimates = array_map('trim', explode(',', $charData['Климатическое исполнение']));
-        $validPlacements = array_map('trim', explode(',', $charData['Категория размещения']));
-
-        if (!in_array($ratio, $validRatios) || !in_array($climate, $validClimates) || !in_array($placement, $validPlacements)) {
-            return null; // Параметры не соответствуют основным данным
-        }
-
-        return [
-            'series' => $series,
-            'distance' => $distance,
-            'ratio' => $ratio,
-            'climate' => $climate,
-            'placement' => $placement,
-        ];
-    }
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
         $this->call([
-            CitySeeder::class,
             ProductTypeSeeder::class,
-            PageSeeder::class,
-            PhoneNumberSeeder::class,
-            EmailSeeder::class,
             UserSeeder::class
         ]);
 
-        $productType = ProductType::where('name', 'Редукторы')->first();
+        $productType = ProductType::where('name', 'Кирпич')->first();
 
-        $categoryName = "Цилиндрические редукторы";
+        $categoryName = "Облицовочный кирпич";
         $category = Category::firstOrCreate([
             'name' => $categoryName,
             'slug' => Str::slug($categoryName),
             'product_type_id' => $productType->id,
         ]);
 
-        $charsCsv = $this->readCsv(storage_path('app/chars.csv'));
-        $modsCsv = $this->readCsv(storage_path('app/modifications.csv'));
-        $subcategoryCsv = $this->readCsv(storage_path('app/products.csv'))[0];
+        // Генерация 13+ товаров с разными названиями и характеристиками
+        $productsData = [
+            [
+                'name' => 'Сердцевины кирпича Тандем Данилово (пиленый кирпич)',
+                'price_per_piece' => 32,
+                'discount_price_per_piece' => 29,
+                'price_sqm' => 850,
+                'discount_price_sqm' => 800,
+                'attributes' => [
+                    'Артикул' => 'TD0001',
+                    'Бренд' => 'Тандем',
+                    'Завод' => 'Данилово',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'натуральный',
+                    'Покрытие' => 'без покрытия',
+                    'Производитель' => 'Тандем',
+                    'Пустотность' => 'полнотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'красный',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Вышневолоцкая керамика Графит матовый 250*120*65 мм',
+                'price_per_piece' => 36,
+                'discount_price_per_piece' => 33,
+                'price_sqm' => 950,
+                'discount_price_sqm' => 900,
+                'attributes' => [
+                    'Артикул' => 'VVK0002',
+                    'Бренд' => 'Вышневолоцкая керамика',
+                    'Завод' => 'Вышний Волочек',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М175',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'графит',
+                    'Покрытие' => 'матовый',
+                    'Производитель' => 'Вышневолоцкая керамика',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'темный',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'серый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный ЛСР красный матовый, утолщенные стенки, F-100, 250*120*65 мм',
+                'price_per_piece' => 38,
+                'discount_price_per_piece' => 34,
+                'price_sqm' => 980,
+                'discount_price_sqm' => 930,
+                'attributes' => [
+                    'Артикул' => 'LSR0003',
+                    'Бренд' => 'ЛСР',
+                    'Завод' => 'ЛСР',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М200',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'красный',
+                    'Покрытие' => 'матовый',
+                    'Производитель' => 'ЛСР',
+                    'Пустотность' => 'утолщенные стенки',
+                    'Страна' => 'Россия',
+                    'Тон' => 'яркий',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'красный',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный BRAER Персик матовый 250*120*65 мм',
+                'price_per_piece' => 37,
+                'discount_price_per_piece' => 33,
+                'price_sqm' => 970,
+                'discount_price_sqm' => 920,
+                'attributes' => [
+                    'Артикул' => 'BR0004',
+                    'Бренд' => 'BRAER',
+                    'Завод' => 'BRAER',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'персик',
+                    'Покрытие' => 'матовый',
+                    'Производитель' => 'BRAER',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'персиковый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Керма Белый рустик 2 250*120*65 мм',
+                'price_per_piece' => 39,
+                'discount_price_per_piece' => 35,
+                'price_sqm' => 990,
+                'discount_price_sqm' => 940,
+                'attributes' => [
+                    'Артикул' => 'KR0005',
+                    'Бренд' => 'Керма',
+                    'Завод' => 'Керма',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'белый',
+                    'Покрытие' => 'рустик',
+                    'Производитель' => 'Керма',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'белый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Донские зори Шоколад бархат 250*120*65 мм',
+                'price_per_piece' => 40,
+                'discount_price_per_piece' => 36,
+                'price_sqm' => 1000,
+                'discount_price_sqm' => 950,
+                'attributes' => [
+                    'Артикул' => 'DZ0006',
+                    'Бренд' => 'Донские зори',
+                    'Завод' => 'Донские зори',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М175',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'шоколад',
+                    'Покрытие' => 'бархат',
+                    'Производитель' => 'Донские зори',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'темный',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'коричневый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный ТЕРЕКС Серый гладкий 2 250*120*65 мм',
+                'price_per_piece' => 35,
+                'discount_price_per_piece' => 31,
+                'price_sqm' => 920,
+                'discount_price_sqm' => 870,
+                'attributes' => [
+                    'Артикул' => 'TRX0007',
+                    'Бренд' => 'ТЕРЕКС',
+                    'Завод' => 'ТЕРЕКС',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'серый',
+                    'Покрытие' => 'гладкий',
+                    'Производитель' => 'ТЕРЕКС',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'серый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Белый город Слоновая кость 250*120*65 мм',
+                'price_per_piece' => 41,
+                'discount_price_per_piece' => 37,
+                'price_sqm' => 1010,
+                'discount_price_sqm' => 960,
+                'attributes' => [
+                    'Артикул' => 'BG0008',
+                    'Бренд' => 'Белый город',
+                    'Завод' => 'Белый город',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М175',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'слоновая кость',
+                    'Покрытие' => 'гладкий',
+                    'Производитель' => 'Белый город',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'бежевый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный КС-Керамик Янтарь гладкий 250*120*65 мм',
+                'price_per_piece' => 37,
+                'discount_price_per_piece' => 33,
+                'price_sqm' => 970,
+                'discount_price_sqm' => 920,
+                'attributes' => [
+                    'Артикул' => 'KSK0009',
+                    'Бренд' => 'КС-Керамик',
+                    'Завод' => 'КС-Керамик',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'янтарь',
+                    'Покрытие' => 'гладкий',
+                    'Производитель' => 'КС-Керамик',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'желтый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Керма Красный рустик 250*120*65 мм',
+                'price_per_piece' => 39,
+                'discount_price_per_piece' => 35,
+                'price_sqm' => 990,
+                'discount_price_sqm' => 940,
+                'attributes' => [
+                    'Артикул' => 'KR0010',
+                    'Бренд' => 'Керма',
+                    'Завод' => 'Керма',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'красный',
+                    'Покрытие' => 'рустик',
+                    'Производитель' => 'Керма',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'яркий',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'красный',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный ЛСР Персиковый гладкий 250*120*65 мм',
+                'price_per_piece' => 38,
+                'discount_price_per_piece' => 34,
+                'price_sqm' => 980,
+                'discount_price_sqm' => 930,
+                'attributes' => [
+                    'Артикул' => 'LSR0011',
+                    'Бренд' => 'ЛСР',
+                    'Завод' => 'ЛСР',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М200',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'персиковый',
+                    'Покрытие' => 'гладкий',
+                    'Производитель' => 'ЛСР',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'персиковый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный BRAER Коричневый бархат 250*120*65 мм',
+                'price_per_piece' => 37,
+                'discount_price_per_piece' => 33,
+                'price_sqm' => 970,
+                'discount_price_sqm' => 920,
+                'attributes' => [
+                    'Артикул' => 'BR0012',
+                    'Бренд' => 'BRAER',
+                    'Завод' => 'BRAER',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М150',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'коричневый',
+                    'Покрытие' => 'бархат',
+                    'Производитель' => 'BRAER',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'темный',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'коричневый',
+                ],
+            ],
+            [
+                'name' => 'Кирпич облицовочный Донские зори Белый гладкий 2 250*120*65 мм',
+                'price_per_piece' => 40,
+                'discount_price_per_piece' => 36,
+                'price_sqm' => 1000,
+                'discount_price_sqm' => 950,
+                'attributes' => [
+                    'Артикул' => 'DZ0013',
+                    'Бренд' => 'Донские зори',
+                    'Завод' => 'Донские зори',
+                    'Марка морозостойкости' => 'F100',
+                    'Марка прочности' => 'М175',
+                    'Материал' => 'керамический',
+                    'Оттенок' => 'белый',
+                    'Покрытие' => 'гладкий',
+                    'Производитель' => 'Донские зори',
+                    'Пустотность' => 'пустотелый',
+                    'Страна' => 'Россия',
+                    'Тон' => 'светлый',
+                    'Форма' => 'прямоугольный',
+                    'Цвет' => 'белый',
+                ],
+            ],
+        ];
 
-        $charsData = [];
-        foreach ($charsCsv as $record) {
-            $charsData[$record['Id']] = $record;
+        $productType = \App\Models\ProductType::firstOrCreate(['name' => 'Кирпич'], ['slug' => Str::slug('Кирпич')]);
+        $category = \App\Models\Category::firstOrCreate([
+            'name' => 'Облицовочный кирпич',
+            'slug' => Str::slug('Облицовочный кирпич'),
+            'product_type_id' => $productType->id,
+        ]);
+        $subcategory = \App\Models\SubCategory::firstOrCreate([
+            'name' => 'Керамический кирпич',
+            'slug' => Str::slug('Керамический кирпич'),
+            'category_id' => $category->id,
+        ]);
+
+        foreach ($productsData as $data) {
+            $product = \App\Models\Product::create([
+                'name' => $data['name'],
+                'slug' => Str::slug($data['name']),
+                'subcategory_id' => $subcategory->id,
+                'price_per_piece' => $data['price_per_piece'],
+                'discount_price_per_piece' => $data['discount_price_per_piece'],
+                'price_sqm' => $data['price_sqm'],
+                'discount_price_sqm' => $data['discount_price_sqm'],
+                'is_new' => true,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+            ]);
+            foreach ($data['attributes'] as $attrName => $attrValue) {
+                $attr = \App\Models\Attribute::firstOrCreate([
+                    'name' => $attrName,
+                    'slug' => Str::slug($attrName),
+                    'subcategory_id' => $subcategory->id,
+                ]);
+                $value = \App\Models\Value::firstOrCreate([
+                    'value' => $attrValue,
+                    'slug' => Str::slug($attrValue),
+                    'attribute_id' => $attr->id,
+                ]);
+                \App\Models\AttributeValue::firstOrCreate([
+                    'attribute_id' => $attr->id,
+                    'value_id' => $value->id,
+                    'product_id' => $product->id,
+                ]);
+            }
         }
 
-        foreach ($modsCsv as $record) {
-            $productId = $record['Id Продукта'];
-            $productName = $record['Название'];
+        // --- Сидирование 13+ товаров кирпича и керамики ---
+        $products = [
+            [
+                'name' => 'Сердцевина кирпича Тандем Данилово (пиленый кирпич)',
+                'brand' => 'Тандем',
+                'factory' => 'Тандем Данилово',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'натуральный',
+                'coating' => 'без покрытия',
+                'manufacturer' => 'Тандем',
+                'hollowness' => 'полнотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'красный',
+                'size' => '250*120*65',
+                'price_per_piece' => 32,
+                'discount_price_per_piece' => 29,
+                'price_sqm' => 850,
+                'discount_price_sqm' => 800,
+                'is_new' => true,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'TD0001',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Вышневолоцкая керамика Графит гладкий 250*120*65 мм',
+                'brand' => 'Вышневолоцкая керамика',
+                'factory' => 'Вышневолоцкий завод',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'графит',
+                'coating' => 'гладкий',
+                'manufacturer' => 'Вышневолоцкая керамика',
+                'hollowness' => 'полнотелый',
+                'country' => 'Россия',
+                'tone' => 'темный',
+                'form' => 'прямоугольный',
+                'color' => 'графит',
+                'size' => '250*120*65',
+                'price_per_piece' => 38,
+                'discount_price_per_piece' => 35,
+                'price_sqm' => 950,
+                'discount_price_sqm' => 900,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'VVK0002',
+            ],
+            [
+                'name' => 'Кирпич облицовочный ЛСР красный гладкий, утолщенные стенки, F-100, 250*120*65 мм',
+                'brand' => 'ЛСР',
+                'factory' => 'ЛСР',
+                'frost' => 'F100',
+                'strength' => 'М175',
+                'material' => 'керамический',
+                'shade' => 'красный',
+                'coating' => 'гладкий',
+                'manufacturer' => 'ЛСР',
+                'hollowness' => 'полнотелый',
+                'country' => 'Россия',
+                'tone' => 'яркий',
+                'form' => 'прямоугольный',
+                'color' => 'красный',
+                'size' => '250*120*65',
+                'price_per_piece' => 40,
+                'discount_price_per_piece' => 36,
+                'price_sqm' => 980,
+                'discount_price_sqm' => 930,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'LSR0003',
+            ],
+            [
+                'name' => 'Кирпич облицовочный BRAER Персик гладкий 250*120*65 мм',
+                'brand' => 'BRAER',
+                'factory' => 'BRAER',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'персик',
+                'coating' => 'гладкий',
+                'manufacturer' => 'BRAER',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'персиковый',
+                'size' => '250*120*65',
+                'price_per_piece' => 37,
+                'discount_price_per_piece' => 34,
+                'price_sqm' => 920,
+                'discount_price_sqm' => 880,
+                'is_new' => true,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'BR0004',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Керма Белый рустик 250*120*65 мм',
+                'brand' => 'Керма',
+                'factory' => 'Керма',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'белый',
+                'coating' => 'рустик',
+                'manufacturer' => 'Керма',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'белый',
+                'size' => '250*120*65',
+                'price_per_piece' => 45,
+                'discount_price_per_piece' => 41,
+                'price_sqm' => 1100,
+                'discount_price_sqm' => 1050,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'KR0005',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Донские зори Шоколад гладкий 250*120*65 мм',
+                'brand' => 'Донские зори',
+                'factory' => 'Донские зори',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'шоколад',
+                'coating' => 'гладкий',
+                'manufacturer' => 'Донские зори',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'темный',
+                'form' => 'прямоугольный',
+                'color' => 'шоколад',
+                'size' => '250*120*65',
+                'price_per_piece' => 39,
+                'discount_price_per_piece' => 36,
+                'price_sqm' => 970,
+                'discount_price_sqm' => 920,
+                'is_new' => false,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'DZ0006',
+            ],
+            [
+                'name' => 'Кирпич облицовочный ТЕРЕКС Серый гладкий 250*120*65 мм',
+                'brand' => 'ТЕРЕКС',
+                'factory' => 'ТЕРЕКС',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'серый',
+                'coating' => 'гладкий',
+                'manufacturer' => 'ТЕРЕКС',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'серый',
+                'size' => '250*120*65',
+                'price_per_piece' => 36,
+                'discount_price_per_piece' => 33,
+                'price_sqm' => 910,
+                'discount_price_sqm' => 870,
+                'is_new' => true,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'TRX0007',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Белый город Слоновая кость рустик 250*120*65 мм',
+                'brand' => 'Белый город',
+                'factory' => 'Белый город',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'слоновая кость',
+                'coating' => 'рустик',
+                'manufacturer' => 'Белый город',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'слоновая кость',
+                'size' => '250*120*65',
+                'price_per_piece' => 46,
+                'discount_price_per_piece' => 42,
+                'price_sqm' => 1120,
+                'discount_price_sqm' => 1070,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'BG0008',
+            ],
+            [
+                'name' => 'Кирпич облицовочный ЛСР Персиковый гладкий 2 250*120*65 мм',
+                'brand' => 'ЛСР',
+                'factory' => 'ЛСР',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'персиковый',
+                'coating' => 'гладкий',
+                'manufacturer' => 'ЛСР',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'персиковый',
+                'size' => '250*120*65',
+                'price_per_piece' => 41,
+                'discount_price_per_piece' => 37,
+                'price_sqm' => 990,
+                'discount_price_sqm' => 940,
+                'is_new' => false,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'LSR0009',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Керма Красный рустик 2 250*120*65 мм',
+                'brand' => 'Керма',
+                'factory' => 'Керма',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'красный',
+                'coating' => 'рустик',
+                'manufacturer' => 'Керма',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'яркий',
+                'form' => 'прямоугольный',
+                'color' => 'красный',
+                'size' => '250*120*65',
+                'price_per_piece' => 43,
+                'discount_price_per_piece' => 39,
+                'price_sqm' => 1050,
+                'discount_price_sqm' => 1000,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'KR0010',
+            ],
+            [
+                'name' => 'Кирпич облицовочный BRAER Коричневый гладкий 250*120*65 мм',
+                'brand' => 'BRAER',
+                'factory' => 'BRAER',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'коричневый',
+                'coating' => 'гладкий',
+                'manufacturer' => 'BRAER',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'темный',
+                'form' => 'прямоугольный',
+                'color' => 'коричневый',
+                'size' => '250*120*65',
+                'price_per_piece' => 42,
+                'discount_price_per_piece' => 38,
+                'price_sqm' => 1020,
+                'discount_price_sqm' => 970,
+                'is_new' => false,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'BR0011',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Донские зори Белый гладкий 250*120*65 мм',
+                'brand' => 'Донские зори',
+                'factory' => 'Донские зори',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'белый',
+                'coating' => 'гладкий',
+                'manufacturer' => 'Донские зори',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'белый',
+                'size' => '250*120*65',
+                'price_per_piece' => 44,
+                'discount_price_per_piece' => 40,
+                'price_sqm' => 1080,
+                'discount_price_sqm' => 1030,
+                'is_new' => true,
+                'is_hit_of_sales' => false,
+                'is_active' => true,
+                'article' => 'DZ0012',
+            ],
+            [
+                'name' => 'Кирпич облицовочный Тандем Желтый гладкий 250*120*65 мм',
+                'brand' => 'Тандем',
+                'factory' => 'Тандем',
+                'frost' => 'F100',
+                'strength' => 'М150',
+                'material' => 'керамический',
+                'shade' => 'желтый',
+                'coating' => 'гладкий',
+                'manufacturer' => 'Тандем',
+                'hollowness' => 'пустотелый',
+                'country' => 'Россия',
+                'tone' => 'светлый',
+                'form' => 'прямоугольный',
+                'color' => 'желтый',
+                'size' => '250*120*65',
+                'price_per_piece' => 35,
+                'discount_price_per_piece' => 32,
+                'price_sqm' => 900,
+                'discount_price_sqm' => 860,
+                'is_new' => false,
+                'is_hit_of_sales' => true,
+                'is_active' => true,
+                'article' => 'TD0013',
+            ],
+        ];
 
-            if (!isset($charsData[$productId])) {
-                continue;
-            }
+        $productType = \App\Models\ProductType::firstOrCreate(['name' => 'Кирпич'], ['slug' => Str::slug('Кирпич')]);
+        $category = \App\Models\Category::firstOrCreate([
+            'name' => 'Облицовочный кирпич',
+            'slug' => Str::slug('Облицовочный кирпич'),
+            'product_type_id' => $productType->id,
+        ]);
+        $subcategory = \App\Models\SubCategory::firstOrCreate([
+            'name' => 'Керамический кирпич',
+            'slug' => Str::slug('Керамический кирпич'),
+            'category_id' => $category->id,
+        ]);
 
-            $parentData = $charsData[$productId];
-
-            if (preg_match('/([А-Я]+)-(\d+)-(\d+)-([А-Я]+)([\d])/', $productName, $matches)) {
-                list(, $series, $size, $ratio, $climate, $placement) = $matches;
-
-                $subcategoryName = "$series-$size";
-                $subcategory = SubCategory::firstOrCreate([
-                    'name' => $subcategoryName,
-                    'slug' => Str::slug($subcategoryName),
-                    'product_type_id' => $productType->id,
-                    'category_id' => $category->id,
-                    'description' => $subcategoryCsv['Описание'] . " " . $subcategoryCsv['Подр. описание']
+        foreach ($products as $data) {
+            $product = \App\Models\Product::create([
+                'name' => $data['name'],
+                'slug' => Str::slug($data['name']),
+                'subcategory_id' => $subcategory->id,
+                'price_per_piece' => $data['price_per_piece'],
+                'discount_price_per_piece' => $data['discount_price_per_piece'],
+                'price_sqm' => $data['price_sqm'],
+                'discount_price_sqm' => $data['discount_price_sqm'],
+                'is_new' => $data['is_new'],
+                'is_hit_of_sales' => $data['is_hit_of_sales'],
+                'is_active' => $data['is_active'],
+            ]);
+            $attributes = [
+                'Артикул' => $data['article'],
+                'Бренд' => $data['brand'],
+                'Завод' => $data['factory'],
+                'Марка морозостойкости' => $data['frost'],
+                'Марка прочности' => $data['strength'],
+                'Материал' => $data['material'],
+                'Оттенок' => $data['shade'],
+                'Покрытие' => $data['coating'],
+                'Производитель' => $data['manufacturer'],
+                'Пустотность' => $data['hollowness'],
+                'Страна' => $data['country'],
+                'Тон' => $data['tone'],
+                'Форма' => $data['form'],
+                'Цвет' => $data['color'],
+                'Размер' => $data['size'],
+            ];
+            foreach ($attributes as $attrName => $attrValue) {
+                $attr = \App\Models\Attribute::firstOrCreate([
+                    'name' => $attrName,
+                    'slug' => Str::slug($attrName),
+                    'subcategory_id' => $subcategory->id,
                 ]);
-
-                $product = Product::create([
-                    'name' => $productName,
-                    'product_type_id' => $productType->id,
-                    'category_id' => $category->id,
-                    'sub_category_id' => $subcategory->id,
-                    'price' => $record['Цена'] ?? 0,
-                    'mass' => $parentData['Масса'] ?? 0,
-                    'dimensions' => $parentData['Длина'] . 'x' . $parentData['Ширина'] . 'x' . $parentData['Высота']
+                $value = \App\Models\Value::firstOrCreate([
+                    'value' => $attrValue,
+                    'slug' => Str::slug($attrValue),
+                    'attribute_id' => $attr->id,
                 ]);
-
-                $attributes = [
-                    'Серия' => $series,
-                    'Типоразмер (межосевое расстояние)' => $size,
-                    'Передаточное отношение (число)' => $ratio,
-                    'Климатическое исполнение' => $climate,
-                    'Категория размещения' => $placement,
-                ];
-
-                $modificationParams = ['Масса', 'Длина', 'Ширина', 'Высота', 'Цена', 'Id', ...array_keys($attributes)];
-                foreach ($modificationParams as $param) {
-                    unset($parentData[$param]);
-                }
-
-                $parentAttributes = $parentData;
-
-                foreach (array_merge($attributes, $parentAttributes) as $attrName => $attrValue) {
-                    $attr = Attribute::firstOrCreate([
-                        'name' => $attrName,
-                        'slug' => Str::slug($attrName),
-                        'product_type_id' => $productType->id,
-                    ]);
-
-                    $value = Value::firstOrCreate([
-                        'value' => $attrValue,
-                        'slug' => Str::slug($attrValue),
-                        'attribute_id' => $attr->id,
-                    ]);
-
-                    AttributeValue::create([
-                        'attribute_id' => $attr->id,
-                        'value_id' => $value->id,
-                        'product_id' => $product->id,
-                    ]);
-                }
+                \App\Models\AttributeValue::firstOrCreate([
+                    'attribute_id' => $attr->id,
+                    'value_id' => $value->id,
+                    'product_id' => $product->id,
+                ]);
             }
         }
     }

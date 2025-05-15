@@ -19,7 +19,10 @@ class Product extends Model
     protected $casts = [
         'is_new' => 'boolean',
         'is_hit_of_sales' => 'boolean',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'images' => 'array',
+        'docs' => 'array',
+        'docs_file_names' => 'array'
     ];
 
     protected static function boot()
@@ -55,7 +58,7 @@ class Product extends Model
 
     public function discountPercentage()
     {
-        return floor(100 - ($this->discount_price / $this->price) * 100);
+        return floor(100 - ($this->discount_price_per_piece / $this->price) * 100);
     }
 
     public function getFormattedPrice()
@@ -65,7 +68,7 @@ class Product extends Model
 
     public function getFormattedDiscountPrice()
     {
-        return static::formatPrice($this->discount_price);
+        return static::formatPrice($this->discount_price_per_piece);
     }
 
     public static function getDocExtension(string $doc)
@@ -128,7 +131,7 @@ class Product extends Model
                 $query->orderBy('views', 'desc');
                 break;
             case 'price':
-                $query->whereNotNull('price')->orderByRaw('IFNULL(discount_price, price)');
+                $query->whereNotNull('price')->orderByRaw('IFNULL(discount_price_per_piece, price_per_piece)');
                 break;
             case 'category':
                 $query->orderBy('name');
@@ -148,15 +151,15 @@ class Product extends Model
                 $query->where('is_hit_of_sales', 1);
                 break;
             case 'discounts':
-                $query->whereNotNull('discount_price');
+                $query->whereNotNull('discount_price_per_piece');
                 break;
         }
     }
 
     public static function scopeFilterByPriceRange($query, $priceRange)
     {
-        $query->where(DB::raw('IFNULL(discount_price, price)'), '>=', $priceRange[0])->where(
-            DB::raw('IFNULL(discount_price, price)'),
+        $query->where(DB::raw('IFNULL(discount_price_per_piece, price_per_piece)'), '>=', $priceRange[0])->where(
+            DB::raw('IFNULL(discount_price_per_piece, price_per_piece)'),
             '<=',
             $priceRange[1]
         );
@@ -166,7 +169,7 @@ class Product extends Model
     {
         return $query->select(
             DB::raw(
-                'MAX(IFNULL(discount_price, price)) as max_price, MIN(IFNULL(discount_price, price)) as min_price',
+                'MAX(IFNULL(discount_price_per_piece, price_per_piece)) as max_price, MIN(IFNULL(discount_price_per_piece, price_per_piece)) as min_price',
             )
         )->get();
     }

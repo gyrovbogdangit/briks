@@ -16,10 +16,6 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->json('images')->nullable();
-            $table->longText('description');
-            $table->json('docs')->nullable();
-            $table->json('docs_file_names')->nullable();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

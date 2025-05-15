@@ -7,12 +7,6 @@ use Illuminate\Support\Str;
 
 class Subcategory extends Model
 {
-    protected $casts = [
-        'images' => 'array',
-        'docs' => 'array',
-        'docs_file_names' => 'array'
-    ];
-
     protected static function boot()
     {
         parent::boot();

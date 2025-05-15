@@ -78,32 +78,7 @@ class SubcategoryResource extends Resource
                                         ]);
                                     }),
 
-                            ]),
-                        Tab::make('Файлы')
-                            ->schema([
-                                FileUpload::make('images')
-                                    ->label('Изображения')
-                                    ->multiple()
-                                    ->image()
-                                    ->imageCropAspectRatio('1:1')
-                                    ->reorderable()
-                                    ->directory('products')
-                                    ->columnSpanFull(),
-                                FileUpload::make('docs')
-                                    ->label('Документы')
-                                    ->multiple()
-                                    ->reorderable()
-                                    ->directory('products')
-                                    ->storeFileNamesIn('docs_file_names')
-                                    ->columnSpanFull(),
-                            ]),
-                        Tab::make('Описание')->schema([
-                            TiptapEditor::make('description')
-                                ->label('Описание')
-                                ->required()
-                                ->columnSpanFull()
-                                ->profile('default')
-                        ])
+                            ])
                     ])->persistTabInQueryString()
             ]);
     }
@@ -113,9 +88,6 @@ class SubcategoryResource extends Resource
         return $table
             ->defaultSort('name')
             ->columns([
-                ImageColumn::make('images')
-                    ->label('Изображение')
-                    ->limit(2),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Название')
                     ->searchable(),

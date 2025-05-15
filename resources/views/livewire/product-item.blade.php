@@ -6,26 +6,41 @@
 
     <div class="card-body">
         <h5 class="card-title text-primary">{{ $product->name }}</h5>
-        @if ($product->dimensions)
-            <p class="card-text">Формат: {{ $product->dimensions }}</p>
-        @endif
 
-        @isset($product->price)
-            @isset($product->discount_price)
+        @php
+            $hasPiece = isset($product->price_per_piece);
+            $hasPieceDiscount = isset($product->discount_price_per_piece);
+            $hasSqm = isset($product->price_sqm);
+            $hasSqmDiscount = isset($product->discount_price_sqm);
+        @endphp
+        @if ($hasPiece || $hasSqm)
+            @if ($hasPiece)
                 <div class="price-wrapper">
-                    <span class="old-price">{!! $product->getFormattedPrice() !!} ₽/шт</span>
-                    <span class="new-price">{!! $product->getFormattedDiscountPrice() !!} ₽/шт</span>
+                    @if ($hasPieceDiscount)
+                        <span class="old-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт</span>
+                        <span class="new-price">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}
+                            ₽/шт</span>
+                    @else
+                        <span class="new-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт</span>
+                    @endif
                 </div>
-            @else
+            @endif
+            @if ($hasSqm)
                 <div class="price-wrapper">
-                    <span class="new-price">{!! $product->getFormattedPrice() !!} ₽/шт</span>
+                    @if ($hasSqmDiscount)
+                        <span class="old-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                        <span class="new-price">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
+                            ₽/м²</span>
+                    @else
+                        <span class="new-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                    @endif
                 </div>
-            @endisset
+            @endif
         @else
             <div class="price-wrapper">
                 <span class="new-price">По запросу</span>
             </div>
-        @endisset
+        @endif
 
         {{-- Значки статуса и скидки --}}
         @if ($product->is_new || (isset($product->price) && isset($product->discount_price)))

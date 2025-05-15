@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Category;
-use App\Models\ProductType;
 use App\Models\Subcategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,10 +15,14 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->integer('price')->nullable();
-            $table->integer('discount_price')->nullable();
-            $table->text('dimensions')->nullable();
-            $table->text('mass')->nullable();
+            $table->float('price_per_piece')->nullable();
+            $table->float('discount_price_per_piece')->nullable();
+            $table->float('price_sqm')->nullable();
+            $table->float('discount_price_sqm')->nullable();
+            $table->json('images')->nullable();
+            $table->longText('description')->nullable();
+            $table->json('docs')->nullable();
+            $table->json('docs_file_names')->nullable();
             $table->boolean('is_new')->default(true);
             $table->boolean('is_hit_of_sales')->default(false);
             $table->boolean('is_active')->default(true);
