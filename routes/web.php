@@ -18,7 +18,7 @@ Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites
 Route::get('/catalog', [HomeController::class, 'catalog'])->name('catalog');
 */
 Route::get('/catalog/{productType:slug}/{category:slug}/{subcategory:slug}', [ProductController::class, 'index'])->name('products.index');
-/*
 Route::get('/catalog/{productType:slug}/{category:slug}/{subcategory:slug}/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+/*
 Route::get('/{page:slug}', [PageController::class, 'index'])->name('page');
  */

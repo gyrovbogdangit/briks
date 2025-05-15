@@ -101,6 +101,72 @@
         </div>
     </section>
 
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="section-title mb-4 text-primary">Популярное</h2>
+
+            <div class="overflow-auto">
+                <div class="d-flex flex-nowrap gap-4 mt-1">
+                    @foreach (range(0, 6) as $i)
+                        <div class="product-card" style="min-width: 250px">
+                            <img src="https://placehold.co/600x400" alt="Кирпич" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Кирпич облицовочный</h5>
+                                <p class="card-text">Формат: 250х65х65 мм</p>
+                                <div class="price-wrapper">
+                                    <span class="old-price">50 ₽/шт</span>
+                                    <span class="new-price">35 ₽/шт</span>
+                                </div>
+                                <div class="price-wrapper">
+                                    <span class="old-price">1000 ₽/м²</span>
+                                    <span class="new-price">900 ₽/м²</span>
+                                </div>
+                                <div class="action-icons">
+                                    <i class="fas fa-cart-plus icon" title="В корзину"></i>
+                                    <i class="fas fa-chart-simple icon" title="В сравнение"></i>
+                                    <i class="fas fa-heart icon favorite" title="В избранное"></i>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title mb-4 text-primary">Новинки</h2>
+
+            <div class="overflow-auto">
+                <div class="d-flex flex-nowrap gap-4 mt-1">
+                    @foreach (range(0, 6) as $i)
+                        <div class="product-card" style="min-width: 250px">
+                            <img src="https://placehold.co/600x400" alt="Кирпич" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Кирпич облицовочный</h5>
+                                <p class="card-text">Формат: 250х65х65 мм</p>
+                                <div class="price-wrapper">
+                                    <span class="old-price">50 ₽/шт</span>
+                                    <span class="new-price">35 ₽/шт</span>
+                                </div>
+                                <div class="price-wrapper">
+                                    <span class="old-price">1000 ₽/м²</span>
+                                    <span class="new-price">900 ₽/м²</span>
+                                </div>
+                                <div class="action-icons">
+                                    <i class="fas fa-cart-plus icon" title="В корзину"></i>
+                                    <i class="fas fa-chart-simple icon" title="В сравнение"></i>
+                                    <i class="fas fa-heart icon favorite" title="В избранное"></i>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="bg-light py-5">
         <div class="container">
             <h2 class="section-title mb-5">Почему выбирают БРИКС</h2>
@@ -159,7 +225,7 @@
     </div>
 
 
-    <section class="py-5 bg-white">
+    {{--   <section class="py-5 bg-white">
         <div class="container">
             <h2 class="section-title mb-5 text-primary">Наши услуги</h2>
 
@@ -213,5 +279,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

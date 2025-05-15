@@ -1,11 +1,14 @@
 <div class="product-card">
-    <a href="{{-- {{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }} --}}">
-        <img src="{{ asset(isset($product->subcategory->images[0]) ? "storage/{$product->subcategory->images[0]}" : 'img/content/product-1.jpg') }}"
+    <a
+        href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+        <img src="{{ asset(isset($product->images[0]) ? "storage/{$product->images[0]}" : 'img/content/product-1.jpg') }}"
             alt="{{ $product->name }}" />
     </a>
 
     <div class="card-body">
-        <h5 class="card-title text-primary">{{ $product->name }}</h5>
+        <h5 class="card-title text-primary"><a class="text-decoration-none"
+                href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">{{ $product->name }}</a>
+        </h5>
 
         @php
             $hasPiece = isset($product->price_per_piece);

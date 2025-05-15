@@ -1,33 +1,22 @@
-<div class="good-info">
-    {{-- <div class="good-data">
-        <div class="good-data__title">Номинальный ток, А</div>
-        <div class="good-data__choice good-choice">
-            <label class="good-choice__item">
-                <input type="radio" class="good-choice__check" name="amperage">
-                <span class="good-choice__txt">1000</span>
-            </label>
-            <label class="good-choice__item">
-                <input type="radio" class="good-choice__check" name="amperage" checked>
-                <span class="good-choice__txt">1500</span>
-            </label>
-        </div>
-    </div> --}}
-    <table class="good-chars">
-        @foreach ($product->attributeValues->take(5) as $attributeValue)
-            <tr>
-                <th><span>{{ $attributeValue->attribute->name }}</span></th>
-                <td><span>{{ $attributeValue->value->value }}</span></td>
-            </tr>
-        @endforeach
-    </table>
-    <div class="good-actions">
-        <a class="good-actions__btn-all" href="#desc" data-tab-index="0"><i class="icon-arrow3"></i><span>Все
-                характеристики</span></a>
+<div class="good-info bg-white rounded shadow-sm p-4">
+    <div class="table-responsive mb-3">
+        <table class="table table-bordered align-middle mb-0">
+            <tbody>
+                @foreach ($product->attributeValues->take(5) as $attributeValue)
+                    <tr>
+                        <th class="bg-light">{{ $attributeValue->attribute->name }}</th>
+                        <td>{{ $attributeValue->value->value }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <a class="btn btn-outline-primary" href="#chars" data-tab-index="1"><i class="icon-arrow3"></i> Все
+            характеристики</a>
         @isset($product->article)
-            <div class="good-actions__article">Артикул: <span>{{ $product->article }}</span></div>
+            <div class="text-muted">Артикул: <span class="fw-semibold">{{ $product->article }}</span></div>
         @endisset
     </div>
-
-    <livewire:product-actions :product="$product" />
-
+    {{-- <livewire:product-actions :product="$product" /> --}}
 </div>

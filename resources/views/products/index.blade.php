@@ -53,20 +53,7 @@
                     @endif
                 </div>
                 <div class="container mt-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Предыдущая</a>
-                            </li>
-                            <li class="page-item"><a class="page-link text-primary" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-primary" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-primary" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-primary" href="#">4</a></li>
-                            <li class="page-item">
-                                <a class="page-link text-primary" href="#">Следующая</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    @include('products.components.index.pagination')
                 </div>
             </div>
         </div>

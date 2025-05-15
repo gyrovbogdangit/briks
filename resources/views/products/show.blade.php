@@ -1,63 +1,65 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="wrap wrap--light-gray">
-        <div class="content">
-            <div class="bread">
-                <a href="{{ route('home') }}" class="bread__link">Главная</a>
-                <span class="bread__sep"><i class="icon-arrow1"></i></span>
+    <div class="container mt-3">
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{{-- {{ route('catalog') }} --}}">Каталог</a></li>
+                <li class="breadcrumb-item"><a>{{ $type->name }}</a></li>
+                <li class="breadcrumb-item"><a>{{ $product->category->name }}</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}">{{ $subcategory->name }}</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
+            </ol>
+        </nav>
+    </div>
 
-                <a href="{{ route('catalog') }}" class="bread__link">Каталог</a>
-                <span class="bread__sep"><i class="icon-arrow1"></i></span>
-
-                <a class="bread__link">{{ $type->name }}</a>
-                <span class="bread__sep"><i class="icon-arrow1"></i></span>
-
-                <a class="bread__link">{{ $product->category->name }}</a>
-                <span class="bread__sep"><i class="icon-arrow1"></i></span>
-
-                <a href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}"
-                    class="bread__link">{{ $subcategory->name }}</a>
-                <span class="bread__sep"><i class="icon-arrow1"></i></span>
-
-                <a class="bread__link active">{{ $product->name }}</a>
-            </div>
-            <div class="title title--inline">
-                <h1>{{ $product->name }}</h1>
-                @if ($product->is_new)
-                    <span class="title__sale">Новинка</span>
-                @endif
-            </div>
+    <div class="container">
+        <div class="d-flex align-items-center gap-3 mb-3">
+            <h1 class="page-title text-primary mb-0">{{ $product->name }}</h1>
+            @if ($product->is_new)
+                <span class="badge bg-warning text-dark">Новинка</span>
+            @endif
+            @if ($product->is_hit_of_sales)
+                <span class="badge bg-danger">Хит продаж</span>
+            @endif
         </div>
     </div>
 
-    <div class="wrap">
-        <div class="page content">
-            <div class="page-product">
-                @if ($product->is_active)
-                    <div class="w-page-product">
-                        @include('products.components.show.slider')
-                        @include('products.components.show.product-info')
-                    </div>
-
-                    @include('products.components.show.good-info')
-                @else
-                    <p class="product-not-available">К сожалению сейчас этот товар не доступен. С его аналогами можете
-                        ознакомиться в
-                        <a
-                            href="{{ route('products.index', ['productType' => $type, 'category' => $type->categories[0], 'subcategory' => $type->categories[0]->subcategories[0]]) }}">нашем
-                            каталоге</a>!
-                    </p>
-                @endif
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6">
+                @include('products.components.show.slider')
+            </div>
+            <div class="col-md-6">
+                @include('products.components.show.good-info')
             </div>
         </div>
+
+        @if ($product->is_active)
+            <div class="row mt-4">
+                <div class="col-12">
+                    @include('products.components.show.product-info')
+                </div>
+            </div>
+        @else
+            <div class="alert alert-warning mt-4">
+                К сожалению сейчас этот товар не доступен. С его аналогами можете ознакомиться в
+                <a href="{{ route('products.index', ['productType' => $type, 'category' => $type->categories[0], 'subcategory' => $type->categories[0]->subcategories[0]]) }}"
+                    class="text-primary">нашем каталоге</a>!
+            </div>
+        @endif
     </div>
 
-    @include('products.components.modal-request-price')
+    {{--  @include('products.components.modal-request-price')
     @include('products.components.show.modal-one-click-order')
 
-    @include('products.components.why-choose-us')
-    @include('products.components.show.related-products')
-    @include('products.components.recently-watched')
-    @include('components.frequent-questions')
+    <div class="container mt-5">
+        @include('products.components.why-choose-us')
+        @include('products.components.show.related-products')
+        @include('products.components.recently-watched')
+        @include('components.frequent-questions')
+    </div> --}}
 @endsection
