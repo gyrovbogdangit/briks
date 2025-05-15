@@ -28,16 +28,12 @@
     <div class="tab-content" id="productTabContent">
         <div class="tab-pane fade show active" id="desc" role="tabpanel">
             <div class="mb-3">
-                <p>{!! str_replace(
-                    ['{NAME}', 'ptsvrn@mail.ru', '88003017090', '+8 (800) 301-70-90'],
-                    [explode(' ', $product->name)[1], 'briks@mail.ru', '+12345678', '+12345678'],
-                    $subcategory->description,
-                ) !!}</p>
+                <p>{!! $product->description !!}</p>
             </div>
-            @if (isset($subcategory->docs) && count($subcategory->docs) > 0)
+            @if (isset($product->docs) && count($product->docs) > 0)
                 <div class="mb-3">
                     <div class="d-flex flex-wrap gap-3">
-                        @foreach ($subcategory->docs_file_names as $doc => $name)
+                        @foreach ($product->docs_file_names as $doc => $name)
                             <a href="{{ Storage::url($doc) }}"
                                 class="btn btn-outline-primary d-flex align-items-center gap-2" target="_blank">
                                 <i class="docs__icon {{ $product::getDocIcon($doc) }}"></i>

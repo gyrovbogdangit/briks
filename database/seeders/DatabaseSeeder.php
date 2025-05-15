@@ -57,7 +57,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 850,
                 'discount_price_sqm' => 800,
                 'attributes' => [
-                    'Артикул' => 'TD0001',
                     'Бренд' => 'Тандем',
                     'Завод' => 'Данилово',
                     'Марка морозостойкости' => 'F100',
@@ -80,7 +79,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 950,
                 'discount_price_sqm' => 900,
                 'attributes' => [
-                    'Артикул' => 'VVK0002',
                     'Бренд' => 'Вышневолоцкая керамика',
                     'Завод' => 'Вышний Волочек',
                     'Марка морозостойкости' => 'F100',
@@ -103,7 +101,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 980,
                 'discount_price_sqm' => 930,
                 'attributes' => [
-                    'Артикул' => 'LSR0003',
                     'Бренд' => 'ЛСР',
                     'Завод' => 'ЛСР',
                     'Марка морозостойкости' => 'F100',
@@ -126,7 +123,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 970,
                 'discount_price_sqm' => 920,
                 'attributes' => [
-                    'Артикул' => 'BR0004',
                     'Бренд' => 'BRAER',
                     'Завод' => 'BRAER',
                     'Марка морозостойкости' => 'F100',
@@ -149,7 +145,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 990,
                 'discount_price_sqm' => 940,
                 'attributes' => [
-                    'Артикул' => 'KR0005',
                     'Бренд' => 'Керма',
                     'Завод' => 'Керма',
                     'Марка морозостойкости' => 'F100',
@@ -172,7 +167,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 1000,
                 'discount_price_sqm' => 950,
                 'attributes' => [
-                    'Артикул' => 'DZ0006',
                     'Бренд' => 'Донские зори',
                     'Завод' => 'Донские зори',
                     'Марка морозостойкости' => 'F100',
@@ -195,7 +189,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 920,
                 'discount_price_sqm' => 870,
                 'attributes' => [
-                    'Артикул' => 'TRX0007',
                     'Бренд' => 'ТЕРЕКС',
                     'Завод' => 'ТЕРЕКС',
                     'Марка морозостойкости' => 'F100',
@@ -218,7 +211,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 1010,
                 'discount_price_sqm' => 960,
                 'attributes' => [
-                    'Артикул' => 'BG0008',
                     'Бренд' => 'Белый город',
                     'Завод' => 'Белый город',
                     'Марка морозостойкости' => 'F100',
@@ -241,7 +233,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 970,
                 'discount_price_sqm' => 920,
                 'attributes' => [
-                    'Артикул' => 'KSK0009',
                     'Бренд' => 'КС-Керамик',
                     'Завод' => 'КС-Керамик',
                     'Марка морозостойкости' => 'F100',
@@ -264,7 +255,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 990,
                 'discount_price_sqm' => 940,
                 'attributes' => [
-                    'Артикул' => 'KR0010',
                     'Бренд' => 'Керма',
                     'Завод' => 'Керма',
                     'Марка морозостойкости' => 'F100',
@@ -287,7 +277,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 980,
                 'discount_price_sqm' => 930,
                 'attributes' => [
-                    'Артикул' => 'LSR0011',
                     'Бренд' => 'ЛСР',
                     'Завод' => 'ЛСР',
                     'Марка морозостойкости' => 'F100',
@@ -310,7 +299,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 970,
                 'discount_price_sqm' => 920,
                 'attributes' => [
-                    'Артикул' => 'BR0012',
                     'Бренд' => 'BRAER',
                     'Завод' => 'BRAER',
                     'Марка морозостойкости' => 'F100',
@@ -333,7 +321,6 @@ class DatabaseSeeder extends Seeder
                 'price_sqm' => 1000,
                 'discount_price_sqm' => 950,
                 'attributes' => [
-                    'Артикул' => 'DZ0013',
                     'Бренд' => 'Донские зори',
                     'Завод' => 'Донские зори',
                     'Марка морозостойкости' => 'F100',
@@ -377,6 +364,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ]);
             foreach ($data['attributes'] as $attrName => $attrValue) {
+                if ($attrName === 'Артикул') continue;
                 $attr = \App\Models\Attribute::firstOrCreate([
                     'name' => $attrName,
                     'slug' => Str::slug($attrName),
@@ -420,7 +408,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => true,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'TD0001',
             ],
             [
                 'name' => 'Кирпич облицовочный Вышневолоцкая керамика Графит гладкий 250*120*65 мм',
@@ -445,7 +432,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'VVK0002',
             ],
             [
                 'name' => 'Кирпич облицовочный ЛСР красный гладкий, утолщенные стенки, F-100, 250*120*65 мм',
@@ -470,7 +456,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'LSR0003',
             ],
             [
                 'name' => 'Кирпич облицовочный BRAER Персик гладкий 250*120*65 мм',
@@ -495,7 +480,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => true,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'BR0004',
             ],
             [
                 'name' => 'Кирпич облицовочный Керма Белый рустик 250*120*65 мм',
@@ -520,7 +504,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'KR0005',
             ],
             [
                 'name' => 'Кирпич облицовочный Донские зори Шоколад гладкий 250*120*65 мм',
@@ -545,7 +528,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'DZ0006',
             ],
             [
                 'name' => 'Кирпич облицовочный ТЕРЕКС Серый гладкий 250*120*65 мм',
@@ -570,7 +552,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => true,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'TRX0007',
             ],
             [
                 'name' => 'Кирпич облицовочный Белый город Слоновая кость рустик 250*120*65 мм',
@@ -595,7 +576,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'BG0008',
             ],
             [
                 'name' => 'Кирпич облицовочный ЛСР Персиковый гладкий 2 250*120*65 мм',
@@ -620,7 +600,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'LSR0009',
             ],
             [
                 'name' => 'Кирпич облицовочный Керма Красный рустик 2 250*120*65 мм',
@@ -645,7 +624,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'KR0010',
             ],
             [
                 'name' => 'Кирпич облицовочный BRAER Коричневый гладкий 250*120*65 мм',
@@ -670,7 +648,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'BR0011',
             ],
             [
                 'name' => 'Кирпич облицовочный Донские зори Белый гладкий 250*120*65 мм',
@@ -695,7 +672,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => true,
                 'is_hit_of_sales' => false,
                 'is_active' => true,
-                'article' => 'DZ0012',
             ],
             [
                 'name' => 'Кирпич облицовочный Тандем Желтый гладкий 250*120*65 мм',
@@ -720,7 +696,6 @@ class DatabaseSeeder extends Seeder
                 'is_new' => false,
                 'is_hit_of_sales' => true,
                 'is_active' => true,
-                'article' => 'TD0013',
             ],
         ];
 
@@ -750,7 +725,6 @@ class DatabaseSeeder extends Seeder
                 'is_active' => $data['is_active'],
             ]);
             $attributes = [
-                'Артикул' => $data['article'],
                 'Бренд' => $data['brand'],
                 'Завод' => $data['factory'],
                 'Марка морозостойкости' => $data['frost'],
