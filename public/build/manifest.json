@@ -1,0 +1,28 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app-DC4SQ41H.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/bootstrap.js"
+    ]
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-e7_YwtJ4.js",
+    "name": "bootstrap",
+    "src": "resources/js/bootstrap.js",
+    "isEntry": true
+  },
+  "resources/js/pages/comparison.js": {
+    "file": "assets/comparison-BRrp6PfJ.js",
+    "name": "comparison",
+    "src": "resources/js/pages/comparison.js",
+    "isEntry": true
+  },
+  "resources/scss/app.scss": {
+    "file": "assets/app--JoErBBD.css",
+    "src": "resources/scss/app.scss",
+    "isEntry": true
+  }
+}
