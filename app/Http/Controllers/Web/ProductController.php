@@ -57,14 +57,10 @@ class ProductController extends Controller
             ->get();
 
         $seo = new Seo(
-            "{$productType->name} — Промышленное оборудование от Rucaf | rucaf.com",
-            'Купить ' . mb_strtolower(
-                $productType->name
-            ) . ' для промышленных нужд от компании Rucaf. Надежное оборудование с доставкой по всей России.',
-            "{$productType->name} — Промышленное оборудование от Rucaf",
-            'Посмотрите наш ассортимент — ' . mb_strtolower(
-                $productType->name
-            ) . ' для различных промышленных нужд. Выбор качественного оборудования от Rucaf с доставкой по всей России.',
+            "{$productType->name} — Строительные материалы Briks: кирпич, кровля, плитка",
+            'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от Briks. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
+            "{$productType->name} — Каталог строительных материалов Briks",
+            'Ознакомьтесь с ассортиментом Briks: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
             asset('storage/' . $productType->image),
             route('products.index', ['productType' => $productType->slug, 'category' => $category, 'subcategory' => $subcategory]),
             'website',
@@ -109,13 +105,11 @@ class ProductController extends Controller
             ->get();
 
         $seo = new Seo(
-            "{$product->name} — Купить промышленное оборудование в Rucaf",
-            "{$product->name} от компании Rucaf. Высокое качество и надежность для промышленных нужд. Доставка по всей России.",
-            "{$product->name} — Купить в Rucaf",
-            "{$product->name} для промышленных приложений. Отличается высокой надежностью и долговечностью. Закажите с доставкой по всей России от компании Rucaf.",
-            isset($subcategory->images[0]) ? asset('storage/' . $subcategory->images[0]) : asset(
-                'storage/' . $productType->image
-            ),
+            "{$product->name} — Купить строительные материалы Briks",
+            "{$product->name} от Briks. Качественный кирпич, кровля, плитка и другие строительные материалы с доставкой по России.",
+            "{$product->name} — Купить в Briks",
+            "{$product->name} для строительства и отделки. Закажите онлайн с доставкой по всей России от Briks.",
+            isset($subcategory->images[0]) ? asset('storage/' . $subcategory->images[0]) : asset('storage/' . $productType->image),
             route('products.show', ['productType' => $productType->slug, 'category' => $category->slug, 'subcategory' => $subcategory->slug, 'product' => $product->slug]),
             'product',
         );
