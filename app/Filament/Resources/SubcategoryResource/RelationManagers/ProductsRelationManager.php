@@ -99,10 +99,13 @@ class ProductsRelationManager extends RelationManager
                                     ->schema([
                                         Select::make('attribute_id')
                                             ->label('Атрибут')
-                                            ->options(function ($get, $record) {
-                                                $subcategoryId = $record?->subcategory_id ?? $get('../../subcategory_id');
-                                                if ($subcategoryId) {
-                                                    return Attribute::where('subcategory_id', $subcategoryId)
+                                            ->options(function ($get, $record, $livewire) {
+                                                $subcategory = $record?->subcategory_id
+                                                    ? \App\Models\Subcategory::find($record->subcategory_id)
+                                                    : ($livewire->getOwnerRecord() ?? null);
+                                                $categoryId = $subcategory?->category_id;
+                                                if ($categoryId) {
+                                                    return Attribute::where('category_id', $categoryId)
                                                         ->orderBy('name')
                                                         ->pluck('name', 'id');
                                                 }

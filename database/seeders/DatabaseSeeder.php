@@ -368,7 +368,7 @@ class DatabaseSeeder extends Seeder
                 $attr = \App\Models\Attribute::firstOrCreate([
                     'name' => $attrName,
                     'slug' => Str::slug($attrName),
-                    'subcategory_id' => $subcategory->id,
+                    'category_id' => $category->id,
                 ]);
                 $value = \App\Models\Value::firstOrCreate([
                     'value' => $attrValue,
@@ -744,7 +744,7 @@ class DatabaseSeeder extends Seeder
                 $attr = \App\Models\Attribute::firstOrCreate([
                     'name' => $attrName,
                     'slug' => Str::slug($attrName),
-                    'subcategory_id' => $subcategory->id,
+                    'category_id' => $category->id,
                 ]);
                 $value = \App\Models\Value::firstOrCreate([
                     'value' => $attrValue,

@@ -56,7 +56,7 @@ class Filter
             unset($requestQuery['min-price'], $requestQuery['max-price']);
         }
 
-        $this->attributes = Attribute::where('subcategory_id', $this->subcategory->id)
+        $this->attributes = Attribute::where('category_id', $this->category->id)
             ->whereIn('slug', array_keys($requestQuery))
             ->withWhereHas(
                 'values',

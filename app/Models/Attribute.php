@@ -31,9 +31,9 @@ class Attribute extends Model
         return $this->belongsToMany(Product::class, 'attribute_values');
     }
 
-    public function subcategory()
+    public function category()
     {
-        return $this->belongsTo(Subcategory::class);
+        return $this->belongsTo(Category::class);
     }
 
     public static function scopeWithUniqueValues($query, Filter $filter)

@@ -9,10 +9,7 @@ use App\Models\Attribute;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AttributeResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\AttributeResource\RelationManagers;
 use App\Filament\Resources\AttributeResource\RelationManagers\ValuesRelationManager;
 use Filament\Forms\Components\Select;
 
@@ -44,11 +41,11 @@ class AttributeResource extends Resource
                     ->label('Название характеристики')
                     ->required()
                     ->maxLength(255),
-                Select::make('subcategory_id')
-                    ->label('Подкатегория')
+                Select::make('category_id')
+                    ->label('Категория')
                     ->required()
                     ->searchable()
-                    ->relationship('subcategory', 'name')
+                    ->relationship('category', 'name')
             ]);
     }
 
@@ -62,8 +59,8 @@ class AttributeResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('subcategory.name')
-                    ->label('Подкатегория')
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Категория')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -75,9 +72,9 @@ class AttributeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('subcategory')
-                    ->label('Подкатегория')
-                    ->relationship('subcategory', 'name')
+                SelectFilter::make('category_id')
+                    ->label('Категория')
+                    ->relationship('category', 'name')
                     ->searchable()
                     ->preload(),
             ])
