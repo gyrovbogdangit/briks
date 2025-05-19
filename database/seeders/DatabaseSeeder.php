@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ProductTypeSeeder::class,
-            UserSeeder::class
+            /*  UserSeeder::class */
         ]);
 
         $productType = ProductType::where('name', 'Кирпич')->first();
