@@ -2,33 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Attribute;
-use App\Models\AttributeValue;
 use App\Models\Category;
-use App\Models\Product;
 use App\Models\ProductType;
-use App\Models\QuickFilter;
-use App\Models\SubCategory;
-use App\Models\User;
-use App\Models\Value;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\ProductTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function readCsv($filePath)
-    {
-        $rows = [];
-        if (($handle = fopen($filePath, 'r')) !== false) {
-            $headers = fgetcsv($handle, 1000, ',');  // Чтение заголовков
-            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-                $rows[] = array_combine($headers, $data);
-            }
-            fclose($handle);
-        }
-        return $rows;
-    }
-
     /**
      * Seed the application's database.
      */
@@ -36,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ProductTypeSeeder::class,
-            /*  UserSeeder::class */
+            /* UserSeeder::class */
         ]);
 
         $productType = ProductType::where('name', 'Кирпич')->first();
@@ -364,12 +346,13 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ]);
             foreach ($data['attributes'] as $attrName => $attrValue) {
-                if ($attrName === 'Артикул') continue;
+                // Найти или создать атрибут только по имени (без category_id)
                 $attr = \App\Models\Attribute::firstOrCreate([
                     'name' => $attrName,
                     'slug' => Str::slug($attrName),
-                    'category_id' => $category->id,
                 ]);
+                // Привязать атрибут к категории (многие-ко-многим)
+                $attr->categories()->syncWithoutDetaching([$category->id]);
                 $value = \App\Models\Value::firstOrCreate([
                     'value' => $attrValue,
                     'slug' => Str::slug($attrValue),
@@ -744,8 +727,8 @@ class DatabaseSeeder extends Seeder
                 $attr = \App\Models\Attribute::firstOrCreate([
                     'name' => $attrName,
                     'slug' => Str::slug($attrName),
-                    'category_id' => $category->id,
                 ]);
+                $attr->categories()->syncWithoutDetaching([$category->id]);
                 $value = \App\Models\Value::firstOrCreate([
                     'value' => $attrValue,
                     'slug' => Str::slug($attrValue),

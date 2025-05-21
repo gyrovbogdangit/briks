@@ -41,11 +41,11 @@ class AttributeResource extends Resource
                     ->label('Название характеристики')
                     ->required()
                     ->maxLength(255),
-                Select::make('category_id')
-                    ->label('Категория')
-                    ->required()
-                    ->searchable()
-                    ->relationship('category', 'name')
+                Select::make('categories')
+                    ->label('Категории')
+                    ->multiple()
+                    ->relationship('categories', 'name')
+                    ->required(),
             ]);
     }
 
@@ -59,9 +59,9 @@ class AttributeResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label('Категория')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->label('Категории')
+                    ->formatStateUsing(fn($state) => is_string($state) ? $state : $state->pluck('name')->join(', ')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,12 +72,11 @@ class AttributeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('category_id')
+                /*     SelectFilter::make('category_id')
                     ->label('Категория')
                     ->relationship('category', 'name')
                     ->searchable()
-                    ->preload(),
-            ])
+                    ->preload(), */])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

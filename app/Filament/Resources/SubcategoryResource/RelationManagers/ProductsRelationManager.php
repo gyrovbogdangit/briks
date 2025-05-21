@@ -7,6 +7,8 @@ use Filament\Tables;
 use App\Models\Value;
 use Filament\Forms\Form;
 use App\Models\Attribute;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Hidden;
@@ -89,6 +91,7 @@ class ProductsRelationManager extends RelationManager
                                 Toggle::make('is_hit_of_sales')
                                     ->label('Хит продаж'),
                                 Toggle::make('is_active')
+                                    ->default(true)
                                     ->label('Активен'),
                             ]),
                         Tab::make('Характеристики')
@@ -99,17 +102,27 @@ class ProductsRelationManager extends RelationManager
                                     ->schema([
                                         Select::make('attribute_id')
                                             ->label('Атрибут')
-                                            ->options(function ($get, $record, $livewire) {
+                                            ->options(function ($get, $record, $livewire, $state) {
                                                 $subcategory = $record?->subcategory_id
                                                     ? \App\Models\Subcategory::find($record->subcategory_id)
                                                     : ($livewire->getOwnerRecord() ?? null);
                                                 $categoryId = $subcategory?->category_id;
-                                                if ($categoryId) {
-                                                    return Attribute::where('category_id', $categoryId)
-                                                        ->orderBy('name')
-                                                        ->pluck('name', 'id');
+                                                if (!$categoryId) {
+                                                    return [];
                                                 }
-                                                return [];
+                                                $allAttributes = Category::find($categoryId)
+                                                    ->attributes()
+                                                    ->orderBy('name')
+                                                    ->pluck('attributes.name', 'attributes.id');
+                                                $attributeValues = $get('../../attributeValues') ?? [];
+                                                $currentKey = $get('__key');
+                                                $usedAttributeIds = collect($attributeValues)
+                                                    ->filter(fn($row) => ($row['__key'] ?? null) !== $currentKey)
+                                                    ->pluck('attribute_id')
+                                                    ->filter()
+                                                    ->unique()
+                                                    ->toArray();
+                                                return $allAttributes->except($usedAttributeIds);
                                             })
                                             ->reactive()
                                             ->required(),
