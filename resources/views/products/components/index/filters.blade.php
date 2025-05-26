@@ -4,26 +4,22 @@
         <div class="categories">
             <ul class="list-group">
                 @foreach ($categories as $category)
-                    <li class="list-group-item">
-                        <a class="category-link" data-bs-toggle="collapse"
-                            href="#category-{{ $category->slug }}-subcategories" role="button"
+                    <li class="list-group-item p-0 border-0 bg-transparent">
+                        <a class="category-link d-block px-2 py-1 fw-bold position-relative {{ $filter->category->slug === $category->slug ? 'active-category' : '' }}"
+                            data-bs-toggle="collapse" href="#category-{{ $category->slug }}-subcategories" role="button"
                             aria-expanded="{{ $filter->category->slug === $category->slug ? 'true' : 'false' }}"
                             aria-controls="category-{{ $category->slug }}-subcategories">
                             {{ $category->name }}
                         </a>
                         @if (count($category->subcategories))
-                            <ul class="collapse list-group ms-3 {{ $filter->category->slug === $category->slug ? 'show' : '' }}"
-                                id="category-{{ $category->slug }}-subcategories">
+                            <ul
+                                class="collapse list-group ms-3 {{ $filter->category->slug === $category->slug ? 'show' : '' }}">
                                 @foreach ($category->subcategories as $subcategory)
-                                    <li class="list-group-item">
-                                        <a class="category-list__item d-flex align-items-center"
+                                    <li class="list-group-item p-0 border-0 bg-transparent">
+                                        <a class="subcategory-link text-decoration-none d-block px-2 py-1 position-relative {{ $subcategory->slug === $filter->subcategory->slug ? 'active-subcategory' : '' }}"
                                             href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}">
-                                            <input type="checkbox" class="category-list__checkbox me-2"
-                                                @checked($subcategory->slug === $filter->subcategory->slug) @disabled($subcategory->products_count === 0)>
-                                            <span class="category-list__txt">{{ $subcategory->name }}
-                                                <span
-                                                    class="category-list__numbs">({{ $subcategory->products_count }})</span>
-                                            </span>
+                                            {{ $subcategory->name }}
+                                            <span class="text-muted">({{ $subcategory->products_count }})</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -36,25 +32,28 @@
 
         <hr />
 
-        <div class="categories">
+        <div class="attributes">
             <ul class="list-group">
                 @foreach ($attributes as $attribute)
                     @if (count($attribute->values) > 1)
-                        <li class="list-group-item {{ $filter->attributeExists($attribute->slug) ? 'show' : '' }}"">
-                            <a class="category-link" data-bs-toggle="collapse"
-                                href="#brandsSubcategories{{ $attribute->id }}" role="button" aria-expanded="true"
-                                aria-controls="brandsSubcategories">
+                        <li class="list-group-item {{ $filter->attributeExists($attribute->slug) ? 'show' : '' }}">
+                            <a class="category-link" data-bs-toggle="collapse" href="#attributes{{ $attribute->id }}"
+                                role="button" aria-expanded="true" aria-controls="attributes">
                                 {{ $attribute->name }}
                             </a>
-                            <ul class="collapse list-group ms-3 show" id="brandsSubcategories{{ $attribute->id }}">
+                            <ul class="collapse list-group ms-3 mt-2 show" id="attributes{{ $attribute->id }}">
                                 @foreach ($attribute->values as $value)
-                                    <li class="list-group-item">
-                                        <input type="checkbox" class="filter-checkbox me-2"
-                                            name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
-                                            id="filter-{{ $attribute->id }}-{{ $value->id }}"
-                                            data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug))
-                                            @disabled($value->products_count === 0) />{{ $value->value }}<span
-                                            class="muted-text">({{ $value->products_count }})</span>
+                                    <li class="list-group-item p-0 border-0 bg-transparent">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input filter-checkbox me-2"
+                                                name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
+                                                id="filter-{{ $attribute->id }}-{{ $value->id }}"
+                                                data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug))
+                                                @disabled($value->products_count === 0) />
+                                            <label class="form-check-label"
+                                                for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
+                                            <span class="text-muted ms-1">({{ $value->products_count }})</span>
+                                        </div>
                                     </li>
                                 @endforeach
                             </ul>
