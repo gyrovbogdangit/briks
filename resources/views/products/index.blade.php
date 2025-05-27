@@ -14,7 +14,7 @@
     </div>
 
     <div class="container">
-        <h1 class="page-title text-primary">Облицовочные материалы</h1>
+        <h1 class="text-primary">Облицовочные материалы</h1>
     </div>
 
     <div class="container d-flex">
@@ -24,16 +24,20 @@
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center flex-wrap p-3 rounded-3 shadow-sm bg-body">
                     <div class="d-flex flex-wrap align-items-center gap-2">
-                        <span class="sort-label">Показывать:</span>
-                        <a href="#" class="filter-link text-primary">20</a>
-                        <a href="#" class="filter-link text-primary">40</a>
-                        <a href="#" class="filter-link text-primary">60</a>
+                        <span class="fw-semibold">Показывать:</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">20</a>
+                        <span class="text-muted">/</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">40</a>
+                        <span class="text-muted">/</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">60</a>
                     </div>
                     <div class="d-flex flex-wrap align-items-center gap-2">
-                        <span class="sort-label">Сортировка:</span>
-                        <a href="#" class="filter-link text-primary">По популярности</a>
-                        <a href="#" class="filter-link text-primary">Сначала дешевые</a>
-                        <a href="#" class="filter-link text-primary">Сначала дорогие</a>
+                        <span class="fw-semibold">Сортировка:</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">По популярности</a>
+                        <span class="text-muted">/</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">Сначала дешевые</a>
+                        <span class="text-muted">/</span>
+                        <a href="#" class="text-secondary text-decoration-none fw-semibold">Сначала дорогие</a>
                     </div>
                 </div>
             </div>

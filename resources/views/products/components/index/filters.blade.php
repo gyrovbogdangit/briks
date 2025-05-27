@@ -1,4 +1,4 @@
-<div class="filters-sidebar col-md-3" style="height: 100%">
+<div class="filters-sidebar col-md-3 bg-white rounded-3 p-3 fw-semibold shadow-sm" style="height: 100%">
     <div>
         <h2 class="fs-4 mb-3">Фильтры</h2>
         <div class="categories">
@@ -113,6 +113,6 @@
                 </div>
             @endif --}}
         </div>
-        <button class="btn btn-primary btn-show mt-3 w-100">Применить фильтры</button>
+        <button class="btn btn-primary w-100 fw-bolder">Применить фильтры</button>
     </div>
 </div>

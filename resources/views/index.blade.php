@@ -241,7 +241,7 @@
                                 Бесплатно сохраним ваши товары на складе БРИКС в течение 2 недель. Забирайте, когда удобно.
                             </p>
                             <a href="#"
-                                class="text-decoration-none fw-bold catalog-link mt-auto text-primary">Подробнее</a>
+                                class="text-decoration-none fw-bold mt-auto text-primary">Подробнее</a>
                         </div>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
                                 Колеруем штукатурку и краску в любой оттенок под ваш проект.
                             </p>
                             <a href="#"
-                                class="text-decoration-none fw-bold catalog-link mt-auto text-primary">Подробнее</a>
+                                class="text-decoration-none fw-bold mt-auto text-primary">Подробнее</a>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
                                 Проведем видеотур по нашему шоуруму БРИКС — не выходя из дома.
                             </p>
                             <a href="#"
-                                class="text-decoration-none fw-bold catalog-link mt-auto text-primary">Подробнее</a>
+                                class="text-decoration-none fw-bold mt-auto text-primary">Подробнее</a>
                         </div>
                     </div>
                 </div>

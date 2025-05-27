@@ -1,7 +1,7 @@
 <div class="top-nav py-2">
     <div class="container d-flex justify-content-between align-items-center fw-bolder">
         <div class="d-flex">
-            <div class="" style="width: 200px"><i class="fas fa-map-marker-alt"></i> Ваш город: Москва</div>
+            <div class="me-3"><i class="fas fa-map-marker-alt"></i> Ваш город: Москва</div>
             <a href="#">Акции</a>
             <a href="#">Доставка</a>
             <a href="#">Оплата</a>
@@ -14,41 +14,46 @@
     </div>
 </div>
 
-<nav class="navbar navbar-expand-lg bg-primary">
+<nav class="navbar navbar-expand-lg border-bottom">
     <div class="container">
-        <a class="navbar-brand me-0" style="width: 200px" href="{{ route('home') }}">БРИКС</a>
+        <a class="navbar-brand me-3" href="{{ route('home') }}">БРИКС</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="btn btn-light text-primary rounded-2 border border-2 border-white fw-bold px-3"
-                        href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu"
-                        style="font-size: 1.1rem;height:44px"><i <i class="fa-solid fa-bars me-2"></i></i>Каталог</a>
-                </li>
-            </ul>
-            <div class="position-relative d-flex align-items-center">
-                <input type="text" class="search-input big-search rounded-2 border border-2 border-white fw-bolder"
-                    placeholder="Поиск..." />
-                <i class="fas fa-search search-icon"></i>
-            </div>
+            <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray fw-bold px-3 text-nowrap"
+                href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu"
+                style="height:44px;margin-top:3px;padding-top:8px;">
+                <i class="fa-solid fa-bars me-2"></i>Каталог
+            </a>
             <div class="d-flex align-items-center">
-                <div class="icon-group d-flex align-items-end gap-3">
-                    <div class="icon-item text-center border-white border border-2 rounded-2 px-2 py-2">
-                        <a href="#" class="d-block me-0 reset-link text-light"><i
-                                class="fa-solid fa-bookmark fs-5" style="width: 25px"></i></a>
-                        {{--  <div class="icon-label">Избранное</div> --}}
+                <div class="d-flex align-items-end gap-3">
+                    <div class="position-relative d-flex align-items-center">
+                        <input type="text"
+                            class="search-input big-search rounded-2 border border-2 border-gray fw-bolder"
+                            placeholder="Поиск..." />
+                        <i class="fas fa-search search-icon"></i>
                     </div>
-                    <div class="icon-item text-center border-white border border-2 rounded-2 px-2 py-2">
-                        <a href="#" class="d-block me-0 reset-link text-light"><i class="fas fa-chart-simple fs-5"
-                                style="width: 25px"></i></a>
-                        {{--  <div class="icon-label">Сравнение</div> --}}
+                    <div class="icon-item text-center">
+                        <a href="#" class="d-block me-0 text-secondary text-decoration-none">
+                            <i class="fas fa-bookmark fs-6"></i>
+                            <div class="icon-label mt-0 text-light-emphasis fw-semibold">Избранное</div>
+                        </a>
+
                     </div>
-                    <div class="icon-item text-center border-white border border-2 rounded-2 px-2 py-2">
-                        <a href="#" class="d-block me-0 reset-link text-light"><i
-                                class="fas fa-shopping-cart fs-5" style="width: 25px"></i></a>
-                        {{--  <div class="icon-label">Корзина</div> --}}
+                    <div class="icon-item text-center border-white">
+                        <a href="#" class="d-block me-0 text-secondary text-decoration-none">
+                            <i class="fas fa-chart-simple fs-6"></i>
+                            <div class="icon-label mt-0 text-light-emphasis fw-semibold">Сравнение</div>
+                        </a>
+
+                    </div>
+                    <div class="icon-item text-center border-white">
+                        <a href="#" class="d-block me-0 text-secondary text-decoration-none">
+                            <i class="fas fa-shopping-cart fs-6"></i>
+                            <div class="icon-label mt-0 text-light-emphasis fw-semibold">Корзина</div>
+                        </a>
+
                     </div>
                 </div>
             </div>

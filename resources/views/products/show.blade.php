@@ -18,7 +18,7 @@
 
     <div class="container">
         <div class="d-flex align-items-center gap-3 mb-3">
-            <h1 class="page-title text-primary mb-0">{{ $product->name }}</h1>
+            <h1 class="text-primary mb-0">{{ $product->name }}</h1>
             @if ($product->is_new)
                 <span class="badge bg-warning text-dark">Новинка</span>
             @endif

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ProductTypeSeeder::class,
-            /* UserSeeder::class */
+            UserSeeder::class
         ]);
 
         $productType = ProductType::where('name', 'Кирпич')->first();
@@ -739,6 +739,69 @@ class DatabaseSeeder extends Seeder
                     'value_id' => $value->id,
                     'product_id' => $product->id,
                 ]);
+            }
+        }
+
+        // --- Генерация 5 типов товаров, по 3 категории в каждом, по 3 подкатегории в каждой, по 4 товара в каждой подкатегории ---
+        for ($t = 1; $t <= 5; $t++) {
+            $type = \App\Models\ProductType::firstOrCreate([
+                'name' => 'Тип ' . $t,
+            ], [
+                'slug' => Str::slug('Тип ' . $t),
+                'image' => 'product-types/img-' . ($t + 1) . '.png',
+            ]);
+            for ($c = 1; $c <= 3; $c++) {
+                $category = \App\Models\Category::firstOrCreate([
+                    'name' => 'Категория ' . $t . '-' . $c,
+                    'product_type_id' => $type->id,
+                ], [
+                    'slug' => Str::slug('Категория ' . $t . '-' . $c),
+                ]);
+                for ($s = 1; $s <= 3; $s++) {
+                    $subcategory = \App\Models\Subcategory::firstOrCreate([
+                        'name' => 'Подкатегория ' . $t . '-' . $c . '-' . $s,
+                        'category_id' => $category->id,
+                    ], [
+                        'slug' => Str::slug('Подкатегория ' . $t . '-' . $c . '-' . $s),
+                    ]);
+                    for ($p = 1; $p <= 4; $p++) {
+                        $product = \App\Models\Product::create([
+                            'name' => 'Товар ' . $t . '-' . $c . '-' . $s . '-' . $p,
+                            'slug' => Str::slug('Товар ' . $t . '-' . $c . '-' . $s . '-' . $p),
+                            'subcategory_id' => $subcategory->id,
+                            'price_per_piece' => rand(30, 60),
+                            'discount_price_per_piece' => rand(25, 29),
+                            'price_sqm' => rand(800, 1200),
+                            'discount_price_sqm' => rand(700, 900),
+                            'is_new' => (bool)rand(0, 1),
+                            'is_hit_of_sales' => (bool)rand(0, 1),
+                            'is_active' => true,
+                        ]);
+                        // Пример генерации атрибутов
+                        $attributes = [
+                            'Цвет' => ['красный', 'белый', 'серый', 'желтый'][($p + $s + $c + $t) % 4],
+                            'Материал' => ['керамика', 'бетон', 'глина'][($p + $s + $c) % 3],
+                            'Форма' => ['прямоугольный', 'квадратный'][($p + $s) % 2],
+                        ];
+                        foreach ($attributes as $attrName => $attrValue) {
+                            $attr = \App\Models\Attribute::firstOrCreate([
+                                'slug' => Str::slug($attrName),
+                            ], [
+                                'name' => $attrName,
+                            ]);
+                            $attr->categories()->syncWithoutDetaching([$category->id]);
+                            $value = \App\Models\Value::firstOrCreate([
+                                'attribute_id' => $attr->id,
+                                'value' => $attrValue,
+                            ]);
+                            \App\Models\AttributeValue::firstOrCreate([
+                                'product_id' => $product->id,
+                                'attribute_id' => $attr->id,
+                                'value_id' => $value->id,
+                            ]);
+                        }
+                    }
+                }
             }
         }
     }

@@ -58,7 +58,7 @@ class Product extends Model
 
     public function discountPercentage()
     {
-        return floor(100 - ($this->discount_price_per_piece / $this->price) * 100);
+        return floor(100 - ($this->discount_price_per_piece / $this->price_per_piece) * 100);
     }
 
     public function getFormattedPrice()

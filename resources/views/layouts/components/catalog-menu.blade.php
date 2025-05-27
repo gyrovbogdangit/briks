@@ -4,52 +4,47 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-0">
-        <ul class="list-group list-group-flush">
+        <div class="catalog-mega-menu d-flex">
+            <!-- Типы -->
+            <ul class="catalog-types list-group border-end">
+                @foreach ($types as $type)
+                    <li class="list-group-item px-3 py-2 border-0 catalog-type-item position-relative">
+                        <a href="#" class="text-decoration-none d-block w-100 catalog-type-link"
+                            data-type-id="{{ $type->id }}">{{ $type->name }}</a>
+                    </li>
+                @endforeach
+            </ul>
             @foreach ($types as $type)
-                <li class="list-group-item px-0">
-                    <a class="d-flex justify-content-between align-items-center text-decoration-none w-100"
-                        data-bs-toggle="collapse" href="#collapse-type-{{ $type->id }}" role="button"
-                        aria-expanded="false" aria-controls="collapse-type-{{ $type->id }}">
-                        <span>{{ $type->name }}</span>
-                        @if (!empty($type->categories))
-                            <span class="ms-2"><i class="bi bi-chevron-right"></i></span>
-                        @endif
-                    </a>
-                    @if (!empty($type->categories))
-                        <div class="collapse ms-3" id="collapse-type-{{ $type->id }}">
-                            <ul class="list-group list-group-flush">
-                                @foreach ($type->categories as $category)
-                                    <li class="list-group-item px-0">
-                                        <a class="d-flex justify-content-between align-items-center text-decoration-none w-100"
-                                            data-bs-toggle="collapse" href="#collapse-category-{{ $category->id }}"
-                                            role="button" aria-expanded="false"
-                                            aria-controls="collapse-category-{{ $category->id }}">
-                                            <span>{{ $category->name }}</span>
-                                            @if (!empty($category->subcategories))
-                                                <span class="ms-2"><i class="bi bi-chevron-right"></i></span>
-                                            @endif
-                                        </a>
-                                        @if (!empty($category->subcategories))
-                                            <div class="collapse ms-3" id="collapse-category-{{ $category->id }}">
-                                                <ul class="list-group list-group-flush">
-                                                    @foreach ($category->subcategories as $subcategory)
-                                                        <li class="list-group-item px-0">
-                                                            <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
-                                                                class="text-decoration-none">
-                                                                {{ $subcategory->name }}
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </li>
+                @if (!empty($type->categories))
+                    <div class="catalog-categories-menu d-none" data-categories-for="{{ $type->id }}">
+                        <ul class="catalog-categories list-group border-start border-end">
+                            @foreach ($type->categories as $category)
+                                <li class="list-group-item px-3 py-2 border-0 catalog-category-item">
+                                    <a href="#" class="text-decoration-none d-block w-100 catalog-category-link"
+                                        data-category-id="{{ $category->id }}">{{ $category->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        @foreach ($type->categories as $category)
+                            @if (!empty($category->subcategories))
+                                <div class="catalog-subcategories-menu d-none"
+                                    data-subcategories-for="{{ $category->id }}">
+                                    <ul class="catalog-subcategories list-group border-start">
+                                        @foreach ($category->subcategories as $subcategory)
+                                            <li class="list-group-item px-3 py-2 border-0">
+                                                <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
+                                                    class="text-decoration-none d-block w-100 catalog-subcategory-link">
+                                                    {{ $subcategory->name }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
             @endforeach
-        </ul>
+        </div>
     </div>
 </nav>
