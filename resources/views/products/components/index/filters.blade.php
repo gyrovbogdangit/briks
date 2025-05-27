@@ -1,4 +1,4 @@
-<div class="filters-sidebar col-md-3 bg-white rounded-3 p-3 fw-semibold shadow-sm" style="height: 100%">
+<div class="filters-sidebar bg-white rounded-3 p-3 fw-semibold shadow-sm" style="height: 100%">
     <div>
         <h2 class="fs-4 mb-3">Фильтры</h2>
         <div class="categories">

@@ -18,8 +18,19 @@
     </div>
 
     <div class="container d-flex">
-        @include('products.components.index.filters')
-
+        <div class="d-none d-md-block col-md-3">
+            @include('products.components.index.filters')
+        </div>
+        <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="filtersOffcanvas"
+            aria-labelledby="filtersOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="filtersOffcanvasLabel">Фильтры</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                @include('products.components.index.filters')
+            </div>
+        </div>
         <div class="col-md-9">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center flex-wrap p-3 rounded-3 shadow-sm bg-body">
@@ -40,6 +51,10 @@
                         <a href="#" class="text-secondary text-decoration-none fw-semibold">Сначала дорогие</a>
                     </div>
                 </div>
+                <button class="btn btn-primary d-block d-md-none my-3 w-100" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#filtersOffcanvas">
+                    <i class="fas fa-filter me-2"></i>Фильтры
+                </button>
             </div>
 
             <div class="container">
