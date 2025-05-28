@@ -16,47 +16,41 @@
             $hasSqm = isset($product->price_sqm);
             $hasSqmDiscount = isset($product->discount_price_sqm);
         @endphp
-        @if ($hasPiece || $hasSqm)
-            @if ($hasPiece)
+
+        <div class="mb-2">
+            @if ($hasPiece || $hasSqm)
+                @if ($hasPiece)
+                    <div class="price-wrapper">
+                        @if ($hasPieceDiscount)
+                            <span class="old-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
+                                ₽/шт</span>
+                            <span class="new-price">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}
+                                ₽/шт</span>
+                        @else
+                            <span class="new-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
+                                ₽/шт</span>
+                        @endif
+                    </div>
+                @endif
+                @if ($hasSqm)
+                    <div class="price-wrapper">
+                        @if ($hasSqmDiscount)
+                            <span class="old-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                            <span class="new-price">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
+                                ₽/м²</span>
+                        @else
+                            <span class="new-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                        @endif
+                    </div>
+                @endif
+            @else
                 <div class="price-wrapper">
-                    @if ($hasPieceDiscount)
-                        <span class="old-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт</span>
-                        <span class="new-price">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}
-                            ₽/шт</span>
-                    @else
-                        <span class="new-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт</span>
-                    @endif
+                    <span class="new-price">По запросу</span>
                 </div>
             @endif
-            @if ($hasSqm)
-                <div class="price-wrapper">
-                    @if ($hasSqmDiscount)
-                        <span class="old-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
-                        <span class="new-price">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
-                            ₽/м²</span>
-                    @else
-                        <span class="new-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
-                    @endif
-                </div>
-            @endif
-        @else
-            <div class="price-wrapper">
-                <span class="new-price">По запросу</span>
-            </div>
-        @endif
+        </div>
 
-        @if ($product->is_new || (isset($product->price) && isset($product->discount_price)))
-            <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded-2 my-2 border">
-                @if ($product->is_new)
-                    <div class="text-secondary"><i class="fa-solid fa-plus"></i> Новинка</div>
-                @endif
-                @if (isset($product->price_per_piece) && isset($product->discount_price_per_piece))
-                    <div class="badge text-bg-danger">-{{ $product->discountPercentage() }}%</div>
-                @endif
-            </div>
-        @endif
-
-        <div class="action-icons bg-light rounded-2 p-2 border">
+        <div class="action-icons bg-light rounded-2 p-2 border mt-auto">
             @isset($product->price_per_piece)
                 {{-- @if ($quantity)
                     <a href="{{ route('cart') }}">
@@ -84,6 +78,21 @@
                 <i class="fas fa-heart icon favorite" title="Добавить в избранное" wire:click="addToFavorites"></i>
             @endif
         </div>
+
+        @if ($product->is_new || (isset($product->price_per_piece) && isset($product->discount_price_per_piece)))
+            <div class="product-labels">
+                @if ($product->is_new)
+                    <div class="badge text-bg-secondary"><i class="fa-solid fa-plus"></i> Новинка</div>
+                @endif
+                @if ($product->is_hit_of_sales)
+                    <div class="badge text-bg-danger">Хит продаж</div>
+                @endif
+                @if (isset($product->price_per_piece) && isset($product->discount_price_per_piece))
+                    <div class="badge text-bg-danger">-{{ $product->discountPercentage() }}%</div>
+                @endif
+            </div>
+        @endif
+
     </div>
 
     {{--  @include('products.components.modal-request-price') --}}

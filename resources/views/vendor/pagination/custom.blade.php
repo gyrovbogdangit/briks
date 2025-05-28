@@ -4,11 +4,13 @@
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Предыдущая</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i
+                            class="fa-solid fa-arrow-left"></i></a>
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link text-primary" href="{{ $paginator->previousPageUrl() }}">Предыдущая</a>
+                    <a class="page-link text-primary" href="{{ $paginator->previousPageUrl() }}"><i
+                            class="fa-solid fa-arrow-left"></i></a>
                 </li>
             @endif
 
@@ -23,9 +25,11 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
+                            <li class="page-item active" aria-current="page"><span
+                                    class="page-link">{{ $page }}</span></li>
                         @else
-                            <li class="page-item"><a class="page-link text-primary" href="{{ $url }}">{{ $page }}</a></li>
+                            <li class="page-item"><a class="page-link text-primary"
+                                    href="{{ $url }}">{{ $page }}</a></li>
                         @endif
                     @endforeach
                 @endif
@@ -34,11 +38,13 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item">
-                    <a class="page-link text-primary" href="{{ $paginator->nextPageUrl() }}">Следующая</a>
+                    <a class="page-link text-primary" href="{{ $paginator->nextPageUrl() }}"><i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </li>
             @else
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Следующая</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </li>
             @endif
         </ul>

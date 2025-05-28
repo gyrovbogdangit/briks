@@ -17,24 +17,12 @@
     </div>
 
     <div class="container">
-        <div class="d-flex align-items-center gap-3 mb-3">
-            <h1 class="text-primary mb-0">{{ $product->name }}</h1>
-            @if ($product->is_new)
-                <span class="badge bg-warning text-dark">Новинка</span>
-            @endif
-            @if ($product->is_hit_of_sales)
-                <span class="badge bg-danger">Хит продаж</span>
-            @endif
-        </div>
-    </div>
-
-    <div class="container">
         <div class="row g-4">
             <div class="col-md-6">
                 @include('products.components.show.slider')
             </div>
             <div class="col-md-6">
-                @include('products.components.show.good-info')
+                @include('products.components.show.short-info')
             </div>
         </div>
 

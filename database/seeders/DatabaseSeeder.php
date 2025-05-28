@@ -750,7 +750,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => Str::slug('Тип ' . $t),
                 'image' => 'product-types/img-' . ($t + 1) . '.png',
             ]);
-            for ($c = 1; $c <= 3; $c++) {
+            for ($c = 1; $c <= 10; $c++) {
                 $category = \App\Models\Category::firstOrCreate([
                     'name' => 'Категория ' . $t . '-' . $c,
                     'product_type_id' => $type->id,

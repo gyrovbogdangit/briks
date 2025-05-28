@@ -61,12 +61,22 @@ class Product extends Model
         return floor(100 - ($this->discount_price_per_piece / $this->price_per_piece) * 100);
     }
 
-    public function getFormattedPrice()
+    public function getFormattedPricePerPiece()
     {
-        return static::formatPrice($this->price);
+        return static::formatPrice($this->price_per_piece);
     }
 
-    public function getFormattedDiscountPrice()
+    public function getFormattedPriceSqm()
+    {
+        return static::formatPrice($this->price_per_sqm);
+    }
+
+    public function getFormattedDiscountPricePerPiece()
+    {
+        return static::formatPrice($this->discount_price_per_piece);
+    }
+
+    public function getFormattedDiscountPriceSqm()
     {
         return static::formatPrice($this->discount_price_per_piece);
     }
