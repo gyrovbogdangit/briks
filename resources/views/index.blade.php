@@ -5,7 +5,7 @@
 
     <section class="py-5 bg-light">
         @include('components.products-slider', [
-            'title' => 'Популярные товары',
+            'title' => 'Хит продаж',
             'products' => $hotProducts,
             'key' => 'hotProducts',
         ])
@@ -15,7 +15,7 @@
         @include('components.products-slider', [
             'title' => 'Популярные товары',
             'products' => $popularProducts,
-            'key' => 'discountProducts',
+            'key' => 'popularProducts',
         ])
     </section>
 
