@@ -2,10 +2,9 @@
     <div class="container d-flex justify-content-between align-items-center fw-bolder">
         <div class="d-flex">
             <div class="me-3"><i class="fas fa-map-marker-alt"></i> Ваш город: Москва</div>
-            <a href="#">Акции</a>
-            <a href="#">Доставка</a>
-            <a href="#">Оплата</a>
-            <a href="#">Контакты</a>
+            @foreach ($pages as $page)
+                <a href="{{ route('page', ['page' => $page]) }}">{{ $page->title }}</a>
+            @endforeach
         </div>
         <div>
             <span class="me-3"><i class="fas fa-phone me-1"></i> +7 (495) 123-45-67</span>

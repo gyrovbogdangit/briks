@@ -16,10 +16,11 @@
     @livewireStyles
 </head>
 
-<body class="bg-body-tertiary min-vh-100">
+<body class="bg-body-tertiary min-vh-100 d-flex flex-column">
     @include('layouts.components.header')
-    @yield('content')
-
+    <main class="flex-grow-1">
+        @yield('content')
+    </main>
     @include('layouts.components.footer')
 
     @include('layouts.components.catalog-menu')

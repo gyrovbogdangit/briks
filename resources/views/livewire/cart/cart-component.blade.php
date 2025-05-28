@@ -101,7 +101,7 @@
             </div>
         </div>
     @else
-        <div class="alert alert-info text-center py-5 rounded-3 shadow-sm">
+        <div class="rounded-3 bg-white shadow-sm  text-center py-5 rounded-3 shadow-sm">
             <p class="mb-2 fs-4">Ваша корзина пока что пуста!</p>
             <p class="mb-0">Вы можете добавить в неё новые товары из <a href="{{-- {{ route('catalog') }} --}}"
                     class="fw-bold text-primary">каталога</a>!</p>
