@@ -1,4 +1,4 @@
-<div class="bg-white rounded-3 shadow-sm p-4 border-0">
+<div class="bg-white rounded-3 shadow-sm p-4 border-0 h-100">
     <div class="container">
         <div class="d-flex align-items-center gap-3 mb-3">
             <h1 class="text-primary mb-0">{{ $product->name }}</h1>
@@ -7,10 +7,10 @@
 
     <div class="d-flex justify-content-between flex-row-reverse gap-2">
         @if ($product->is_new)
-            <span class="text-bg-secondary p-1 rounded-3 fw-semibold">Новинка</span>
+            <span class="text-bg-secondary py-1 px-2 rounded-3 fw-semibold">Новинка</span>
         @endif
         @if ($product->is_hit_of_sales)
-            <span class="text-bg-danger p-1 rounded-3 fw-semibold">Хит продаж</span>
+            <span class="text-bg-danger py-1 px-2 rounded-3 fw-semibold">Хит продаж</span>
         @endif
     </div>
 

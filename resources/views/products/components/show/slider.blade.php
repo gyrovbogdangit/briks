@@ -1,4 +1,4 @@
-<div class="bg-white rounded shadow-sm p-3">
+<div class="bg-white rounded-3 shadow-sm p-3 h-100">
     <div class="fancybox-gallery-main mb-3">
         @if (isset($product->images) && count($product->images))
             @foreach ($product->images as $i => $image)

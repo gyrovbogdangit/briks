@@ -1,14 +1,26 @@
-<div class="card shadow-sm mb-3">
-    <div class="card-body">
+<div class="shadow-sm mb-3 bg-light rounded-3 p-3">
+    <div>
         @if (isset($product->price_per_piece) || isset($product->price_sqm))
             <div class="mb-3">
-                <form class="d-flex align-items-center gap-2" wire:submit="addToCart">
+                <form class="d-flex align-items-center gap-2 flex-wrap" wire:submit="addToCart">
                     @isset($quantity)
-                        <a class="btn btn-success flex-grow-1" href="{{ route('cart') }}">
+                        <a class="btn btn-success flex-grow-1" href="{{-- {{ route('cart') }} --}}">
                             В корзине
                         </a>
                     @else
-                        <input type="number" class="form-control w-auto" placeholder="1 шт" wire:model="quantity">
+                        <input type="number" class="form-control w-auto" placeholder="1" wire:model="quantity">
+                        <div class="btn-group mb-2 mb-md-0" role="group" aria-label="Единица измерения">
+                            <input type="radio" class="btn-check" name="unit" id="unit_piece{{ $product->id }}"
+                                value="piece" autocomplete="off" wire:model="unit"
+                                @if (isset($product->price_per_piece)) checked @endif
+                                @if (!isset($product->price_per_piece)) disabled @endif>
+                            <label class="btn btn-outline-primary" for="unit_piece{{ $product->id }}">шт</label>
+                            <input type="radio" class="btn-check" name="unit" id="unit_sqm{{ $product->id }}"
+                                value="sqm" autocomplete="off" wire:model="unit"
+                                @if (isset($product->price_sqm) && !isset($product->price_per_piece)) checked @endif
+                                @if (!isset($product->price_sqm)) disabled @endif>
+                            <label class="btn btn-outline-primary" for="unit_sqm{{ $product->id }}">м²</label>
+                        </div>
                         <button class="btn btn-primary flex-grow-1" type="button" data-id="{{ $product->id }}"
                             wire:click="addToCart">
                             В корзину
@@ -46,7 +58,7 @@
                 </button>
             @endif
             @if ($inComparison)
-                <a class="btn btn-outline-primary flex-fill" href="{{ route('comparison') }}">
+                <a class="btn btn-outline-primary flex-fill" href="{{-- {{ route('comparison') }} --}}">
                     <i class="fas fa-balance-scale me-1"></i> В сравнении
                 </a>
             @else
