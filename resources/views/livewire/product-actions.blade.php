@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <form class="d-flex align-items-center gap-2 flex-wrap" wire:submit="addToCart">
                     @isset($quantity)
-                        <a class="btn btn-success flex-grow-1" href="{{-- {{ route('cart') }} --}}">
+                        <a class="btn btn-success flex-grow-1" href="{{ route('cart') }}">
                             В корзине
                         </a>
                     @else
@@ -49,7 +49,7 @@
         @endif
         <div class="d-flex gap-2 mt-3">
             @if ($inFavorites)
-                <a class="btn btn-outline-danger flex-fill" href="{{-- {{ route('favorites') }} --}}">
+                <a class="btn btn-outline-danger flex-fill" href="{{ route('favorites') }}">
                     <i class="fas fa-heart me-1"></i> В избранном
                 </a>
             @else
@@ -58,7 +58,7 @@
                 </button>
             @endif
             @if ($inComparison)
-                <a class="btn btn-outline-primary flex-fill" href="{{-- {{ route('comparison') }} --}}">
+                <a class="btn btn-outline-primary flex-fill" href="{{ route('comparison') }}">
                     <i class="fas fa-balance-scale me-1"></i> В сравнении
                 </a>
             @else

@@ -14,27 +14,32 @@ class CartService
         //
     }
 
-    public static function add(int $productId, int $quantity)
+    public static function add(int $productId, int $quantity, string $unit = 'piece')
     {
         $sessionCart = session('cart', []);
-
-        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId) {
-            return $value['product_id'] == $productId;
+        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId, $unit) {
+            return $value['product_id'] == $productId && $value['unit'] == $unit;
         });
-
         if (is_null($recordIndex)) {
-            session()->push('cart', ['product_id' => $productId, 'quantity' => $quantity]);
+            // Добавляем в конец, если такого товара с этим unit нет
+            session()->put('cart', array_merge($sessionCart, [[
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'unit' => $unit
+            ]]));
             return true;
         } else {
-            return false;
+            $sessionCart[$recordIndex]['quantity'] += $quantity;
+            session(['cart' => $sessionCart]);
+            return true;
         }
     }
 
-    public static function update(int $productId, int $quantity)
+    public static function update(int $productId, int $quantity, string $unit = 'piece')
     {
         $sessionCart = session('cart', []);
 
-        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId) {
+        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId, $unit) {
             return $value['product_id'] == $productId;
         });
 
@@ -46,17 +51,17 @@ class CartService
         }
     }
 
-    public static function delete(int $productId)
+    public static function delete(int $productId, string $unit)
     {
         $sessionCart = session('cart', []);
 
-        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId) {
+        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId, $unit) {
             return $value['product_id'] == $productId;
         });
-
         if (!is_null($recordIndex)) {
             session()->pull("cart.$recordIndex");
         }
+
         return true;
     }
 
@@ -74,15 +79,17 @@ class CartService
             ->with('category.productType', 'subcategory')
             ->get();
 
-        foreach ($products as $product) {
-            $product->quantity = current(array_filter(
-                $sessionCart,
-                function ($el) use ($product) {
-                    return $el['product_id'] == $product->id;
-                }
-            ))['quantity'];
+        $result = collect();
+        foreach ($sessionCart as $item) {
+            $product = $products->firstWhere('id', $item['product_id']);
+            if ($product) {
+                $clone = clone $product;
+                $clone->quantity = $item['quantity'];
+                $clone->unit = $item['unit'] ?? 'piece';
+                $result->push($clone);
+            }
         }
-        return $products;
+        return $result;
     }
 
     public static function getQuantity($productId)
@@ -113,6 +120,18 @@ class CartService
             return 0;
         } else {
             return array_sum(array_column($sessionCart, 'quantity'));
+        }
+    }
+
+    public static function changeUnit(int $productId, string $newUnit)
+    {
+        $sessionCart = session('cart', []);
+        $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId) {
+            return $value['product_id'] == $productId;
+        });
+        if (!is_null($recordIndex)) {
+            $sessionCart[$recordIndex]['unit'] = $newUnit;
+            session(['cart' => $sessionCart]);
         }
     }
 }

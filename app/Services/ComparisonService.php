@@ -60,4 +60,26 @@ class ComparisonService
         session()->pull('comparison.' . $productIndex);
         return true;
     }
+
+    public static function getCategories()
+    {
+        $sessionComparison = session('comparison');
+        if (empty($sessionComparison)) {
+            return collect();
+        }
+        // Получаем все категории, в которых есть сравниваемые товары
+        $products = \App\Models\Product::whereIn('id', $sessionComparison)
+            ->with(['category', 'attributeValues.attribute', 'attributeValues.value', 'subcategory'])
+            ->get();
+        $categories = $products->groupBy(function ($product) {
+            return $product->category->id;
+        })->map(function ($products) {
+            $category = $products->first()->category;
+            $category->products = $products;
+            // Получаем все уникальные атрибуты этой категории
+            $category->attributes = $category->attributes()->get();
+            return $category;
+        });
+        return $categories->values();
+    }
 }

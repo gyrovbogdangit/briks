@@ -1,16 +1,17 @@
 <div>
     @if (count($products))
-        <div class="wrap-catalog">
-            <div class="catalog">
-                @foreach ($products as $product)
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            @foreach ($products as $product)
+                <div class="col">
                     <livewire:product-item :product="$product" />
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
     @else
-        <div class="favorites-empty">
-            <p>Избранные товары отсутствуют!</p>
-            <p>Вы можете добавить в неё новые товары из <a href="{{ route('catalog') }}">каталога</a>!</p>
+        <div class="alert alert-info text-center py-5 rounded-3 shadow-sm">
+            <p class="mb-2 fs-4">Избранные товары отсутствуют!</p>
+            <p class="mb-0">Вы можете добавить в неё новые товары из <a href="{{ route('catalog') }}"
+                    class="fw-bold text-primary">каталога</a>!</p>
         </div>
     @endif
 </div>

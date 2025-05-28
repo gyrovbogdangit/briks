@@ -15,36 +15,58 @@ class CartComponent extends Component
     {
         $this->products = CartService::get();
         $this->totalSum = $this->products
-            ->sum(fn($product) => ($product->discount_price ?? $product->price) * $product->quantity);
-        $this->totalQuantity = CartService::getTotalQuantity();
+            ->sum(function ($product) {
+                if ($product->unit === 'sqm') {
+                    $price = $product->discount_price_sqm ?? $product->price_sqm;
+                } else {
+                    $price = $product->discount_price_per_piece ?? $product->price_per_piece;
+                }
+                return $price * $product->quantity;
+            });
+        $this->totalQuantity = $this->products->sum('quantity');
         $this->dispatch('cartUpdated');
     }
 
-    public function increment($productId)
+    public function increment($productId, $unit = 'piece')
     {
-        $quantity = CartService::getQuantity($productId);
+        $quantity = CartService::getQuantity($productId, $unit);
         if ($quantity >= 100) {
             return;
         }
-        CartService::update($productId, $quantity + 1);
+        CartService::update($productId, $quantity + 1, $unit);
         $this->mount();
     }
 
-    public function decrement($productId)
+    public function decrement($productId, $unit = 'piece')
     {
-        $product = $this->products->firstWhere('id', $productId);
-        $quantity = CartService::getQuantity($productId);
+        $product = $this->products->first(function ($p) use ($productId, $unit) {
+            return $p->id == $productId;
+        });
+
+        if (!$product) {
+            return;
+        }
+
+        $quantity = CartService::getQuantity($productId, $unit);
         if ($quantity <= 1) {
-            CartService::delete($productId, $product->quantity);
+            CartService::delete($productId, $unit);
         } else {
-            CartService::update($productId, $quantity - 1);
+            CartService::update($productId, $quantity - 1, $unit);
         }
         $this->mount();
     }
 
-    public function delete($productId)
+    public function delete($productId, $unit = 'piece')
     {
-        CartService::delete($productId, 0);
+        CartService::delete($productId, $unit);
+        $this->mount();
+    }
+
+    public function changeUnit($productId, $newUnit)
+    {
+        $quantity = CartService::getQuantity($productId);
+        if ($quantity < 1) $quantity = 1;
+        CartService::changeUnit($productId, $newUnit, $quantity);
         $this->mount();
     }
 
