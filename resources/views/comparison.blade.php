@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('css')
-    @vite('resources/css/pages/comparison.css')
-@endsection
-
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
