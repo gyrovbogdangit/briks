@@ -13,6 +13,8 @@ class HomeController extends Controller
     public function index()
     {
         $hotProducts = Product::where('is_hit_of_sales', true)->limit(20)->get();
+        $popularProducts = Product::orderBy('views', 'desc')->limit(20)->get();
+        $newProducts = Product::where('is_new', true)->limit(20)->get();
 
         $seo = new Seo(
             'Briks — Кирпич, кровля, тротуарная плитка и строительные материалы с доставкой',
@@ -24,7 +26,12 @@ class HomeController extends Controller
             'website',
         );
 
-        return view('index')->with(['hotProducts' => $hotProducts, 'seo' => $seo]);
+        return view('index')->with([
+            'hotProducts' => $hotProducts,
+            'popularProducts' => $popularProducts,
+            'newProducts' => $newProducts,
+            'seo' => $seo
+        ]);
     }
 
     public function catalog()

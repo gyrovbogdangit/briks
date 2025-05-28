@@ -1,7 +1,7 @@
 <div class="bg-white rounded-3 shadow-sm p-4 border-0 h-100">
     <div class="container">
         <div class="d-flex align-items-center gap-3 mb-3">
-            <h1 class="text-primary mb-0">{{ $product->name }}</h1>
+            <h1 class="text-primary mb-0 fs-2">{{ $product->name }}</h1>
         </div>
     </div>
 

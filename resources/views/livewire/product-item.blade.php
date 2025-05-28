@@ -1,13 +1,16 @@
-<div class="product-card border rounded-3 bg-white shadow-sm">
+<div class="product-card border rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
+    style="width:220px;min-height:390px">
     <a
         href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
         <img src="{{ asset(isset($product->images[0]) ? "storage/{$product->images[0]}" : 'img/content/product-1.jpg') }}"
-            alt="{{ $product->name }}" class="rounded-top-2" />
+            alt="{{ $product->name }}" class="rounded-top-2 w-100" style="height:160px; object-fit:cover;" />
     </a>
 
-    <div class="card-body p-3">
-        <h5 class="card-title text-primary fs-6 fw-bold"><a class="text-decoration-none"
-                href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">{{ $product->name }}</a>
+    <div class="card-body p-3 d-flex flex-column h-100">
+        <h5 class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;"><a class="text-decoration-none"
+                href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+                {{ Illuminate\Support\Str::limit($product->name, 70) }}
+            </a>
         </h5>
 
         @php
@@ -17,7 +20,7 @@
             $hasSqmDiscount = isset($product->discount_price_sqm);
         @endphp
 
-        <div class="mb-2">
+        <div class="mt-auto">
             @if ($hasPiece || $hasSqm)
                 @if ($hasPiece)
                     <div class="price-wrapper">
@@ -50,30 +53,29 @@
             @endif
         </div>
 
-        <div class="action-icons bg-light rounded-2 p-2 border mt-auto">
+        <div class="action-icons bg-light rounded-2 p-2 border mt-2">
             @isset($product->price_per_piece)
-                {{-- @if ($quantity)
-                    <a href="{{ route('cart') }}">
-                        <i class="fas fa-cart-plus icon active" title="В корзине"></i>
-                    </a>
-                @else --}}
-                <i class="fas fa-cart-plus icon" title="В корзину" wire:click="addToCart"></i>
-                {{--   @endif --}}
+                @if ($quantity)
+                    <a class="fas fa-cart-plus icon active text-decoration-none" href="{{ route('cart') }}"
+                        title="В корзине"></a>
+                @else
+                    <i class="fas fa-cart-plus icon" title="В корзину" wire:click="addToCart"></i>
+                @endif
             @else
                 <i class="fas fa-cart-plus icon" title="Запросить стоимость" data-fancybox
                     data-src="#order{{ $product->id }}"></i>
             @endisset
 
             @if ($inComparison)
-                <i class="fas fa-chart-simple icon active" title="Убрать из сравнения"
-                    wire:click="deleteFromComparison"></i>
+                <a class="fas fa-chart-simple icon active text-decoration-none text-warning" title="Убрать из сравнения"
+                    wire:click="deleteFromComparison"></a>
             @else
                 <i class="fas fa-chart-simple icon" title="Добавить в сравнение" wire:click="addToComparison"></i>
             @endif
 
             @if ($inFavorites)
-                <i class="fas fa-heart icon favorite active" title="Убрать из избранного"
-                    wire:click="deleteFromFavorites"></i>
+                <a class="fas fa-heart icon favorite active text-decoration-none text-danger"
+                    title="Убрать из избранного" wire:click="deleteFromFavorites"></a>
             @else
                 <i class="fas fa-heart icon favorite" title="Добавить в избранное" wire:click="addToFavorites"></i>
             @endif

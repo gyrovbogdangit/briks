@@ -68,7 +68,7 @@
         </div>
     </div>
 </nav>
-<!-- Offcanvas для мобильных: меню, каталог, иконки, контакты -->
+
 <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="mobileHeaderMenu"
     aria-labelledby="mobileHeaderMenuLabel">
     <div class="offcanvas-header">
@@ -82,32 +82,32 @@
         </a>
         <div class="mb-3">
             <div class="icon-item text-center mb-2">
-                <a href="#" class="d-block text-secondary text-decoration-none">
+                <a href="{{ route('favorites') }}" class="d-block text-secondary text-decoration-none">
                     <i class="fas fa-bookmark fs-6"></i>
                     <div class="icon-label mt-0 text-light-emphasis fw-semibold">Избранное</div>
                 </a>
             </div>
             <div class="icon-item text-center mb-2">
-                <a href="#" class="d-block text-secondary text-decoration-none">
+                <a href="{{ route('comparison') }}" class="d-block text-secondary text-decoration-none">
                     <i class="fas fa-chart-simple fs-6"></i>
                     <div class="icon-label mt-0 text-light-emphasis fw-semibold">Сравнение</div>
                 </a>
             </div>
             <div class="icon-item text-center mb-2">
-                <a href="#" class="d-block text-secondary text-decoration-none">
+                <a href="{{ route('cart') }}" class="d-block text-secondary text-decoration-none">
                     <i class="fas fa-shopping-cart fs-6"></i>
                     <div class="icon-label mt-0 text-light-emphasis fw-semibold">Корзина</div>
                 </a>
+            </div>
+            <div class="mt-3">
+                @foreach ($pages as $page)
+                    <a href="{{ route('page', ['page' => $page]) }}"
+                        class="d-block bg-light mb-2 text-decoration-none text-center text-secondary py-1">{{ $page->title }}</a>
+                @endforeach
             </div>
         </div>
         <hr />
         <div class="mb-2"><i class="fas fa-phone me-1"></i> +7 (495) 123-45-67</div>
         <div><i class="fas fa-shop me-1"></i> ул. 9 Января, 195, Воронеж</div>
-        <div class="mt-3">
-            <a href="#" class="d-block mb-2">Акции</a>
-            <a href="#" class="d-block mb-2">Доставка</a>
-            <a href="#" class="d-block mb-2">Оплата</a>
-            <a href="#" class="d-block mb-2">Контакты</a>
-        </div>
     </div>
 </div>
