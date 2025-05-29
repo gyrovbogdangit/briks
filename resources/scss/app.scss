@@ -348,3 +348,22 @@ footer a:hover {
     }
   }
 }
+
+/* Custom Scrollbar for Thumbnails */
+.fancy-thumb-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f8fafc;
+}
+.fancy-thumb-scroll::-webkit-scrollbar {
+  height: 7px;
+  background: #f8fafc;
+  border-radius: 6px;
+}
+.fancy-thumb-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.fancy-thumb-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b0b7c3;
+}

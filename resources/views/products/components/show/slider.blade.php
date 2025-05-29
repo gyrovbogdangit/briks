@@ -15,9 +15,11 @@
         @endif
     </div>
     @if (isset($product->images) && count($product->images) > 1)
-        <div class="d-flex gap-2 justify-content-center mt-2">
+        <div class="d-flex gap-2 justify-content-center mt-2 flex-nowrap overflow-auto pb-2 fancy-thumb-scroll"
+            style="scroll-snap-type: x mandatory;">
             @foreach ($product->images as $i => $image)
-                <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="{{ $product->name }}">
+                <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="{{ $product->name }}"
+                    style="scroll-snap-align: start; min-width: 60px; max-width: 60px;">
                     <img src="{{ asset('storage/' . $image) }}" class="rounded border"
                         style="width: 60px; height: 60px; object-fit: cover; cursor:pointer;" alt="">
                 </a>

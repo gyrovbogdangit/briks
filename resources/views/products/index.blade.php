@@ -26,7 +26,9 @@
     </div>
 
     <div class="container d-flex mb-5">
-        @include('products.components.index.filters')
+        <div class="d-none d-md-block col-md-3">
+            @include('products.components.index.filters')
+        </div>
 
         <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="filtersOffcanvas"
             aria-labelledby="filtersOffcanvasLabel">
@@ -35,7 +37,9 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                @include('products.components.index.filters')
+                <div class="">
+                    @include('products.components.index.filters')
+                </div>
             </div>
         </div>
 
