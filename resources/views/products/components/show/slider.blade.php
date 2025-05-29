@@ -15,8 +15,8 @@
         @endif
     </div>
     @if (isset($product->images) && count($product->images) > 1)
-        <div class="d-flex gap-2 justify-content-center mt-2 flex-nowrap overflow-auto pb-2 fancy-thumb-scroll"
-            style="scroll-snap-type: x mandatory;">
+        <div class="d-flex gap-2 mt-2 flex-nowrap overflow-auto pb-2 fancy-thumb-scroll w-100"
+            style="scroll-snap-type: x mandatory; max-width: 100%;">
             @foreach ($product->images as $i => $image)
                 <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="{{ $product->name }}"
                     style="scroll-snap-align: start; min-width: 60px; max-width: 60px;">
