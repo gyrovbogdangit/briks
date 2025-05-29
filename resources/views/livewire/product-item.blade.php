@@ -1,5 +1,5 @@
 <div class="product-card border rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
-    style="width:220px;min-height:390px">
+    style="width:220px;min-height:330px">
     <a
         href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
         <img src="{{ asset(isset($product->images[0]) ? "storage/{$product->images[0]}" : 'img/content/product-1.jpg') }}"
@@ -9,7 +9,7 @@
     <div class="card-body p-3 d-flex flex-column h-100">
         <h5 class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;"><a class="text-decoration-none"
                 href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
-                {{ Illuminate\Support\Str::limit($product->name, 70) }}
+                {{ Illuminate\Support\Str::limit($product->name, 60) }}
             </a>
         </h5>
 

@@ -26,9 +26,9 @@
                                             class="text-muted text-decoration-line-through">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
                                         <span
                                             class="badge bg-danger ms-2">-{{ floor(100 - ($product->discount_price_sqm / $product->price_sqm) * 100) }}%</span>
-                                    @else
+                                    @elseif (isset($product->price_sqm))
                                         <span
-                                            class="fs-5 fw-bold text-primary">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
+                                            class="fs-5 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
                                     @endif
                                 </div>
                                 <div class="d-flex align-items-center gap-2 justify-content-end">
@@ -39,9 +39,9 @@
                                             class="text-muted text-decoration-line-through">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
                                         <span
                                             class="badge bg-danger ms-2">-{{ floor(100 - ($product->discount_price_per_piece / $product->price_per_piece) * 100) }}%</span>
-                                    @else
+                                    @elseif (isset($product->price_per_piece))
                                         <span
-                                            class="fs-5 fw-bold text-primary">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
+                                            class="fs-5 fw-bold">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
                                     @endif
                                 </div>
                             </div>
@@ -62,8 +62,12 @@
                             <select class="form-select form-select-sm w-auto ms-2 py-1 px-2 rounded-3 border-secondary"
                                 style="min-width: 60px; max-width: 90px;height:34px;"
                                 wire:change="changeUnit({{ $product->id }}, $event.target.value)">
-                                <option value="piece" @if ($product->unit === 'piece') selected @endif>шт</option>
-                                <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²</option>
+                                @if (isset($product->price_per_piece) || isset($product->discount_price_per_piece))
+                                    <option value="piece" @if ($product->unit === 'piece') selected @endif>шт</option>
+                                @endif
+                                @if (isset($product->price_sqm) || isset($product->discount_price_sqm))
+                                    <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²</option>
+                                @endif
                             </select>
                             <button class="border border-secondary rounded-3 py-1 px-2 btn-sm ms-2 bg-light"
                                 wire:click="delete({{ $product->id }}, '{{ $product->unit }}')">

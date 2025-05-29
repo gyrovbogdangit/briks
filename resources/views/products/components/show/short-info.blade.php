@@ -36,8 +36,7 @@
                             <span
                                 class="badge bg-danger align-middle ms-2">-{{ floor(100 - ($product->discount_price_per_piece / $product->price_per_piece) * 100) }}%</span>
                         @else
-                            <span
-                                class="fs-3 fw-bold text-primary">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
+                            <span class="fs-3 fw-bold">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
                                 ₽/шт</span>
                         @endif
                     </div>
@@ -54,8 +53,7 @@
                             <span
                                 class="badge bg-danger align-middle ms-2">-{{ floor(100 - ($product->discount_price_sqm / $product->price_sqm) * 100) }}%</span>
                         @else
-                            <span
-                                class="fs-5 fw-bold text-primary">{{ number_format($product->price_sqm, 0, ',', ' ') }}
+                            <span class="fs-5 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }}
                                 ₽/м²</span>
                         @endif
                     </div>

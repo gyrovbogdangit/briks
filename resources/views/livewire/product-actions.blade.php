@@ -8,17 +8,17 @@
                             В корзине
                         </a>
                     @else
-                        <input type="number" class="form-control w-auto" placeholder="1" wire:model="quantity">
+                        <input type="number" class="form-control w-auto" placeholder="1" min="1" wire:model="quantity">
                         <div class="btn-group mb-2 mb-md-0" role="group" aria-label="Единица измерения">
                             <input type="radio" class="btn-check" name="unit" id="unit_piece{{ $product->id }}"
                                 value="piece" autocomplete="off" wire:model="unit"
-                                @if (isset($product->price_per_piece)) checked @endif
-                                @if (!isset($product->price_per_piece)) disabled @endif>
+                                @if (!isset($product->price_per_piece)) disabled @endif
+                                @if (isset($product->price_per_piece) && (!isset($product->price_sqm) || $unit === 'piece' || !isset($unit))) checked @endif>
                             <label class="btn btn-outline-primary" for="unit_piece{{ $product->id }}">шт</label>
                             <input type="radio" class="btn-check" name="unit" id="unit_sqm{{ $product->id }}"
                                 value="sqm" autocomplete="off" wire:model="unit"
-                                @if (isset($product->price_sqm) && !isset($product->price_per_piece)) checked @endif
-                                @if (!isset($product->price_sqm)) disabled @endif>
+                                @if (!isset($product->price_sqm)) disabled @endif
+                                @if (isset($product->price_sqm) && (!isset($product->price_per_piece) || $unit === 'sqm')) checked @endif>
                             <label class="btn btn-outline-primary" for="unit_sqm{{ $product->id }}">м²</label>
                         </div>
                         <button class="btn btn-primary flex-grow-1" type="button" data-id="{{ $product->id }}"

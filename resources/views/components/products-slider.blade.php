@@ -47,6 +47,6 @@
             @endif
         </div>
     @else
-        <div class="text-muted">Нет популярных товаров</div>
+        <div class="text-muted">Нет товаров в категории</div>
     @endif
 </div>
