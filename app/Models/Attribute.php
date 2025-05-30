@@ -38,8 +38,11 @@ class Attribute extends Model
 
     public static function scopeWithUniqueValues($query, Filter $filter)
     {
-        $attributes = $query->with(['values' => function ($query) {
+        $attributes = $query->with(['values' => function ($query) use ($filter) {
             $query->orderBy('value')->distinct();
+            $query->whereHas('products', function ($q) use ($filter) {
+                $q->where('products.subcategory_id', $filter->subcategory->id);
+            });
         }])->get();
 
         foreach ($attributes as $attribute) {
@@ -53,6 +56,7 @@ class Attribute extends Model
             $attribute->values->loadCount(['products' => function ($productQuery) use ($filter, $attribute) {
                 $productQuery->active();
                 $productQuery->withSubcategory($filter->subcategory);
+                $productQuery->where('products.subcategory_id', $filter->subcategory->id);
                 if ($filter->priceRange) {
                     $productQuery->filterByPriceRange($filter->priceRange);
                 }

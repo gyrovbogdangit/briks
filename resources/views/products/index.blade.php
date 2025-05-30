@@ -20,8 +20,7 @@
     </div>
 
     <div class="container">
-        <h1 class="text-primary mb-3">{{ $subcategory->name }} <span
-                class="text-muted fs-2">({{ $products->total() }})</span>
+        <h1 class="mb-3">{{ $subcategory->name }} <span class="text-muted fs-2">({{ $products->total() }})</span>
         </h1>
     </div>
 

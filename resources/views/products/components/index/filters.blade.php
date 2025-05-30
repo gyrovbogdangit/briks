@@ -42,20 +42,34 @@
                                 {{ $attribute->name }}
                             </a>
                             <ul class="collapse list-group ms-3 mt-2 show" id="attributes{{ $attribute->id }}">
-                                @foreach ($attribute->values as $value)
-                                    <li class="list-group-item p-0 border-0 bg-transparent">
+                                @php $values = $attribute->values->values(); @endphp
+                                @foreach ($values as $i => $value)
+                                    <li
+                                        class="list-group-item p-0 border-0 bg-transparent @if ($i >= 5) d-none more-values-{{ $attribute->id }} @endif">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input filter-checkbox me-2"
                                                 name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
                                                 id="filter-{{ $attribute->id }}-{{ $value->id }}"
-                                                data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug))
-                                                @disabled($value->products_count === 0) />
-                                            <label class="form-check-label"
+                                                data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug)) />
+                                            <label
+                                                class="form-check-label  @if ($value->products_count === 0) text-muted @endif"
                                                 for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
                                             <span class="text-muted ms-1">({{ $value->products_count }})</span>
                                         </div>
                                     </li>
                                 @endforeach
+                                @if ($values->count() > 5)
+                                    <li class="list-group-item p-0 border-0 bg-transparent">
+                                        <button class="btn btn-link btn-sm px-0 show-more-values-btn" type="button"
+                                            data-attribute-id="{{ $attribute->id }}">
+                                            Показать все
+                                        </button>
+                                        <button class="btn btn-link btn-sm px-0 hide-more-values-btn d-none"
+                                            type="button" data-attribute-id="{{ $attribute->id }}">
+                                            Скрыть
+                                        </button>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                         <hr />

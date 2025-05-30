@@ -57,11 +57,16 @@ $('#catalog-menu').on('show.bs.offcanvas', function () {
     $('.catalog-subcategories-menu').removeClass('active').addClass('d-none');
 });
 
-/* import 'theia-sticky-sidebar/dist/ResizeSensor.min';
-import 'theia-sticky-sidebar/dist/theia-sticky-sidebar.min';
+$(document).on('click', '.show-more-values-btn', function () {
+    const attrId = $(this).data('attribute-id');
+    $(`.more-values-${attrId}`).removeClass('d-none');
+    $(this).addClass('d-none');
+    $(this).siblings('.hide-more-values-btn').removeClass('d-none');
+});
 
-import 'jscrollpane/script/jquery.mousewheel';
-import 'jscrollpane/script/jquery.jscrollpane.min';
-
-import 'slick-carousel/slick/slick.min';
- */
+$(document).on('click', '.hide-more-values-btn', function () {
+    const attrId = $(this).data('attribute-id');
+    $(`.more-values-${attrId}`).addClass('d-none');
+    $(this).addClass('d-none');
+    $(this).siblings('.show-more-values-btn').removeClass('d-none');
+});
