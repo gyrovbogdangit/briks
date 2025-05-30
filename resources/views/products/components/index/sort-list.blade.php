@@ -6,8 +6,8 @@
             $query['page'] = 1;
             $query[$sortSlug] = $slug;
         @endphp
-        <a class="text-secondary text-decoration-none fw-semibold"
-            {{ $filter->$attr == $slug ? 'sort-list__item--active' : '' }}"
+        <a class="text-decoration-none fw-semibold
+        {{ $filter->$attr == $slug ? 'text-primary rounded-3 bg-light px-2' : 'text-secondary' }}"
             href="{{ route('products.index', [
                 'productType' => $type,
                 'category' => $category,

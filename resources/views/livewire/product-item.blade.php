@@ -1,4 +1,4 @@
-<div class="product-card border rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
+<div class="product-card rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
     style="width:220px;min-height:330px">
     <a
         href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">

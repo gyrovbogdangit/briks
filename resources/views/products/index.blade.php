@@ -44,16 +44,16 @@
         </div>
 
         <div class="col-md-9">
-            <div class="container">
+            <div class="container d-flex flex-column gap-3">
+                @include('products.components.index.search-links')
+                @include('products.components.index.active-filters')
+
                 @include('products.components.index.sort-list-wrap')
 
-                <button class="btn btn-primary d-block d-md-none my-3 w-100" type="button" data-bs-toggle="offcanvas"
+                <button class="btn btn-primary d-block d-md-none w-100" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#filtersOffcanvas">
                     <i class="fas fa-filter me-2"></i>Фильтры
                 </button>
-
-                @include('products.components.index.search-links')
-                @include('products.components.index.active-filters')
             </div>
 
             @include('products.components.index.products')

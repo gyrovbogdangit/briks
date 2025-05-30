@@ -1,5 +1,5 @@
 <div class="filters-sidebar bg-white rounded-3 p-3 fw-semibold shadow-sm">
-    <div>
+    <form>
         <h2 class="fs-4 mb-3">Фильтры</h2>
         <div class="categories">
             <ul class="list-group">
@@ -64,5 +64,5 @@
             </ul>
         </div>
         <button class="btn btn-primary w-100 fw-bolder">Применить фильтры</button>
-    </div>
+    </form>
 </div>

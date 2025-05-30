@@ -116,4 +116,17 @@ class Filter
 
         return $query;
     }
+
+
+    public function queryWithoutAttributeValue($attributeSlug, $valueSlug): array
+    {
+        $query = $this->getQuery();
+        if (isset($query[$attributeSlug])) {
+            $query[$attributeSlug] = array_diff($query[$attributeSlug], [$valueSlug]);
+            if (empty($query[$attributeSlug])) {
+                unset($query[$attributeSlug]);
+            }
+        }
+        return $query;
+    }
 }

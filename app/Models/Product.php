@@ -141,7 +141,7 @@ class Product extends Model
                 $query->orderBy('views', 'desc');
                 break;
             case 'price':
-                $query->whereNotNull('price')->orderByRaw('IFNULL(discount_price_per_piece, price_per_piece)');
+                $query->orderByRaw('IFNULL(discount_price_per_piece, price_per_piece)');
                 break;
             case 'category':
                 $query->orderBy('name');
@@ -161,7 +161,7 @@ class Product extends Model
                 $query->where('is_hit_of_sales', 1);
                 break;
             case 'discounts':
-                $query->whereNotNull('discount_price_per_piece');
+                $query->whereNotNull('discount_price_per_piece')->orWhere('discount_price_per_sqm', '>', 0);
                 break;
         }
     }
