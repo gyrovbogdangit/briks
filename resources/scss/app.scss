@@ -239,7 +239,7 @@ footer a:hover {
     width: 25px;
 }
 .offcanvas-start {
-    --bs-offcanvas-width: 700px;
+    --bs-offcanvas-width: 950px;
 }
 .catalog-mega-menu {
     position: relative;
@@ -247,7 +247,7 @@ footer a:hover {
     display: flex;
 }
 .catalog-types {
-    width: 220px;
+    width: 300px;
     background: #f8f9fa;
     z-index: 1;
     border-radius: 0;
@@ -271,7 +271,7 @@ footer a:hover {
 }
 .catalog-categories-menu {
     position: relative;
-    min-width: 220px;
+    min-width: 300px;
     flex: none;
     overflow: visible;
     border-right: 1px solid #e5e5e5;
@@ -287,7 +287,7 @@ footer a:hover {
     display: flex;
 }
 .catalog-categories {
-    width: 220px;
+    width: 320px;
     height: calc(100vh - 62px);
     border-radius: 0;
 }
@@ -295,7 +295,7 @@ footer a:hover {
     position: absolute;
     left: 100%;
     top: 0;
-    width: 220px;
+    width: 300px;
     height: 100%;
     min-height: 100%;
     box-sizing: border-box;
@@ -310,7 +310,7 @@ footer a:hover {
     display: block;
 }
 .catalog-subcategories {
-    width: 220px;
+    width: 300px;
 }
 .catalog-subcategory-link {
     color: inherit;

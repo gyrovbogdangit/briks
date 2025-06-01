@@ -9,8 +9,12 @@
             <ul class="catalog-types list-group border-end">
                 @foreach ($types as $type)
                     <li class="list-group-item px-3 py-2 border-0 catalog-type-item position-relative">
-                        <a href="#" class="text-decoration-none d-block w-100 catalog-type-link"
-                            data-type-id="{{ $type->id }}">{{ $type->name }}</a>
+                        <a href="{{ route('product-types.show', ['productType' => $type]) }}"
+                            class="text-decoration-none d-block w-100 catalog-type-link"
+                            data-type-id="{{ $type->id }}">
+                            {{ $type->name }}
+                            <i class="fa-solid fa-chevron-right float-end mt-1"></i>
+                        </a>
                     </li>
                 @endforeach
             </ul>
@@ -20,8 +24,12 @@
                         <ul class="catalog-categories list-group border-start border-end">
                             @foreach ($type->categories as $category)
                                 <li class="list-group-item px-3 py-2 border-0 catalog-category-item">
-                                    <a href="#" class="text-decoration-none d-block w-100 catalog-category-link"
-                                        data-category-id="{{ $category->id }}">{{ $category->name }}</a>
+                                    <a href="{{ route('categories.show', ['productType' => $type, 'category' => $category]) }}"
+                                        class="text-decoration-none d-block w-100 catalog-category-link"
+                                        data-category-id="{{ $category->id }}">
+                                        {{ $category->name }}
+                                        <i class="fa-solid fa-chevron-right float-end mt-1"></i>
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
@@ -59,17 +67,19 @@
                             <ul class="collapse list-group ms-2" id="mobile-type-{{ $type->id }}">
                                 @foreach ($type->categories as $category)
                                     <li class="list-group-item p-0 border-0">
-                                        <a class="d-block px-3 py-2 text-decoration-none" data-bs-toggle="collapse"
-                                            href="#mobile-cat-{{ $category->id }}" role="button" aria-expanded="false"
+                                        <a class="d-block px-3 py-2 text-decoration-none text-dark"
+                                            data-bs-toggle="collapse" href="#mobile-cat-{{ $category->id }}"
+                                            role="button" aria-expanded="false"
                                             aria-controls="mobile-cat-{{ $category->id }}">
                                             {{ $category->name }}
                                         </a>
                                         @if (!empty($category->subcategories))
-                                            <ul class="collapse list-group ms-2" id="mobile-cat-{{ $category->id }}">
+                                            <ul class="collapse list-group ms-2 show"
+                                                id="mobile-cat-{{ $category->id }}">
                                                 @foreach ($category->subcategories as $subcategory)
                                                     <li class="list-group-item p-0 border-0">
                                                         <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
-                                                            class="d-block px-3 py-2 text-decoration-none">
+                                                            class="d-block px-3 py-2 text-decoration-none text-dark">
                                                             {{ $subcategory->name }}
                                                         </a>
                                                     </li>
