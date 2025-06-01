@@ -90,9 +90,9 @@ class QuickFilterResource extends Resource
                 Select::make('attribute_id')
                     ->label('Характеристика')
                     ->options(function ($get) {
-                        $subcategoryId = $get('subcategory_id');
-                        if ($subcategoryId) {
-                            $values = Category::find($subcategoryId)
+                        $categoryId = $get('categoryId');
+                        if ($categoryId) {
+                            $values = Category::find($categoryId)
                                 ->attributes()
                                 ->get()
                                 ->sortBy('name')
