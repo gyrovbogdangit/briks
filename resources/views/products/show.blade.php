@@ -2,18 +2,46 @@
 
 @section('content')
     <div class="container mt-3">
-        <nav class="breadcrumbs" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Главная</a></li>
-                <li class="breadcrumb-item"><a href="{{-- {{ route('catalog') }} --}}">Каталог</a></li>
-                <li class="breadcrumb-item"><a>{{ $type->name }}</a></li>
-                <li class="breadcrumb-item"><a>{{ $product->category->name }}</a></li>
-                <li class="breadcrumb-item"><a
-                        href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}">{{ $subcategory->name }}</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
-            </ol>
-        </nav>
+        @include('components.breadcrumbs', [
+            'breadcrumbs' => [
+                [
+                    'name' => 'Главная',
+                    'url' => route('home'),
+                ],
+                [
+                    'name' => 'Каталог',
+                    'url' => route('catalog'),
+                ],
+                [
+                    'name' => $type->name,
+                    'url' => route('product-types.show', ['productType' => $type]),
+                ],
+                [
+                    'name' => $category->name,
+                    'url' => route('categories.show', [
+                        'productType' => $type,
+                        'category' => $category,
+                    ]),
+                ],
+                [
+                    'name' => $subcategory->name,
+                    'url' => route('products.index', [
+                        'productType' => $type,
+                        'category' => $category,
+                        'subcategory' => $subcategory,
+                    ]),
+                ],
+                [
+                    'name' => $product->name,
+                    'url' => route('products.show', [
+                        'productType' => $type,
+                        'category' => $category,
+                        'subcategory' => $subcategory,
+                        'product' => $product,
+                    ]),
+                ],
+            ],
+        ])
     </div>
 
     <div class="container mb-4">

@@ -32,26 +32,30 @@ class ViewComposerProvider extends ServiceProvider
             $view->with('citiesGrouped', $citiesGrouped);
         });
 
-        View::composer('layouts.components.catalog-menu', function ($view) {
-            $types = ProductType::with([
-                'categories' => function ($query) {
-                    $query->orderBy('name')->with([
-                        'subcategories' => function ($query) {
-                            $query->orderBy('name');
-                        }
-                    ]);
-                }
-            ])->orderBy('name')->get();
-            $view->with('types', $types);
-        });
+        View::composer(
+            [
+                'layouts.components.catalog-menu',
+                'catalog'
+            ],
+            function ($view) {
+                $types = ProductType::with([
+                    'categories' => function ($query) {
+                        $query->orderBy('name')->with([
+                            'subcategories' => function ($query) {
+                                $query->orderBy('name');
+                            }
+                        ]);
+                    }
+                ])->orderBy('name')->get();
+                $view->with('types', $types);
+            }
+        );
 
         View::composer([
             'layouts.components.header',
             'layouts.components.footer',
             'products.components.why-choose-us',
             'components.frequent-questions',
-            'catalog',
-            'components.catalog'
         ], function ($view) {
             static $sharedData;
 

@@ -1,6 +1,7 @@
 <nav id="catalog-menu" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="catalogMenuLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="catalogMenuLabel">Каталог</h5>
+        <h5 class="offcanvas-title" id="catalogMenuLabel"><a href="{{ route('catalog') }}"
+                class="text-decoration-none text-dark">Каталог</h5></a>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-0">

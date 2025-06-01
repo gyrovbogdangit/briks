@@ -2,21 +2,37 @@
 
 @section('content')
     <div class="container mt-3">
-        <nav class="breadcrumbs" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                <li class="breadcrumb-item"><a href="#">Каталог</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{ $type->name }}
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{ $category->name }}
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{ $subcategory->name }}
-                </li>
-            </ol>
-        </nav>
+        @include('components.breadcrumbs', [
+            'breadcrumbs' => [
+                [
+                    'name' => 'Главная',
+                    'url' => route('home'),
+                ],
+                [
+                    'name' => 'Каталог',
+                    'url' => route('catalog'),
+                ],
+                [
+                    'name' => $type->name,
+                    'url' => route('product-types.show', ['productType' => $type]),
+                ],
+                [
+                    'name' => $category->name,
+                    'url' => route('categories.show', [
+                        'productType' => $type,
+                        'category' => $category,
+                    ]),
+                ],
+                [
+                    'name' => $subcategory->name,
+                    'url' => route('products.index', [
+                        'productType' => $type,
+                        'category' => $category,
+                        'subcategory' => $subcategory,
+                    ]),
+                ],
+            ],
+        ])
     </div>
 
     <div class="container">
