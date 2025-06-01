@@ -6,7 +6,7 @@
                 wire:model.live="search">
         </div>
     </form>
-    <div style="max-height: 400px; overflow-y: auto;">
+    <div style="max-height: 400px; overflow-y: auto;" class="fancy-thumb-scroll">
         @foreach ($groupedCities as $capitalLetter => $cities)
             <div class="mb-2">
                 <div class="fw-bold text-secondary small mb-1">{{ $capitalLetter }}</div>

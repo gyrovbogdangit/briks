@@ -17,14 +17,9 @@
     <div class="container">
         <div class="d-flex d-lg-none w-100 align-items-center gap-2 py-2">
             <a class="navbar-brand flex-shrink-0 me-2" href="{{ route('home') }}">БРИКС</a>
-            <form class="flex-grow-1 mx-0" role="search">
-                <div class="position-relative d-flex align-items-center w-100">
-                    <input type="text"
-                        class="search-input big-search rounded-2 border border-2 border-gray fw-bolder w-100"
-                        placeholder="Поиск..." />
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </form>
+            <div class="flex-grow-1 mx-0" role="search">
+                <livewire:search />
+            </div>
             <button class="btn ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileHeaderMenu">
                 <i class="fas fa-bars fs-4"></i>
             </button>
@@ -37,14 +32,9 @@
                 style="height:44px;padding-top:8px;">
                 <i class="fa-solid fa-bars me-2"></i>Каталог
             </a>
-            <form class="flex-grow-1 mx-0 mx-lg-3 order-3 order-lg-2" role="search">
-                <div class="position-relative d-flex align-items-center w-100">
-                    <input type="text"
-                        class="search-input big-search rounded-2 border border-2 border-gray fw-bolder w-100"
-                        placeholder="Поиск..." />
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </form>
+
+            <livewire:search />
+
             <div class="d-flex align-items-center gap-3 order-4">
                 <div class="icon-item text-center">
                     <a href="{{ route('favorites') }}" class="d-block me-0 text-secondary text-decoration-none">
