@@ -46,13 +46,13 @@
                                 @foreach ($values as $i => $value)
                                     <li
                                         class="list-group-item p-0 border-0 bg-transparent @if ($i >= 5) d-none more-values-{{ $attribute->id }} @endif">
-                                        <div class="form-check">
+                                        <div class="form-check d-flex">
                                             <input type="checkbox" class="form-check-input filter-checkbox me-2"
                                                 name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
                                                 id="filter-{{ $attribute->id }}-{{ $value->id }}"
                                                 data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug)) />
                                             <label
-                                                class="form-check-label  @if ($value->products_count === 0) text-muted @endif"
+                                                class="form-check-label  @if ($value->products_count === 0) text-black-50 @endif"
                                                 for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
                                             <span class="text-muted ms-1">({{ $value->products_count }})</span>
                                         </div>
