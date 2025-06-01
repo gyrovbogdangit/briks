@@ -1,22 +1,25 @@
-<div class="modal-content">
-    <div style="width:90%; padding-top:15px; padding-bottom:15px">
-        <div class="modal-form__item">
-            <input type="text" class="modal-form__input" id="name2" placeholder="" wire:model.live="search">
-            <label for="name2" class="modal-form__label">Поиск</label>
+<div class="modal-body">
+    <form class="mb-3">
+        <div class="mb-2">
+            <label for="city-search-input" class="form-label">Поиск</label>
+            <input type="text" class="form-control" id="city-search-input" placeholder="Начните вводить город..."
+                wire:model.live="search">
         </div>
-    </div>
-
-    <div style="overflow-y: scroll; height: 400px">
-        <div class="cities-wrap-modal">
-            @foreach ($groupedCities as $capitalLetter => $cities)
-                <div class="cities-group">
-                    <b class="cities-capital-letter">{{ $capitalLetter }}</b>
+    </form>
+    <div style="max-height: 400px; overflow-y: auto;">
+        @foreach ($groupedCities as $capitalLetter => $cities)
+            <div class="mb-2">
+                <div class="fw-bold text-secondary small mb-1">{{ $capitalLetter }}</div>
+                <div class="list-group">
                     @foreach ($cities as $city)
-                        <p class="city-btn" wire:click="chooseCity({{ $city->id }})" data-fancybox-close>
-                            {{ $city->name }}</p>
+                        <button type="button"
+                            class="list-group-item list-group-item-action city-btn text-start py-1 px-2"
+                            wire:click="chooseCity({{ $city->id }})" data-bs-dismiss="modal">
+                            {{ $city->name }}
+                        </button>
                     @endforeach
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>

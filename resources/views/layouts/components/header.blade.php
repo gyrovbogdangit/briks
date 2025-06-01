@@ -1,7 +1,7 @@
 <div class="top-nav py-2 d-none d-lg-block">
     <div class="container d-flex justify-content-between align-items-center fw-bolder">
         <div class="d-flex">
-            <div class="me-3"><i class="fas fa-map-marker-alt"></i> Ваш город: Москва</div>
+            <livewire:city-name />
             @foreach ($pages as $page)
                 <a href="{{ route('page', ['page' => $page]) }}">{{ $page->title }}</a>
             @endforeach
@@ -76,6 +76,9 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+        <div class="mb-3">
+            <livewire:city-name />
+        </div>
         <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray fw-bold px-3 text-nowrap w-100 mb-3"
             href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu">
             <i class="fa-solid fa-bars me-2"></i>Каталог
@@ -109,5 +112,19 @@
         <hr />
         <div class="mb-2"><i class="fas fa-phone me-1"></i> +7 (495) 123-45-67</div>
         <div><i class="fas fa-shop me-1"></i> ул. 9 Января, 195, Воронеж</div>
+    </div>
+</div>
+
+<div class="modal fade" id="city" tabindex="-1" aria-labelledby="cityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-semibold" id="cityModalLabel">Изменить город</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body p-0">
+                <livewire:city-search />
+            </div>
+        </div>
     </div>
 </div>

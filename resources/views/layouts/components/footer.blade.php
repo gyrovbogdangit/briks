@@ -13,18 +13,12 @@
              <div class="col-md-4 mb-3">
                  <h5 class="fw-bold">Быстрые ссылки</h5>
                  <ul class="list-unstyled fw-semibold">
-                     <li>
-                         <a href="#" class="text-light text-decoration-none">Каталог</a>
-                     </li>
-                     <li>
-                         <a href="#" class="text-light text-decoration-none">Шоурумы</a>
-                     </li>
-                     <li>
-                         <a href="#" class="text-light text-decoration-none">О нас</a>
-                     </li>
-                     <li>
-                         <a href="#" class="text-light text-decoration-none">Контакты</a>
-                     </li>
+                     @foreach ($pages as $page)
+                         <li>
+                             <a href="{{ route('page', ['page' => $page]) }}"
+                                 class="text-light text-decoration-none">{{ $page->title }}</a>
+                         </li>
+                     @endforeach
                  </ul>
              </div>
 
