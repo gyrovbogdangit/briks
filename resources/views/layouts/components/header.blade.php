@@ -7,8 +7,10 @@
             @endforeach
         </div>
         <div>
-            <span class="me-3"><i class="fas fa-phone me-1"></i> +7 (495) 123-45-67</span>
-            <span><i class="fas fa-shop me-1"></i> ул. 9 Января, 195, Воронеж</span>
+            <a href="tel:{{ $phoneNumbers[0]->number }}">
+                <span class="me-3"><i class="fas fa-phone me-1"></i> {{ $phoneNumbers[0]->number }}</span></a>
+            <a href="{{ $addresses[0]->url }}" rel="noopener noreferrer" target="_blank">
+                <span><i class="fas fa-shop me-1"></i> {{ $addresses[0]->address }}</span></a>
         </div>
     </div>
 </div>

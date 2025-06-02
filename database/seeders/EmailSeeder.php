@@ -13,8 +13,7 @@ class EmailSeeder extends Seeder
     public function run(): void
     {
         Email::insert([
-            ['email' => 'info-order@rucaf.ru', 'data' => 'Общие вопросы'],
-            ['email' => 'site-review@rucaf.ru', 'data' => 'Вопросы по сайту'],
+            ['email' => 'briks1@briks.ru', 'data' => 'Основной адрес для связи'],
         ]);
     }
 }

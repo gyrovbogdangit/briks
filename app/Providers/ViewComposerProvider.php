@@ -3,12 +3,13 @@
 namespace App\Providers;
 
 use App\Models\City;
-use App\Models\Email;
 use App\Models\Page;
+use App\Models\Email;
+use App\Models\Address;
 use App\Models\PhoneNumber;
 use App\Models\ProductType;
-use App\Services\RecentlyViewedService;
 use Illuminate\Support\Facades\View;
+use App\Services\RecentlyViewedService;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerProvider extends ServiceProvider
@@ -69,7 +70,8 @@ class ViewComposerProvider extends ServiceProvider
                         });
                     })->get(),
                     'phoneNumbers' => PhoneNumber::get(),
-                    'emails' => Email::get()
+                    'emails' => Email::get(),
+                    'addresses' => Address::get(),
                 ];
             }
 
