@@ -27,8 +27,8 @@
                         </button>
                     @endisset
                 </form>
-                <button class="btn btn-outline-secondary w-100 mt-2" type="button"
-                    data-bs-toggle="modal" data-bs-target="#order-one-click{{ $product->id }}">
+                <button class="btn btn-outline-secondary w-100 mt-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#order-one-click{{ $product->id }}">
                     Заказать в 1 клик
                 </button>
             </div>
@@ -36,13 +36,13 @@
             <div class="mb-3">
                 <div class="d-flex align-items-center gap-2">
                     <input type="number" class="form-control w-auto" placeholder="1 шт">
-                    <button class="btn btn-primary flex-grow-1" type="button" data-fancybox
-                        data-src="#order{{ $product->id }}">
+                    <button class="btn btn-primary flex-grow-1" type="button" data-bs-toggle="modal"
+                        data-bs-target="#requestPriceModal{{ $product->id }}">
                         Запросить стоимость
                     </button>
                 </div>
-                <button class="btn btn-outline-secondary w-100 mt-2" type="button"
-                    data-bs-toggle="modal" data-bs-target="#order-one-click{{ $product->id }}">
+                <button class="btn btn-outline-secondary w-100 mt-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#order-one-click{{ $product->id }}">
                     Заказать в 1 клик
                 </button>
             </div>
