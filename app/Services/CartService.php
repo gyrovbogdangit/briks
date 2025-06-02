@@ -45,6 +45,7 @@ class CartService
 
         if (!is_null($recordIndex)) {
             $sessionCart[$recordIndex]['quantity'] = $quantity;
+            $sessionCart[$recordIndex]['unit'] = $unit;
             session(['cart' => $sessionCart]);
         } else {
             return false;

@@ -34,17 +34,30 @@
             </div>
         @else
             <div class="mb-3">
-                <div class="d-flex align-items-center gap-2">
-                    <input type="number" class="form-control w-auto" placeholder="1 шт">
-                    <button class="btn btn-primary flex-grow-1" type="button" data-bs-toggle="modal"
+                <form class="d-flex align-items-center gap-2" wire:submit="addToCart">
+                    @isset($quantity)
+                        <a class="btn btn-success flex-grow-1" href="{{ route('cart') }}">
+                            В корзине
+                        </a>
+                    @else
+                        <input type="number" class="form-control w-50" placeholder="1" min="1"
+                            wire:model="quantity">
+                        <button class="btn btn-primary w-50" type="button" data-id="{{ $product->id }}"
+                            wire:click="addToCart">
+                            В корзину
+                        </button>
+                    @endisset
+                </form>
+                <div class="d-flex align-items-center gap-2 mt-3">
+                    <button class="btn btn-outline-primary flex-grow-1 w-50" type="button" data-bs-toggle="modal"
                         data-bs-target="#requestPriceModal{{ $product->id }}">
                         Запросить стоимость
                     </button>
+                    <button class="btn btn-outline-secondary flex-grow-1 w-50" type="button" data-bs-toggle="modal"
+                        data-bs-target="#order-one-click{{ $product->id }}">
+                        Заказать в 1 клик
+                    </button>
                 </div>
-                <button class="btn btn-outline-secondary w-100 mt-2" type="button" data-bs-toggle="modal"
-                    data-bs-target="#order-one-click{{ $product->id }}">
-                    Заказать в 1 клик
-                </button>
             </div>
         @endif
         <div class="d-flex gap-2 mt-3">

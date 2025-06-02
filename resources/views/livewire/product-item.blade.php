@@ -54,17 +54,12 @@
         </div>
 
         <div class="action-icons bg-light rounded-2 p-2 border mt-2">
-            @isset($product->price_per_piece)
-                @if ($quantity)
-                    <a class="fas fa-cart-plus icon active text-decoration-none" href="{{ route('cart') }}"
-                        title="В корзине"></a>
-                @else
-                    <i class="fas fa-cart-plus icon" title="В корзину" wire:click="addToCart"></i>
-                @endif
+            @if ($quantity)
+                <a class="fas fa-cart-plus icon active text-decoration-none" href="{{ route('cart') }}"
+                    title="В корзине"></a>
             @else
-                <i class="fas fa-cart-plus icon" title="Запросить стоимость" data-fancybox
-                    data-src="#order{{ $product->id }}"></i>
-            @endisset
+                <i class="fas fa-cart-plus icon" title="В корзину" wire:click="addToCart"></i>
+            @endif
 
             @if ($inComparison)
                 <a class="fas fa-chart-simple icon active text-decoration-none text-warning" title="Убрать из сравнения"

@@ -22,7 +22,7 @@ class CartComponent extends Component
     public function increment($productId, $unit = 'piece')
     {
         $quantity = CartService::getQuantity($productId, $unit);
-        if ($quantity >= 100) {
+        if ($quantity >= 10000) {
             return;
         }
         CartService::update($productId, $quantity + 1, $unit);

@@ -59,16 +59,27 @@
                                     wire:click.throttle.100ms="increment({{ $product->id }}, '{{ $product->unit }}')"
                                     type="button"><i class="fa-solid fa-plus"></i></button>
                             </div>
-                            <select class="form-select form-select-sm w-auto ms-2 py-1 px-2 rounded-3 border-secondary"
-                                style="min-width: 60px; max-width: 90px;height:34px;"
-                                wire:change="changeUnit({{ $product->id }}, $event.target.value)">
-                                @if (isset($product->price_per_piece) || isset($product->discount_price_per_piece))
-                                    <option value="piece" @if ($product->unit === 'piece') selected @endif>шт</option>
-                                @endif
-                                @if (isset($product->price_sqm) || isset($product->discount_price_sqm))
-                                    <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²</option>
-                                @endif
-                            </select>
+                            @if (isset($product->price_per_piece) ||
+                                    isset($product->discount_price_per_piece) ||
+                                    isset($product->price_sqm) ||
+                                    isset($product->discount_price_sqm))
+                                <select
+                                    class="form-select form-select-sm w-auto ms-2 py-1 px-2 rounded-3 border-secondary"
+                                    style="min-width: 60px; max-width: 90px;height:34px;"
+                                    wire:change="changeUnit({{ $product->id }}, $event.target.value)">
+                                    @if (isset($product->price_per_piece) || isset($product->discount_price_per_piece))
+                                        <option value="piece" @if ($product->unit === 'piece') selected @endif>шт
+                                        </option>
+                                    @endif
+                                    @if (isset($product->price_sqm) || isset($product->discount_price_sqm))
+                                        <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²
+                                        </option>
+                                    @endif
+                                </select>
+                            @else
+                                <div class="text-muted w-auto ms-2 py-1 px-2 rounded-3 border border-secondary">шт.
+                                </div>
+                            @endif
                             <button class="border border-secondary rounded-3 py-1 px-2 btn-sm ms-2 bg-light"
                                 wire:click="delete({{ $product->id }}, '{{ $product->unit }}')">
                                 <i class="fa fa-trash text-danger me-1"></i> Удалить
@@ -77,14 +88,16 @@
                         <div class="">
                             <span class="fw-semibold">Сумма: </span>
                             <span class="fw-bold text-primary">
-                                @if ($product->unit === 'sqm')
+                                @if ($product->unit === 'sqm' && (isset($product->price_sqm) || isset($product->discount_price_sqm)))
                                     @php $price = $product->discount_price_sqm ?? $product->price_sqm; @endphp
                                     {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
                                     {{ $product->quantity }} м²
-                                @else
+                                @elseif ($product->unit === 'piece' && (isset($product->price_per_piece) || isset($product->discount_price_per_piece)))
                                     @php $price = $product->discount_price_per_piece ?? $product->price_per_piece; @endphp
                                     {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
                                     {{ $product->quantity }} шт
+                                @else
+                                    <span class="text-muted">Цена по запросу</span>
                                 @endif
                             </span>
                         </div>
