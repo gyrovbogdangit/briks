@@ -37,26 +37,7 @@
 
             <livewire:search />
 
-            <div class="d-flex align-items-center gap-3 order-4">
-                <div class="icon-item text-center">
-                    <a href="{{ route('favorites') }}" class="d-block me-0 text-secondary text-decoration-none">
-                        <i class="fas fa-bookmark fs-6"></i>
-                        <div class="icon-label mt-0 text-light-emphasis fw-semibold">Избранное</div>
-                    </a>
-                </div>
-                <div class="icon-item text-center border-white">
-                    <a href="{{ route('comparison') }}" class="d-block me-0 text-secondary text-decoration-none">
-                        <i class="fas fa-chart-simple fs-6"></i>
-                        <div class="icon-label mt-0 text-light-emphasis fw-semibold">Сравнение</div>
-                    </a>
-                </div>
-                <div class="icon-item text-center border-white">
-                    <a href="{{ route('cart') }}" class="d-block me-0 text-secondary text-decoration-none">
-                        <i class="fas fa-shopping-cart fs-6"></i>
-                        <div class="icon-label mt-0 text-light-emphasis fw-semibold">Корзина</div>
-                    </a>
-                </div>
-            </div>
+            <livewire:header-actions />
         </div>
     </div>
 </nav>
@@ -76,23 +57,8 @@
             <i class="fa-solid fa-bars me-2"></i>Каталог
         </a>
         <div class="mb-3">
-            <div class="icon-item text-center mb-2">
-                <a href="{{ route('favorites') }}" class="d-block text-secondary text-decoration-none">
-                    <i class="fas fa-bookmark fs-6"></i>
-                    <div class="icon-label mt-0 text-light-emphasis fw-semibold">Избранное</div>
-                </a>
-            </div>
-            <div class="icon-item text-center mb-2">
-                <a href="{{ route('comparison') }}" class="d-block text-secondary text-decoration-none">
-                    <i class="fas fa-chart-simple fs-6"></i>
-                    <div class="icon-label mt-0 text-light-emphasis fw-semibold">Сравнение</div>
-                </a>
-            </div>
-            <div class="icon-item text-center mb-2">
-                <a href="{{ route('cart') }}" class="d-block text-secondary text-decoration-none">
-                    <i class="fas fa-shopping-cart fs-6"></i>
-                    <div class="icon-label mt-0 text-light-emphasis fw-semibold">Корзина</div>
-                </a>
+            <div class="container">
+                <livewire:header-actions />
             </div>
             <div class="mt-3">
                 @foreach ($pages as $page)
