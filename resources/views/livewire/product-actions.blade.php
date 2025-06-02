@@ -27,8 +27,8 @@
                         </button>
                     @endisset
                 </form>
-                <button class="btn btn-outline-secondary w-100 mt-2" type="button" data-fancybox
-                    data-src="#order-one-click{{ $product->id }}">
+                <button class="btn btn-outline-secondary w-100 mt-2" type="button"
+                    data-bs-toggle="modal" data-bs-target="#order-one-click{{ $product->id }}">
                     Заказать в 1 клик
                 </button>
             </div>
@@ -41,8 +41,8 @@
                         Запросить стоимость
                     </button>
                 </div>
-                <button class="btn btn-outline-secondary w-100 mt-2" type="button" data-fancybox
-                    data-src="#order-one-click{{ $product->id }}">
+                <button class="btn btn-outline-secondary w-100 mt-2" type="button"
+                    data-bs-toggle="modal" data-bs-target="#order-one-click{{ $product->id }}">
                     Заказать в 1 клик
                 </button>
             </div>

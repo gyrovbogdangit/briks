@@ -69,8 +69,8 @@
         @endif
     </div>
 
-    {{--  @include('products.components.modal-request-price')
     @include('products.components.show.modal-one-click-order')
+    {{--  @include('products.components.modal-request-price')
 
     <div class="container mt-5">
         @include('products.components.why-choose-us')
