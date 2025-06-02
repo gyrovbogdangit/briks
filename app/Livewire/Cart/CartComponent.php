@@ -14,15 +14,7 @@ class CartComponent extends Component
     public function mount()
     {
         $this->products = CartService::get();
-        $this->totalSum = $this->products
-            ->sum(function ($product) {
-                if ($product->unit === 'sqm') {
-                    $price = $product->discount_price_sqm ?? $product->price_sqm;
-                } else {
-                    $price = $product->discount_price_per_piece ?? $product->price_per_piece;
-                }
-                return $price * $product->quantity;
-            });
+        $this->totalSum = CartService::getTotalSum();
         $this->totalQuantity = $this->products->sum('quantity');
         $this->dispatch('cartUpdated');
     }

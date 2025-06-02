@@ -1,60 +1,55 @@
-<div class="modal-wrap">
-    <div class="modal-title"><span>Заявка на оформление заказа</span><button class="modal-close-btn" type="button"
-            data-fancybox-close><i class="icon-close1"></i></button></div>
-    <div class="modal-content scroll">
-        @if ($emailSended)
-            <div class="msg-ok">
-                <div class="msg-ok__icon"><i class="icon-check1"></i></div>
-                <div class="msg-ok__content">
-                    <p><b>Заявка отправлена</b></p>
-                    <p>Вам перезвонят в течение 15 минут.</p>
-                </div>
+<div class="modal-body">
+    @if ($emailSended)
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <div>
+                <b>Заявка отправлена</b><br>
+                Вам перезвонят в течение 15 минут.
             </div>
-            <div class="msg-actions">
-                <button class="msg-actions__btn btn btn--gray" type="button" data-fancybox-close>Закрыть</button>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+    @else
+        <form wire:submit="sendEmail" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">Имя</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                    name="name" placeholder="Ваше имя" wire:model="name" required>
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-        @else
-            <form wire:submit="sendEmail" class="modal-form">
-                <div class="modal-form__item">
-                    <input type="text" class="modal-form__input" name="name" placeholder=" " wire:model="name">
-                    <label for="name" class="modal-form__label">Имя</label>
-                </div>
-                <div class="modal-form__error">
-                    @error('name')
-                        <p>{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="modal-form__item">
-                    <input type="text" class="modal-form__input" name="phone" placeholder=" " wire:model="phone">
-                    <label for="phone" class="modal-form__label">Телефон</label>
-                </div>
-                <div class="modal-form__error">
-                    @error('phone')
-                        <p class="modal-validation-error"> {{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="modal-form__item">
-                    <textarea class="modal-form__textarea" placeholder=" " name="text" wire:model="comment"></textarea>
-                    <label for="msg2" class="modal-form__label">Комментарий</label>
-                </div>
-                <div class="modal-form__error">
-                    @error('comment')
-                        <p class="modal-validation-error"> {{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="modal-form__item modal-form__item--actions">
-                    <button class="modal-form__btn btn" type="submit">Оставить заявку</button>
-                </div>
-                <label class="modal-form__item modal-form__item--privacy">
-                    <input type="checkbox" class="modal-form__check" wire:model="privacy">
-                    <span class="modal-form__txt @error('privacy') error @enderror">Даю согласие на <a
-                            href="{{ route('privacy') }}">обработку
-                            персональных данных.</a></span>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Телефон</label>
+                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                    name="phone" placeholder="Ваш телефон" wire:model="phone" required>
+                @error('phone')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Комментарий</label>
+                <textarea class="form-control @error('comment') is-invalid @enderror" id="comment" name="comment"
+                    placeholder="Комментарий" wire:model="comment" rows="3"></textarea>
+                @error('comment')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input @error('privacy') is-invalid @enderror" type="checkbox" id="privacy"
+                    wire:model="privacy" required>
+                <label class="form-check-label" for="privacy">
+                    Даю согласие на <a href="{{ route('privacy') }}" target="_blank">обработку персональных
+                        данных</a>.
                 </label>
-            </form>
-        @endif
-    </div>
+                @error('privacy')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Оставить заявку</button>
+            </div>
+        </form>
+    @endif
 </div>

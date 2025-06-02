@@ -35,12 +35,14 @@ class ModalRequestCart extends Component
         $this->validate();
 
         $products = CartService::get();
+        $totalSum = CartService::getTotalSum();
 
         Mail::to(env('MAIL_TO_ADDRESS'))->queue(new RequestCart(
             $this->name,
             $this->phone,
             $this->comment,
             $products,
+            $totalSum,
             CustomerService::getCity()
         ));
 

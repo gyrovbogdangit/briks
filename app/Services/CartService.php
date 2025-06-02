@@ -134,4 +134,17 @@ class CartService
             session(['cart' => $sessionCart]);
         }
     }
+
+    public static function getTotalSum()
+    {
+        $products = static::get();
+        return $products->sum(function ($product) {
+            if ($product->unit === 'sqm') {
+                $price = $product->discount_price_sqm ?? $product->price_sqm;
+            } else {
+                $price = $product->discount_price_per_piece ?? $product->price_per_piece;
+            }
+            return $price * $product->quantity;
+        });
+    }
 }

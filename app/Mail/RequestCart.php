@@ -8,9 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Propaganistas\LaravelPhone\PhoneNumber;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class RequestCart extends Mailable
 {
@@ -28,17 +27,14 @@ class RequestCart extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(string $name, string $phone, ?string $comment, Collection $products, ?string $city)
+    public function __construct(string $name, string $phone, ?string $comment, Collection $products, float $totalSum, ?string $city)
     {
         $this->name = $name;
         $this->phone = new PhoneNumber($phone, 'RU');
         $this->comment = $comment;
         $this->products = $products;
         $this->city = $city;
-
-        $this->totalSum = $products
-            ->sum(fn($product) => ($product->discount_price ?? $product->price) * $product->quantity);
-        $this->totalQuantity = CartService::getTotalQuantity();
+        $this->totalSum = $totalSum;
     }
 
     /**

@@ -99,7 +99,7 @@
                     <span class="fs-6 text-secondary">({{ $totalQuantity }}
                         {{ trans_choice('товар|товара|товаров', $totalQuantity, [], 'ru') }})</span>
                 </div>
-                <button class="btn btn-primary btn-lg px-4" data-fancybox data-src="#request-cart">
+                <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#requestCartModal">
                     <i class="fa fa-paper-plane me-2"></i>Оставить заявку
                 </button>
             </div>
@@ -107,7 +107,7 @@
     @else
         <div class="rounded-3 bg-white shadow-sm  text-center py-5 rounded-3 shadow-sm">
             <p class="mb-2 fs-4">Ваша корзина пока что пуста!</p>
-            <p class="mb-0">Вы можете добавить в неё новые товары из <a href="{{-- {{ route('catalog') }} --}}"
+            <p class="mb-0">Вы можете добавить в неё новые товары из <a href="{{ route('catalog') }}"
                     class="fw-bold text-primary">каталога</a>!</p>
         </div>
     @endif
