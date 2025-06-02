@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Page;
 use App\Models\Email;
 use App\Models\Address;
+use App\Models\Product;
 use App\Models\PhoneNumber;
 use App\Models\ProductType;
 use Illuminate\Support\Facades\View;
@@ -81,6 +82,21 @@ class ViewComposerProvider extends ServiceProvider
         View::composer('products.components.recently-watched', function ($view) {
             $recentlyViewedProducts = RecentlyViewedService::getProducts();
             $view->with('recentlyViewedProducts', $recentlyViewedProducts);
+        });
+
+        View::composer('components.hot-products', function ($view) {
+            $hotProducts = Product::where('is_hit_of_sales', true)->active()->limit(20)->get();
+            $view->with('hotProducts', $hotProducts);
+        });
+
+        View::composer('components.popular-products', function ($view) {
+            $popularProducts = Product::orderBy('views', 'desc')->active()->limit(20)->get();
+            $view->with('popularProducts', $popularProducts);
+        });
+
+        View::composer('components.new-products', function ($view) {
+            $newProducts = Product::where('is_new', true)->active()->limit(20)->get();
+            $view->with('newProducts', $newProducts);
         });
     }
 }

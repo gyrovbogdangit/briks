@@ -12,10 +12,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $hotProducts = Product::where('is_hit_of_sales', true)->limit(20)->get();
-        $popularProducts = Product::orderBy('views', 'desc')->limit(20)->get();
-        $newProducts = Product::where('is_new', true)->limit(20)->get();
-
         $seo = new Seo(
             'Briks — Кирпич, кровля, тротуарная плитка и строительные материалы с доставкой',
             'Briks — строительные решения: продажа облицовочного кирпича, кровли, тротуарной плитки, фасадных и кровельных материалов. Большой выбор, выгодные цены, доставка по всей России.',
@@ -26,12 +22,7 @@ class HomeController extends Controller
             'website',
         );
 
-        return view('index')->with([
-            'hotProducts' => $hotProducts,
-            'popularProducts' => $popularProducts,
-            'newProducts' => $newProducts,
-            'seo' => $seo
-        ]);
+        return view('index')->with('seo', $seo);
     }
 
     public function catalog()

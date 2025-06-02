@@ -11,11 +11,18 @@
             </div>
         </div>
     </div>
-    {{--
-    @include('products.components.recently-watched')
-    @include('components.frequent-questions')
-    @include('components.cities')
-    --}}
+
+    <section class="py-5 bg-white">
+        @include('products.components.recently-watched')
+    </section>
+
+    <section class="py-5 bg-light">
+        @include('components.popular-products')
+    </section>
+
+    <section class="py-5 bg-white">
+        @include('components.new-products')
+    </section>
 @endsection
 
 @section('js')

@@ -4,27 +4,15 @@
     @include('components.hero')
 
     <section class="py-5 bg-light">
-        @include('components.products-slider', [
-            'title' => 'Хит продаж',
-            'products' => $hotProducts,
-            'key' => 'hotProducts',
-        ])
+        @include('components.hot-products')
     </section>
 
     <section class="py-5 bg-white">
-        @include('components.products-slider', [
-            'title' => 'Популярные товары',
-            'products' => $popularProducts,
-            'key' => 'popularProducts',
-        ])
+        @include('components.popular-products')
     </section>
 
     <section class="py-5 bg-light">
-        @include('components.products-slider', [
-            'title' => 'Новинки',
-            'products' => $newProducts,
-            'key' => 'newProducts',
-        ])
+        @include('components.new-products')
     </section>
 
     <section class="py-5 bg-white">

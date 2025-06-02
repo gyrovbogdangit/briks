@@ -71,12 +71,16 @@
 
     @include('products.components.show.modal-one-click-order')
     @include('products.components.modal-request-price')
-    {{--
 
-    <div class="container mt-5">
-        @include('products.components.why-choose-us')
-        @include('products.components.show.related-products')
+    <section class="py-5 bg-white">
         @include('products.components.recently-watched')
-        @include('components.frequent-questions')
-    </div> --}}
+    </section>
+
+    <section class="py-5 bg-light">
+        @include('components.popular-products')
+    </section>
+
+    <section class="py-5 bg-white">
+        @include('components.new-products')
+    </section>
 @endsection
