@@ -16,7 +16,7 @@ class CategoryController extends Controller
                 $query->active();
                 $query->limit(1);
             }])
-            ->orderBy('name')
+            ->orderByRaw('ISNULL(sort_index), sort_index')
             ->withCount('products')
             ->get();
 

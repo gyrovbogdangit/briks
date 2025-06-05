@@ -77,7 +77,9 @@ class SubcategoryResource extends Resource
                                                 ->required()
                                         ]);
                                     }),
-
+                                Forms\Components\TextInput::make('sort_index')
+                                    ->label('Порядковый номер')
+                                    ->integer(),
                             ])
                     ])->persistTabInQueryString()
             ]);

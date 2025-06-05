@@ -26,6 +26,9 @@ class CategoriesRelationManager extends RelationManager
                     ->maxLength(255)
                     ->label('Название')
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('sort_index')
+                    ->label('Порядковый номер')
+                    ->integer(),
                 FileUpload::make('image')
                     ->label('Изображение')
                     ->image()
@@ -39,7 +42,10 @@ class CategoriesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Название'),
+                Tables\Columns\TextColumn::make('sort_index')
+                    ->label('Порядковый номер'),
             ])
             ->filters([
                 //

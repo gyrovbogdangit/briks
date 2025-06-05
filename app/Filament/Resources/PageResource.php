@@ -42,6 +42,9 @@ class PageResource extends Resource
                     ->label('Название страницы')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('sort_index')
+                    ->label('Порядковый номер')
+                    ->integer(),
                 Forms\Components\TextInput::make('description')
                     ->label('Описание')
                     ->required()

@@ -40,19 +40,19 @@ class Attribute extends Model
     {
         $attributes = $query->with(['values' => function ($query) use ($filter) {
             $query->orderBy('value')->distinct();
-            $query->whereHas('products', function ($q) use ($filter) {
-                $q->where('products.subcategory_id', $filter->subcategory->id);
+            $query->whereHas('products', function ($query) use ($filter) {
+                $query->where('products.subcategory_id', $filter->subcategory->id);
             });
         }])->get();
 
-        foreach ($attributes as $attribute) {
+        /* foreach ($attributes as $attribute) {
             $attribute->values = $attribute->values->sortBy('value');
             /*
                 Код ниже нужен для функции выбора нескольких значений у одного атрибута.
                 Например: пользователь выбрал страну Россия,
                     в выборе фильтров мы должны дать возможность выбрать ему другую страну(Китай) и корректно отобразить
                     кол-во для России и для Китая.
-            */
+
             $attribute->values->loadCount(['products' => function ($productQuery) use ($filter, $attribute) {
                 $productQuery->active();
                 $productQuery->withSubcategory($filter->subcategory);
@@ -93,7 +93,7 @@ class Attribute extends Model
                     $productQuery->filterByAttributes($filter->attributes);
                 }
             }]);
-        }
+        } */
         return $attributes;
     }
 

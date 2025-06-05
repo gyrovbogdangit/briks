@@ -1,14 +1,14 @@
 <div class="product-card rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
     style="width:220px;min-height:330px">
     <a
-        href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+        href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
         <img src="{{ asset(isset($product->images[0]) ? "storage/{$product->images[0]}" : 'img/content/product-1.jpg') }}"
             alt="{{ $product->name }}" class="rounded-top-2 w-100" style="height:160px; object-fit:cover;" />
     </a>
 
     <div class="card-body p-3 d-flex flex-column h-100">
         <h5 class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;"><a class="text-decoration-none"
-                href="{{ route('products.show', ['productType' => $product->category->productType, 'category' => $product->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+                href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
                 {{ Illuminate\Support\Str::limit($product->name, 60) }}
             </a>
         </h5>

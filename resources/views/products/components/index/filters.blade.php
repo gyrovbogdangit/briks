@@ -54,7 +54,9 @@
                                             <label
                                                 class="form-check-label  @if ($value->products_count === 0) text-black-50 @endif"
                                                 for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
-                                            <span class="text-muted ms-1">({{ $value->products_count }})</span>
+                                            @isset($value->products_count)
+                                                <span class="text-muted ms-1">({{ $value->products_count }})</span>
+                                            @endisset
                                         </div>
                                     </li>
                                 @endforeach

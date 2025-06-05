@@ -10,8 +10,9 @@ class ProductTypeController extends Controller
     public function show(ProductType $productType)
     {
         $categories = $productType->categories()
+            ->orderByRaw('ISNULL(sort_index), sort_index')
             ->with(['subcategories' => function ($query) {
-                $query->orderBy('name');
+                $query->orderByRaw('ISNULL(sort_index), sort_index');
                 $query->withCount('products');
             }])
             ->get();

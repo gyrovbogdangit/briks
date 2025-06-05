@@ -40,15 +40,16 @@ class ViewComposerProvider extends ServiceProvider
                 'catalog'
             ],
             function ($view) {
-                $types = ProductType::with([
-                    'categories' => function ($query) {
-                        $query->orderBy('name')->with([
-                            'subcategories' => function ($query) {
-                                $query->orderBy('name');
-                            }
-                        ]);
-                    }
-                ])->orderBy('name')->get();
+                $types = ProductType
+                    ::with([
+                        'categories' => function ($query) {
+                            $query
+                                ->orderByRaw('ISNULL(sort_index), sort_index')
+                                ->with(['subcategories' => fn($query) => $query->orderByRaw('ISNULL(sort_index), sort_index')]);
+                        }
+                    ])
+                    ->orderByRaw('ISNULL(sort_index), sort_index')
+                    ->get();
                 $view->with('types', $types);
             }
         );
@@ -63,13 +64,7 @@ class ViewComposerProvider extends ServiceProvider
 
             if (!$sharedData) {
                 $sharedData = [
-                    'pages' => Page::orderBy('title')->get(),
-                    'productTypes' => ProductType::withWhereHas('categories', function ($query) {
-                        $query->orderBy('name')->limit(1);
-                        $query->withWhereHas('subcategories', function ($query) {
-                            $query->orderBy('name')->limit(1);
-                        });
-                    })->get(),
+                    'pages' => Page::orderByRaw('ISNULL(sort_index), sort_index')->get(),
                     'phoneNumbers' => PhoneNumber::get(),
                     'emails' => Email::get(),
                     'addresses' => Address::get(),
@@ -85,17 +80,29 @@ class ViewComposerProvider extends ServiceProvider
         });
 
         View::composer('components.hot-products', function ($view) {
-            $hotProducts = Product::where('is_hit_of_sales', true)->active()->limit(20)->get();
+            $hotProducts = Product::where('is_hit_of_sales', true)
+                ->active()
+                ->with('subcategory.category.productType')
+                ->limit(20)
+                ->get();
             $view->with('hotProducts', $hotProducts);
         });
 
         View::composer('components.popular-products', function ($view) {
-            $popularProducts = Product::orderBy('views', 'desc')->active()->limit(20)->get();
+            $popularProducts = Product::orderBy('views', 'desc')
+                ->active()
+                ->with('subcategory.category.productType')
+                ->limit(20)
+                ->get();
             $view->with('popularProducts', $popularProducts);
         });
 
         View::composer('components.new-products', function ($view) {
-            $newProducts = Product::where('is_new', true)->active()->limit(20)->get();
+            $newProducts = Product::where('is_new', true)
+                ->active()
+                ->with('subcategory.category.productType')
+                ->limit(20)
+                ->get();
             $view->with('newProducts', $newProducts);
         });
     }

@@ -9,7 +9,6 @@ use App\Models\Category;
 use App\Models\ProductType;
 use App\Models\Subcategory;
 use App\Http\Controllers\Controller;
-use App\Models\Attribute;
 use App\Services\RecentlyViewedService;
 
 class ProductController extends Controller
@@ -18,10 +17,13 @@ class ProductController extends Controller
     {
         $filter = new Filter($productType, $category, $subcategory, request()->query());
 
-        $categories = $productType->categories()->with(['subcategories' => function ($query) {
-            $query->orderBy('name');
-            $query->withCount('products');
-        }])->get();
+        $categories = $productType
+            ->categories()
+            ->orderByRaw('ISNULL(sort_index), sort_index')
+            ->with(['subcategories' => function ($query) {
+                $query->orderByRaw('ISNULL(sort_index), sort_index');
+                $query->withCount('products');
+            }])->get();
 
         $attributes = $category
             ->attributes()
@@ -29,12 +31,9 @@ class ProductController extends Controller
 
         $products = $subcategory
             ->products()
-            ->with('subcategory')
-            ->with(['category' => function ($query) {
-                $query->with('productType');
-            }])
+            ->with('subcategory.category.productType')
             ->active()
-            ->withAttributes()
+            /*  ->withAttributes() */
             ->filterByAttributes($filter->attributes)
             ->sortBy($filter->sortBy)
             ->showProducts($filter->showProducts);

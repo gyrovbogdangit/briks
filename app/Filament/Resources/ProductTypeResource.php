@@ -45,6 +45,9 @@ class ProductTypeResource extends Resource
                     ->label('Название')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('sort_index')
+                    ->label('Порядковый номер')
+                    ->integer(),
                 RichEditor::make('short_text')
                     ->label('Короткое описание')
                     ->columnSpanFull()

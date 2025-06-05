@@ -23,10 +23,7 @@ class RecentlyViewedService
             $recentlyViewedProducts = Product::whereIn('id', $recentlyViewedProducts)
                 ->active()
                 ->orderByRaw('FIELD(id, ' . implode(',', $recentlyViewedProducts) . ') DESC')
-                ->with('subcategory')
-                ->with(['category' => function ($query) {
-                    $query->with('productType');
-                }])
+                ->with('subcategory.category.productType')
                 ->limit(5)
                 ->get();
         }
