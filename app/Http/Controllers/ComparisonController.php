@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\Seo;
+use App\Helpers\Seo;
 
 class ComparisonController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Helper\Seo;
+use App\Helpers\Seo;
 use App\Helpers\Filter;
 use App\Models\Product;
 use App\Models\Category;
