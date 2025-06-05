@@ -1,5 +1,6 @@
 $primary: #027d8a;
 $secondary: darken($primary, 5%);
+$info: #515558;
 
 @import "bootstrap/scss/bootstrap";
 @import "@fancyapps/fancybox/dist/jquery.fancybox.css";
@@ -11,25 +12,6 @@ body {
 .navbar-brand {
     font-family: "Unbounded", sans-serif;
     font-size: 24px;
-}
-.hero-banner::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-}
-.hero-text {
-    position: relative;
-    z-index: 2;
-}
-.hero-text h1 {
-    font-family: "Unbounded", sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-}
-.hero-text p {
-    font-size: 20px;
-    margin-top: 10px;
 }
 /* Section Titles */
 .section-title {
@@ -204,8 +186,11 @@ footer a:hover {
 }
 .top-nav a {
     color: #fff;
-    margin-left: 10px;
+    margin-left: 14px;
     text-decoration: none;
+    :first-child {
+        margin-left: 0;
+    }
 }
 .top-nav a:hover {
     color: $gray-200;
@@ -363,6 +348,11 @@ footer a:hover {
     }
 }
 
+.quick-filter {
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
 .fancy-thumb-scroll {
     scrollbar-width: thin;
     scrollbar-color: #d1d5db #f8fafc;
@@ -425,4 +415,49 @@ footer a:hover {
         right: 18px !important;
         font-size: 1.2rem !important;
     }
+}
+@media (max-width: 576px) {
+    .hero-carousel {
+        margin-top: 100px;
+    }
+
+    .hero-banner {
+        height: 220px !important;
+        min-height: 180px;
+        background-position: center center !important;
+    }
+    .hero-text h1 {
+        font-size: 1.3rem !important;
+        line-height: 1.2;
+    }
+    .hero-text p {
+        font-size: 1rem !important;
+        margin-top: 6px;
+    }
+    .hero-text .btn {
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+    }
+}
+@media (max-width: 400px) {
+    .hero-banner {
+        height: 140px !important;
+    }
+    .hero-text h1 {
+        font-size: 1rem !important;
+    }
+}
+.carousel-control-prev {
+    width: 5% !important;
+}
+
+.carousel-control-next {
+    width: 5% !important;
+}
+
+.product-actions a {
+    color: $gray-600;
+}
+.product-actions a:hover {
+    color: $gray-700;
 }

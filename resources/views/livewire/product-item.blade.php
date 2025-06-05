@@ -30,7 +30,7 @@
                             <span class="new-price">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}
                                 ₽/шт</span>
                         @else
-                            <span class="new-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
+                            <span class="new-price ms-auto">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
                                 ₽/шт</span>
                         @endif
                     </div>
@@ -42,7 +42,8 @@
                             <span class="new-price">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
                                 ₽/м²</span>
                         @else
-                            <span class="new-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                            <span class="new-price ms-auto">{{ number_format($product->price_sqm, 0, ',', ' ') }}
+                                ₽/м²</span>
                         @endif
                     </div>
                 @endif
@@ -91,6 +92,4 @@
         @endif
 
     </div>
-
-    {{--  @include('products.components.modal-request-price') --}}
 </div>

@@ -1,63 +1,29 @@
- <section id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-     <div class="carousel-inner">
-         <div class="carousel-item active">
-             <div class="hero-banner d-flex align-items-center justify-content-center text-center"
-                 style="
-              background: url('https://placehold.co/1900x500') center/cover
-                no-repeat;
-              height: 500px;
-              position: relative;
-            ">
-                 <div class="hero-text text-white">
-                     <h1 class="fw-bold">Облицовочные материалы от БРИКС</h1>
-                     <p class="fw-semibold">
-                         Качество. Надёжность. Прямо от производителя
-                     </p>
-                     <a href="#" class="btn btn-primary btn-lg mt-3 fw-semibold">Оформить заказ</a>
-                 </div>
-             </div>
-         </div>
+<section id="heroCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        @foreach ($heroSliders as $i => $slide)
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}"
+                @if ($loop->first) class="active"
+                aria-current="true" @endif
+                aria-label="Slide {{ $i }}"></button>
+        @endforeach
+    </div>
+    <div class="carousel-inner">
+        @foreach ($heroSliders as $slide)
+            <div class="carousel-item @if ($loop->first) active @endif">
+                <a href="{{ $slide->url }}">
+                    <div class="hero-banner d-flex align-items-center justify-content-center text-center"
+                        style="background: url('{{ asset('storage/' . $slide->image) }}') center/cover no-repeat;
+                            height: 500px;position: relative;">
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
 
-         <div class="carousel-item">
-             <div class="hero-banner d-flex align-items-center justify-content-center text-center"
-                 style="
-              background: url('https://placehold.co/1900x500') center/cover
-                no-repeat;
-              height: 500px;
-              position: relative;
-            ">
-                 <div class="hero-text text-white">
-                     <h1 class="fw-bold">Керамическая черепица для вашего дома</h1>
-                     <p class="fw-semibold">
-                         Эстетика. Долговечность. Проверенное качество
-                     </p>
-                     <a href="#" class="btn btn-primary btn-lg mt-3 fw-semibold">Оформить заказ</a>
-                 </div>
-             </div>
-         </div>
-
-         <div class="carousel-item">
-             <div class="hero-banner d-flex align-items-center justify-content-center text-center"
-                 style="
-              background: url('https://placehold.co/1900x500') center/cover
-                no-repeat;
-              height: 500px;
-              position: relative;
-            ">
-                 <div class="hero-text text-white">
-                     <h1 class="fw-bold">Надёжный металлопрофиль от БРИКС</h1>
-                     <p class="fw-semibold">Идеальное решение для кровли и фасадов</p>
-                     <a href="#" class="btn btn-primary btn-lg mt-3 fw-semibold">Оформить заказ</a>
-                 </div>
-             </div>
-         </div>
-     </div>
-
-     <!-- Стрелки навигации -->
-     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-         <span class="carousel-control-prev-icon"></span>
-     </button>
-     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-         <span class="carousel-control-next-icon"></span>
-     </button>
- </section>
+    <button class="carousel-control-prev z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</section>

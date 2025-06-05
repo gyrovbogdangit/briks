@@ -6,6 +6,7 @@ use App\Helper\Seo;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Email;
+use App\Models\HeroSlider;
 use App\Models\PhoneNumber;
 
 class HomeController extends Controller
@@ -22,7 +23,11 @@ class HomeController extends Controller
             'website',
         );
 
-        return view('index')->with('seo', $seo);
+        $heroSliders = HeroSlider::orderByRaw('ISNULL(sort_index), sort_index')->get();
+
+        return view('index')
+            ->with('seo', $seo)
+            ->with('heroSliders', $heroSliders);
     }
 
     public function catalog()

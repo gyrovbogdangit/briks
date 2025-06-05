@@ -16,7 +16,7 @@
                     @foreach ($products->chunk(5) as $chunkIndex => $chunk)
                         <div class="carousel-item @if ($chunkIndex === 0) active @endif">
                             <div
-                                class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center align-items-stretch h-100 m-0">
+                                class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center align-items-stretch h-100 m-0 py-1">
                                 @foreach ($chunk as $product)
                                     <div class="col d-flex align-items-stretch">
                                         <livewire:product-item :product="$product" :wire:key="'{$key}-'.$product->id" />

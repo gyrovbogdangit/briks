@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-    @include('components.hero')
+    <div class="container">
+        @include('components.hero')
+    </div>
 
     <section class="py-5 bg-light">
         @include('components.hot-products')
