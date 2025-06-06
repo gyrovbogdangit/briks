@@ -1,5 +1,6 @@
 @if ($filter->attributes->isNotEmpty() || $filter->priceRange)
-    <div class="d-flex justify-content-start gap-3 align-items-center fancy-thumb-scroll overflow-x-auto pb-1">
+    <div class="d-flex justify-content-start gap-3 align-items-center fancy-thumb-scroll overflow-x-auto pb-1"
+        style="max-width: calc(100vw - 50px);">
         @foreach ($filter->attributes as $attribute)
             @foreach ($attribute->values as $value)
                 <a href="{{ route('products.index', [
