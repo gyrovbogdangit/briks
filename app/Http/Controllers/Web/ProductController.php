@@ -38,16 +38,6 @@ class ProductController extends Controller
             ->sortBy($filter->sortBy)
             ->showProducts($filter->showProducts);
 
-
-        $productsCopy = clone $products;
-        $priceRange = $productsCopy->getPriceRange();
-        $minPrice = $priceRange->value('min_price');
-        $maxPrice = $priceRange->value('max_price');
-
-        if ($filter->priceRange) {
-            $products->filterByPriceRange($filter->priceRange);
-        }
-
         $products = $products->paginate($filter->pageSize);
 
         $quickFilters = $subcategory
@@ -75,8 +65,6 @@ class ProductController extends Controller
                 'attributes' => $attributes,
                 'filter' => $filter,
                 'quickFilters' => $quickFilters,
-                'minPrice' => $minPrice,
-                'maxPrice' => $maxPrice,
                 'seo' => $seo
             ]);
     }

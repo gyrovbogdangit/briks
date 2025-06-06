@@ -118,21 +118,33 @@ class Product extends Model
 
     public static function scopeFilterByAttributes($query, $attributes)
     {
-        foreach ($attributes as $attribute) {
-            $query->whereHas('attributeValues', function ($query) use ($attribute) {
-                $name = $attribute->slug;
-                $values = $attribute->values->pluck('slug');
-                $query
-                    ->whereHas('attribute', function ($query) use ($name) {
-                        $query->where('slug', $name);
-                    })
-                    ->whereHas('value', function ($query) use ($values) {
-                        $query->whereIn('slug', $values);
-                    });
-            });
+        if ($attributes->isEmpty()) {
+            return $query;
         }
-        return $query;
+
+        $attributeCount = $attributes->count();
+
+        $filters = $attributes->mapWithKeys(function ($attr) {
+            return [$attr->slug => $attr->values->pluck('slug')->toArray()];
+        });
+
+        return $query->whereHas('attributeValues', function ($q) use ($filters, $attributeCount) {
+            $q->join('attributes as a', 'attribute_values.attribute_id', '=', 'a.id')
+                ->join('values as v', 'attribute_values.value_id', '=', 'v.id')
+                ->where(function ($query) use ($filters) {
+                    foreach ($filters as $attributeSlug => $valueSlugs) {
+                        $query->orWhere(function ($q2) use ($attributeSlug, $valueSlugs) {
+                            $q2->where('a.slug', $attributeSlug)
+                                ->whereIn('v.slug', $valueSlugs);
+                        });
+                    }
+                })
+                ->select('attribute_values.product_id')
+                ->groupBy('attribute_values.product_id')
+                ->havingRaw('COUNT(DISTINCT a.slug) = ?', [$attributeCount]);
+        });
     }
+
 
     public static function scopeSortBy($query, $sortBy)
     {

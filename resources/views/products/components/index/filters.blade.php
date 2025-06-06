@@ -50,9 +50,9 @@
                                             <input type="checkbox" class="form-check-input filter-checkbox me-2"
                                                 name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
                                                 id="filter-{{ $attribute->id }}-{{ $value->id }}"
+                                                @if ($value->products_count === 0) disabled @endif
                                                 data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug)) />
-                                            <label
-                                                class="form-check-label  @if ($value->products_count === 0) text-black-50 @endif"
+                                            <label class="form-check-label"
                                                 for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
                                             @isset($value->products_count)
                                                 <span class="text-muted ms-1">({{ $value->products_count }})</span>
