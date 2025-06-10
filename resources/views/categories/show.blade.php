@@ -38,19 +38,17 @@
                 <div class="col-12 col-md-10 col-lg-8 mb-4">
                     <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
-                            <div class="col-12 col-md-4 text-center bg-white py-3 px-2">
-                                @if (isset($subcategory->products[0]->images[0]))
+                            @isset($subcategory->products[0]->images[0])
+                                <div class="col-12 col-md-4 text-center bg-white py-3 px-2">
                                     <a
                                         href="{{ route('products.index', ['productType' => $category->productType, 'category' => $category, 'subcategory' => $subcategory]) }}">
                                         <img src="{{ asset('storage/' . $subcategory->products[0]->images[0]) }}"
                                             alt="{{ $subcategory->name }}" class="img-fluid rounded-3"
                                             style="max-height:100px;object-fit:contain;">
                                     </a>
-                                @else
-                                    <div class="text-muted small">Нет изображения</div>
-                                @endif
-                            </div>
-                            <div class="col-12 col-md-8 p-3">
+                                </div>
+                            @endisset
+                            <div class="col-12 col-md-8 p-3 @if (!isset($subcategory->products[0]->images[0])) ms-5 @endif">
                                 <h2 class="h5 fw-bold mb-2"><a
                                         href="{{ route('products.index', ['productType' => $category->productType, 'category' => $category, 'subcategory' => $subcategory]) }}"
                                         class="text-decoration-none text-dark">{{ $subcategory->name }}</a>

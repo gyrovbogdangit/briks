@@ -31,18 +31,16 @@
                 <div class="col-12 col-md-10 col-lg-8 mb-4">
                     <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
-                            <div class="col-12 col-md-4 text-center bg-white py-3 px-2">
-                                @if (isset($category->image))
+                            @isset($category->image)
+                                <div class="col-12 col-md-4 text-center bg-white py-3 px-2">
                                     <a
                                         href="{{ route('categories.show', ['productType' => $productType, 'category' => $category]) }}">
                                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                                             class="img-fluid rounded-3" style="max-height:100px;object-fit:contain;">
                                     </a>
-                                @else
-                                    <div class="text-muted small">Нет изображения</div>
-                                @endif
-                            </div>
-                            <div class="col-12 col-md-8 p-3">
+                                </div>
+                            @endisset
+                            <div class="col-12 col-md-8 p-3 @if (!isset($category->image)) ms-5 @endif">
                                 <h2 class="h5 fw-bold mb-2"><a class="text-decoration-none text-dark"
                                         href="{{ route('categories.show', ['productType' => $productType, 'category' => $category]) }}">{{ $category->name }}</a>
                                 </h2>
