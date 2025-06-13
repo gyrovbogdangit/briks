@@ -5,13 +5,13 @@
             style="min-height: 420px;">
             @if ($products->count() > 5)
                 <button
-                    class="carousel-control-prev position-relative me-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-sm-flex"
+                    class="carousel-control-prev position-relative me-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-lg-flex"
                     type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="prev"
                     style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-arrow-left fs-4"></i>
                 </button>
             @endif
-            <div id="{{ $key }}Carousel" class="carousel slide flex-grow-1 d-none d-sm-block">
+            <div id="{{ $key }}Carousel" class="carousel slide flex-grow-1 d-none d-lg-block">
                 <div class="carousel-inner w-100">
                     @foreach ($products->chunk(5) as $chunkIndex => $chunk)
                         <div class="carousel-item @if ($chunkIndex === 0) active @endif">
@@ -27,7 +27,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="d-block d-sm-none w-100">
+            <div class="d-lg-none w-100">
                 <div class="d-flex flex-nowrap gap-3 overflow-auto pb-2" style="scroll-snap-type: x mandatory;">
                     @foreach ($products as $product)
                         <div style="min-width: 85vw; max-width: 90vw; scroll-snap-align: start;" class="flex-shrink-0">
@@ -39,7 +39,7 @@
             </div>
             @if ($products->count() > 5)
                 <button
-                    class="carousel-control-next position-relative ms-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-sm-flex"
+                    class="carousel-control-next position-relative ms-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-lg-flex"
                     type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="next"
                     style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-arrow-right fs-4"></i>

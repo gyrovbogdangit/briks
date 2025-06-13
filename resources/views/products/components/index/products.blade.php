@@ -12,7 +12,7 @@
              </p>
          @endif
      </div>
-     <div class="container mt-4">
+     <div class="mt-4">
          @include('products.components.index.pagination')
      </div>
  </div>

@@ -81,7 +81,7 @@
     </div>
 
     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
-        <a class="btn btn-outline-primary rounded-3 px-4 py-2 shadow-sm w-100" href="#chars" data-tab-index="1">
+        <a class="btn btn-outline-primary rounded-3 px-4 py-2 shadow-sm w-100" href="#chars" data-bs-toggle="tab" data-bs-target="#chars" role="tab" aria-controls="chars">
             <i class="fa-solid fa-down-long"></i> Все характеристики
         </a>
         @isset($product->article)
