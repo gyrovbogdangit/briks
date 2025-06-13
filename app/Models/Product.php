@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Category;
-use App\Models\ProductType;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use App\Models\AttributeValue;
@@ -21,6 +20,7 @@ class Product extends Model
         'is_hit_of_sales' => 'boolean',
         'is_active' => 'boolean',
         'images' => 'array',
+        'thumbs' => 'array',
         'docs' => 'array',
         'docs_file_names' => 'array'
     ];
@@ -44,6 +44,25 @@ class Product extends Model
             'subcategory_id',
             'category_id'
         );
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($product) {
+            if (!$product->isDirty('images')) {
+                return;
+            }
+
+            $compressor = new \App\Services\ImageCompressor();
+            $thumbs = [];
+
+            foreach ((array) $product->images as $imagePath) {
+                $compressedPath = $compressor->compress($imagePath, 200);
+                $thumbs[] = $compressedPath ?: null;
+            }
+
+            $product->thumbs = $thumbs;
+        });
     }
 
     public function attributeValues()

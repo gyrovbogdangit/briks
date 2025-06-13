@@ -9,6 +9,7 @@
         "awcodes/filament-tiptap-editor": "^3.0",
         "fedeisas/laravel-mail-css-inliner": "^5.3",
         "filament/filament": "^3.2",
+        "intervention/image": "^3.11",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",

@@ -4,7 +4,8 @@
             @foreach ($product->images as $i => $image)
                 <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="{{ $product->name }}"
                     @if ($i > 0) style="display:none;" @endif>
-                    <img src="{{ asset('storage/' . $image) }}" class="d-block w-100 rounded" alt="">
+                    <img src="{{ asset('storage/' . ($product->thumbs[$i] ?? $image)) }}" class="d-block w-100 rounded"
+                        alt="{{ $product->name }}">
                 </a>
             @endforeach
         @else
@@ -20,7 +21,7 @@
             @foreach ($product->images as $i => $image)
                 <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="{{ $product->name }}"
                     style="scroll-snap-align: start; min-width: 60px; max-width: 60px;">
-                    <img src="{{ asset('storage/' . $image) }}" class="rounded border"
+                    <img src="{{ asset('storage/' . ($product->thumbs[$i] ?? $image)) }}" class="rounded border"
                         style="width: 60px; height: 60px; object-fit: cover; cursor:pointer;" alt="">
                 </a>
             @endforeach

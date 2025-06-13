@@ -2,7 +2,7 @@
     style="width:220px;min-height:330px">
     <a
         href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
-        <img src="{{ asset(isset($product->images[0]) ? "storage/{$product->images[0]}" : 'img/content/product-1.jpg') }}"
+        <img src="{{ asset(isset($product->images[0]) && isset($product->thumbs[0]) ? "storage/{$product->thumbs[0]}" : 'img/content/product-1.jpg') }}"
             alt="{{ $product->name }}" class="rounded-top-2 w-100" style="height:160px; object-fit:cover;" />
     </a>
 
