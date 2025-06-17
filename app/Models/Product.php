@@ -30,7 +30,14 @@ class Product extends Model
         parent::boot();
 
         static::saving(function ($model) {
-            $model->slug = Str::slug($model->name);
+            $baseSlug = Str::slug($model->name);
+            $slug = $baseSlug;
+            $i = 1;
+            while (static::where('slug', $slug)->where('id', '!=', $model->id)->exists()) {
+                $slug = $baseSlug . '-' . $i;
+                $i++;
+            }
+            $model->slug = $slug;
         });
     }
 
