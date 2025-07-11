@@ -33,6 +33,24 @@
 
     @yield('js')
     @livewireScripts
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!localStorage.getItem('cookieAccepted')) {
+                const cookieBanner = document.createElement('div');
+                cookieBanner.innerHTML = `
+                    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:16px 10px;z-index:9999;display:flex;justify-content:center;align-items:center;gap:16px;box-shadow:0 -2px 8px rgba(0,0,0,0.1);font-size:1rem;">
+                        <span>Мы используем cookie для улучшения работы сайта. Продолжая пользоваться сайтом, вы соглашаетесь с <a href='/privacy' style='color:#ffd700;text-decoration:underline;'>политикой конфиденциальности</a>.</span>
+                        <button id="cookie-accept-btn" style="background:#ffd700;color:#222;border:none;padding:8px 18px;border-radius:6px;font-weight:600;cursor:pointer;">Ок</button>
+                    </div>
+                `;
+                document.body.appendChild(cookieBanner);
+                document.getElementById('cookie-accept-btn').onclick = function () {
+                    localStorage.setItem('cookieAccepted', '1');
+                    document.getElementById('cookie-banner').remove();
+                };
+            }
+        });
+    </script>
 </body>
 
 </html>
