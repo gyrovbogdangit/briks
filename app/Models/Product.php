@@ -7,6 +7,8 @@ use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Bus;
+use App\Jobs\CompressProductImagesJob;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,20 +57,11 @@ class Product extends Model
 
     protected static function booted()
     {
-        static::saving(function ($product) {
+        static::saved(function ($product) {
             if (!$product->isDirty('images')) {
                 return;
             }
-
-            $compressor = new \App\Services\ImageCompressor();
-            $thumbs = [];
-
-            foreach ((array) $product->images as $imagePath) {
-                $compressedPath = $compressor->compress($imagePath, 200);
-                $thumbs[] = $compressedPath ?: null;
-            }
-
-            $product->thumbs = $thumbs;
+            Bus::dispatch(new CompressProductImagesJob($product->id, $product->images));
         });
     }
 
