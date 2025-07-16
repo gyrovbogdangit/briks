@@ -6,7 +6,7 @@
             @if (isset($product->thumbs[0])) {{ Storage::url($product->thumbs[0]) }}
             @elseif (isset($product->images[0])) {{ Storage::url($product->images[0]) }}
             @else {{ asset('img/content/product-1.jpg') }} @endif"
-            alt="{{ $product->name }}" class="rounded-top-2 w-100" style="height:160px; object-fit:cover;" />
+            alt="{{ $product->name }}" class="rounded-top-2 w-100" style="height:100%; object-fit:cover;" />
     </a>
 
     <div class="card-body p-3 d-flex flex-column h-100">
