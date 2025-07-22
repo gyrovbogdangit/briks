@@ -11,6 +11,6 @@ class CustomerService
 
     public static function getCity()
     {
-        return session('city', false);
+        return session('city', 'Воронеж');
     }
 }

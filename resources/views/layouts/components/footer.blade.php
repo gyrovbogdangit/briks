@@ -35,16 +35,11 @@
                             class="link-light text-decoration-none">{{ $emails[0]->email }}</a>
                     </li>
                 </ul>
-                {{-- <div class="mt-3">
-                    <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                    <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                    <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
-                </div> --}}
             </div>
         </div>
         <hr class="bg-light" />
         <div class="text-center small">
-            &copy; 2025 БРИКС. Все права защищены.
+            &copy; 2025 БРИКС. Все права защищены. Не является публичной офертой.
         </div>
     </div>
 </footer>
