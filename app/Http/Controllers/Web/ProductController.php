@@ -46,10 +46,10 @@ class ProductController extends Controller
             ->get();
 
         $seo = new Seo(
-            "{$productType->name} — Строительные материалы Briks: кирпич, кровля, плитка",
-            'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от Briks. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
-            "{$productType->name} — Каталог строительных материалов Briks",
-            'Ознакомьтесь с ассортиментом Briks: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
+            "{$productType->name} — Строительные материалы БРИКС: кирпич, кровля, плитка",
+            'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от БРИКС. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
+            "{$productType->name} — Каталог строительных материалов БРИКС",
+            'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
             asset('storage/' . $productType->image),
             route('products.index', ['productType' => $productType->slug, 'category' => $category, 'subcategory' => $subcategory]),
             'website',
@@ -92,10 +92,10 @@ class ProductController extends Controller
             ->get();
 
         $seo = new Seo(
-            "{$product->name} — Купить строительные материалы Briks",
-            "{$product->name} от Briks. Качественный кирпич, кровля, плитка и другие строительные материалы с доставкой по России.",
-            "{$product->name} — Купить в Briks",
-            "{$product->name} для строительства и отделки. Закажите онлайн с доставкой по всей России от Briks.",
+            "{$product->name} — Купить строительные материалы БРИКС",
+            "{$product->name} от БРИКС. Качественный кирпич, кровля, плитка и другие строительные материалы с доставкой по России.",
+            "{$product->name} — Купить в БРИКС",
+            "{$product->name} для строительства и отделки. Закажите онлайн с доставкой по всей России от БРИКС.",
             isset($subcategory->images[0]) ? asset('storage/' . $subcategory->images[0]) : asset('storage/' . $productType->image),
             route('products.show', ['productType' => $productType->slug, 'category' => $category->slug, 'subcategory' => $subcategory->slug, 'product' => $product->slug]),
             'product',

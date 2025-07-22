@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Briks</title>
+    <title>БРИКС</title>
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;

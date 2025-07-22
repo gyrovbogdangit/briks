@@ -34,7 +34,7 @@ class Seo
         string $ogImage,
         string $ogUrl,
         string $ogType,
-        string $ogSiteName = 'Briks'
+        string $ogSiteName = 'БРИКС'
     ) {
         $this->title = $title;
         $this->description = $description;
