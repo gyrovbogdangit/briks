@@ -25,7 +25,7 @@ class CategoryController extends Controller
             'Купить ' . mb_strtolower($category->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
             $category->name . ' — Каталог БРИКС',
             'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($category->name) . ', кровля, плитка, фасадные материалы. Доставка по всей России.',
-            isset($category->image) ? asset('storage/' . $category->image) : null,
+            isset($category->image) ? asset('storage/' . $category->image) : '',
             route('categories.show', ['productType' => $productType->slug, 'category' => $category->slug]),
             'website',
         );

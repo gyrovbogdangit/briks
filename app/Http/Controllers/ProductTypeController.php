@@ -22,7 +22,7 @@ class ProductTypeController extends Controller
             'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
             $productType->name . ' — Каталог БРИКС',
             'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Доставка по всей России.',
-            isset($productType->image) ? asset('storage/' . $productType->image) : null,
+            isset($productType->image) ? asset('storage/' . $productType->image) : '',
             route('product-types.show', ['productType' => $productType->slug]),
             'website',
         );
