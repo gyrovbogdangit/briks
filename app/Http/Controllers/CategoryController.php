@@ -20,9 +20,20 @@ class CategoryController extends Controller
             ->withCount('products')
             ->get();
 
+        $seo = new \App\Helpers\Seo(
+            $category->name . ' — Каталог строительных материалов БРИКС',
+            'Купить ' . mb_strtolower($category->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
+            $category->name . ' — Каталог БРИКС',
+            'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($category->name) . ', кровля, плитка, фасадные материалы. Доставка по всей России.',
+            isset($category->image) ? asset('storage/' . $category->image) : null,
+            route('categories.show', ['productType' => $productType->slug, 'category' => $category->slug]),
+            'website',
+        );
+
         return view('categories.show', [
             'category' => $category,
             'subcategories' => $subcategories,
+            'seo' => $seo,
         ]);
     }
 }
