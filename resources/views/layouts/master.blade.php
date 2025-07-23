@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
     <!-- Yandex.Metrika counter -->
-    <meta name="yandex-verification" content="70e92b50ce025327"  />
+    <meta name="yandex-verification" content="70e92b50ce025327" />
     <script type="text/javascript">
         (function(m, e, t, r, i, k, a) {
             m[i] = m[i] || function() {
