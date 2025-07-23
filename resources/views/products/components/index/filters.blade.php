@@ -12,8 +12,8 @@
                             {{ $category->name }}
                         </a>
                         @if (count($category->subcategories))
-                            <ul
-                                class="collapse list-group ms-3 {{ $filter->category->slug === $category->slug ? 'show' : '' }}">
+                            <ul class="collapse list-group ms-3 mt-2 {{ $filter->category->slug === $category->slug ? 'show' : '' }}"
+                                id="category-{{ $category->slug }}-subcategories">
                                 @foreach ($category->subcategories as $subcategory)
                                     <li class="list-group-item p-0 border-0 bg-transparent">
                                         <a class="subcategory-link text-decoration-none d-block px-2 py-1 position-relative {{ $subcategory->slug === $filter->subcategory->slug ? 'active-subcategory' : '' }}"
