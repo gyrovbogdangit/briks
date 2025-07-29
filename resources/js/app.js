@@ -37,6 +37,9 @@ $(document).on('mouseenter', '.catalog-type-link', function (e) {
     $(this).closest('.catalog-type-item').addClass('active');
 
     $('.catalog-subcategories-menu').removeClass('active').addClass('d-none');
+
+    const categoryId = $(`.catalog-categories-menu[data-categories-for='${typeId}'] a`).first().data('category-id')
+    $(`.catalog-subcategories-menu[data-subcategories-for='${categoryId}']`).addClass('active').removeClass('d-none');
 });
 
 $(document).on('mouseenter', '.catalog-category-link', function () {
@@ -47,9 +50,9 @@ $(document).on('mouseenter', '.catalog-category-link', function () {
     $(`.catalog-subcategories-menu[data-subcategories-for='${categoryId}']`).addClass('active').removeClass('d-none');
 });
 
-$(document).on('mouseleave', '.catalog-categories-menu', function () {
+/* $(document).on('mouseleave', '.catalog-categories-menu', function () {
     $('.catalog-subcategories-menu').removeClass('active').addClass('d-none');
-});
+}); */
 
 $('#catalog-menu').on('show.bs.offcanvas', function () {
     $('.catalog-categories-menu').removeClass('active').addClass('d-none');

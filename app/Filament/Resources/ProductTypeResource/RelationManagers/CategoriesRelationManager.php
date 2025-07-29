@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -33,7 +34,14 @@ class CategoriesRelationManager extends RelationManager
                     ->label('Изображение')
                     ->image()
                     ->directory('categories')
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
+                Select::make('product_type_id')
+                    ->label('Тип товара')
+                    ->relationship('productType', 'name')
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->columnSpanFull(),
             ]);
     }
 
