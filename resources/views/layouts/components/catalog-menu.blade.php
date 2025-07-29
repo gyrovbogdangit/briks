@@ -20,7 +20,7 @@
             </ul>
             @foreach ($types as $type)
                 @if (!empty($type->categories))
-                    <div class="catalog-categories-menu d-none" data-categories-for="{{ $type->id }}">
+                    <div class="catalog-categories-menu" data-categories-for="{{ $type->id }}">
                         <ul class="catalog-categories list-group border-start border-end">
                             @foreach ($type->categories as $category)
                                 <li class="list-group-item px-3 py-2 border-0 catalog-category-item">
@@ -35,9 +35,8 @@
                         </ul>
                         @foreach ($type->categories as $category)
                             @if (!empty($category->subcategories))
-                                <div class="catalog-subcategories-menu d-none"
-                                    data-subcategories-for="{{ $category->id }}">
-                                    <ul class="catalog-subcategories list-group border-start">
+                                <div class="catalog-subcategories-menu" data-subcategories-for="{{ $category->id }}">
+                                    <ul class="catalog-subcategories list-group">
                                         @foreach ($category->subcategories as $subcategory)
                                             <li class="list-group-item px-3 py-2 border-0">
                                                 <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
