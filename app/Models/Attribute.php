@@ -7,6 +7,7 @@ use App\Models\Value;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 
 class Attribute extends Model
 {
@@ -36,23 +37,23 @@ class Attribute extends Model
         return $this->belongsToMany(Category::class, 'attribute_category');
     }
 
-    public static function scopeWithUniqueValues($query, Filter $filter)
+    /**
+     * Получить коллекцию атрибутов с уникальными значениями и подсчетом продуктов для фильтрации.
+     */
+    public static function getWithValuesAndCounts(Filter $filter)
     {
-        $attributes = $query->with(['values' => function ($query) use ($filter) {
-            $query->orderBy('value')->distinct();
-            $query->whereHas('products', function ($query) use ($filter) {
-                $query->where('products.subcategory_id', $filter->subcategory->id);
-            });
-        }])->get();
+        $attributes = $filter
+            ->category
+            ->attributes()
+            ->with(['values' => function ($query) use ($filter) {
+                $query->orderBy('value')->distinct();
+                $query->whereHas('products', function ($query) use ($filter) {
+                    $query->where('products.subcategory_id', $filter->subcategory->id);
+                });
+            }])->get();
 
         foreach ($attributes as $attribute) {
             $attribute->values = $attribute->values->sortBy('value');
-            /*
-                Код ниже нужен для функции выбора нескольких значений у одного атрибута.
-                Например: пользователь выбрал страну Россия,
-                    в выборе фильтров мы должны дать возможность выбрать ему другую страну(Китай) и корректно отобразить
-                    кол-во для России и для Китая.
-            */
             $attribute->values->loadCount(['products' => function ($productQuery) use ($filter, $attribute) {
                 $productQuery->active();
                 $productQuery->withSubcategory($filter->subcategory);

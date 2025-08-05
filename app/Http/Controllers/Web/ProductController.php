@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\ProductType;
 use App\Models\Subcategory;
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Services\RecentlyViewedService;
 
 class ProductController extends Controller
@@ -25,15 +26,12 @@ class ProductController extends Controller
                 $query->withCount('products');
             }])->get();
 
-        $attributes = $category
-            ->attributes()
-            ->withUniqueValues($filter);
+        $attributes = Attribute::getWithValuesAndCounts($filter);
 
         $products = $subcategory
             ->products()
             ->with('subcategory.category.productType')
             ->active()
-            /*  ->withAttributes() */
             ->filterByAttributes($filter->attributes)
             ->sortBy($filter->sortBy)
             ->showProducts($filter->showProducts);
