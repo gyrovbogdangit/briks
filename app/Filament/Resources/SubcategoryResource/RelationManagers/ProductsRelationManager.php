@@ -5,12 +5,15 @@ namespace App\Filament\Resources\SubcategoryResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Value;
+use App\Models\Category;
 use Filament\Forms\Form;
 use App\Models\Attribute;
-use App\Models\Category;
-use App\Models\Subcategory;
 use Filament\Tables\Table;
+use App\Models\Subcategory;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Tabs;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -19,6 +22,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -64,6 +68,12 @@ class ProductsRelationManager extends RelationManager
                                     ->numeric(),
                                 TextInput::make('discount_price_sqm')
                                     ->label('Скидочная цена за квадратный метр')
+                                    ->numeric(),
+                                TextInput::make('price_m3')
+                                    ->label('Цена за кубический метр')
+                                    ->numeric(),
+                                TextInput::make('discount_price_m3')
+                                    ->label('Скидочная цена за кубический метр')
                                     ->numeric(),
                             ]),
                         Tab::make('Файлы')
@@ -148,12 +158,16 @@ class ProductsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->defaultSort('name', 'asc')
             ->recordTitleAttribute('name')
             ->columns([
                 ImageColumn::make('images')
                     ->label('Изображение')
                     ->limit(2),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Название')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -164,6 +178,31 @@ class ProductsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Action::make('duplicate')
+                    ->label('Дублировать')
+                    ->icon('heroicon-o-document-duplicate')
+                    ->action(function ($record) {
+                        DB::transaction(function () use ($record) {
+                            $newProduct = $record->replicate();
+                            $newProduct->name = $record->name . ' (Копия)';
+                            $newProduct->save();
+
+                            foreach ($record->attributeValues as $attrValue) {
+                                $data = Arr::except($attrValue->toArray(), ['id', 'product_id', 'created_at', 'updated_at']);
+                                $newProduct->attributeValues()->create($data);
+                            }
+
+                            $newProduct->save();
+
+                            return $newProduct;
+                        });
+
+                        Notification::make()
+                            ->title('Товар успешно дублирован')
+                            ->success()
+                            ->send();
+                    })
+                    ->color('secondary')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

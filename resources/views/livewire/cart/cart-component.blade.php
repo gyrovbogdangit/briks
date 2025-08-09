@@ -31,78 +31,99 @@
                                             class="fs-5 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
                                     @endif
                                 </div>
-                                <div class="d-flex align-items-center gap-2 justify-content-end">
-                                    @if (isset($product->discount_price_per_piece))
-                                        <span
-                                            class="fs-5 fw-bold text-danger">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}₽/шт</span>
-                                        <span
-                                            class="text-muted text-decoration-line-through">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
-                                        <span
-                                            class="badge bg-danger ms-2">-{{ floor(100 - ($product->discount_price_per_piece / $product->price_per_piece) * 100) }}%</span>
-                                    @elseif (isset($product->price_per_piece))
-                                        <span
-                                            class="fs-5 fw-bold">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
-                                    @endif
+                                <div class="d-flex align-items-center gap-2 justify-content-end"
+                                    @if (isset($product->discount_price_m3)) <span
+                                                class="fs-5 fw-bold text-danger">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}₽/м³</span>
+                                            <span
+                                                class="text-muted text-decoration-line-through">{{ number_format($product->price_m3, 0, ',', ' ') }}₽/м³</span>
+                                            <span
+                                                class="badge bg-danger ms-2">-{{ floor(100 - ($product->discount_price_m3 / $product->price_m3) * 100) }}%</span>
+                                        @elseif (isset($product->price_m3))
+                                            <span
+                                                class="fs-5 fw-bold">{{ number_format($product->price_m3, 0, ',', ' ') }}₽/м³</span> @endif
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 justify-content-end">
+                                        @if (isset($product->discount_price_per_piece))
+                                            <span
+                                                class="fs-5 fw-bold text-danger">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}₽/шт</span>
+                                            <span
+                                                class="text-muted text-decoration-line-through">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
+                                            <span
+                                                class="badge bg-danger ms-2">-{{ floor(100 - ($product->discount_price_per_piece / $product->price_per_piece) * 100) }}%</span>
+                                        @elseif (isset($product->price_per_piece))
+                                            <span
+                                                class="fs-5 fw-bold">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                            <div class="input-group input-group-sm w-auto" style="height: 34px;">
-                                <button class="btn btn-outline-secondary py-1 px-2 rounded-start-3"
-                                    wire:click.throttle.100ms="decrement({{ $product->id }}, '{{ $product->unit }}')"
-                                    type="button"><i class="fa-solid fa-minus"></i></button>
-                                <input type="text"
-                                    class="form-control text-center border border-secondary fw-semibold py-1 px-2 "
-                                    value="{{ $product->quantity }}" min="1" max="100" readonly
-                                    style="width: 60px;">
-                                <button class="btn btn-outline-secondary py-1 px-2 rounded-end-3"
-                                    wire:click.throttle.100ms="increment({{ $product->id }}, '{{ $product->unit }}')"
-                                    type="button"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                            @if (isset($product->price_per_piece) ||
-                                    isset($product->discount_price_per_piece) ||
-                                    isset($product->price_sqm) ||
-                                    isset($product->discount_price_sqm))
-                                <select
-                                    class="form-select form-select-sm w-auto ms-2 py-1 px-2 rounded-3 border-secondary"
-                                    style="min-width: 60px; max-width: 90px;height:34px;"
-                                    wire:change="changeUnit({{ $product->id }}, $event.target.value)">
-                                    @if (isset($product->price_per_piece) || isset($product->discount_price_per_piece))
-                                        <option value="piece" @if ($product->unit === 'piece') selected @endif>шт
-                                        </option>
-                                    @endif
-                                    @if (isset($product->price_sqm) || isset($product->discount_price_sqm))
-                                        <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²
-                                        </option>
-                                    @endif
-                                </select>
-                            @else
-                                <div class="text-muted w-auto ms-2 py-1 px-2 rounded-3 border border-secondary">шт.
+                            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                <div class="input-group input-group-sm w-auto" style="height: 34px;">
+                                    <button class="btn btn-outline-secondary py-1 px-2 rounded-start-3"
+                                        wire:click.throttle.100ms="decrement({{ $product->id }}, '{{ $product->unit }}')"
+                                        type="button"><i class="fa-solid fa-minus"></i></button>
+                                    <input type="text"
+                                        class="form-control text-center border border-secondary fw-semibold py-1 px-2 "
+                                        value="{{ $product->quantity }}" min="1" max="100" readonly
+                                        style="width: 60px;">
+                                    <button class="btn btn-outline-secondary py-1 px-2 rounded-end-3"
+                                        wire:click.throttle.100ms="increment({{ $product->id }}, '{{ $product->unit }}')"
+                                        type="button"><i class="fa-solid fa-plus"></i></button>
                                 </div>
-                            @endif
-                            <button class="border border-secondary rounded-3 py-1 px-2 btn-sm ms-2 bg-light"
-                                wire:click="delete({{ $product->id }}, '{{ $product->unit }}')">
-                                <i class="fa fa-trash text-danger me-1"></i> Удалить
-                            </button>
-                        </div>
-                        <div class="">
-                            <span class="fw-semibold">Сумма: </span>
-                            <span class="fw-bold text-primary">
-                                @if ($product->unit === 'sqm' && (isset($product->price_sqm) || isset($product->discount_price_sqm)))
-                                    @php $price = $product->discount_price_sqm ?? $product->price_sqm; @endphp
-                                    {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
-                                    {{ $product->quantity }} м²
-                                @elseif ($product->unit === 'piece' && (isset($product->price_per_piece) || isset($product->discount_price_per_piece)))
-                                    @php $price = $product->discount_price_per_piece ?? $product->price_per_piece; @endphp
-                                    {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
-                                    {{ $product->quantity }} шт
+                                @if (isset($product->price_per_piece) ||
+                                        isset($product->discount_price_per_piece) ||
+                                        isset($product->price_sqm) ||
+                                        isset($product->discount_price_sqm) ||
+                                        isset($product->price_m3) ||
+                                        isset($product->discount_price_m3))
+                                    <select
+                                        class="form-select form-select-sm w-auto ms-2 py-1 px-2 rounded-3 border-secondary"
+                                        style="min-width: 60px; max-width: 90px;height:34px;"
+                                        wire:change="changeUnit({{ $product->id }}, $event.target.value)">
+                                        @if (isset($product->price_per_piece) || isset($product->discount_price_per_piece))
+                                            <option value="piece" @if ($product->unit === 'piece') selected @endif>шт
+                                            </option>
+                                        @endif
+                                        @if (isset($product->price_sqm) || isset($product->discount_price_sqm))
+                                            <option value="sqm" @if ($product->unit === 'sqm') selected @endif>м²
+                                            </option>
+                                        @endif
+                                        @if (isset($product->price_m3) || isset($product->discount_price_m3))
+                                            <option value="m3" @if ($product->unit === 'm3') selected @endif>м³
+                                            </option>
+                                        @endif
+                                    </select>
                                 @else
-                                    <span class="text-muted">Цена по запросу</span>
+                                    <div class="text-muted w-auto ms-2 py-1 px-2 rounded-3 border border-secondary">шт.
+                                    </div>
                                 @endif
-                            </span>
+                                <button class="border border-secondary rounded-3 py-1 px-2 btn-sm ms-2 bg-light"
+                                    wire:click="delete({{ $product->id }}, '{{ $product->unit }}')">
+                                    <i class="fa fa-trash text-danger me-1"></i> Удалить
+                                </button>
+                            </div>
+                            <div class="">
+                                <span class="fw-semibold">Сумма: </span>
+                                <span class="fw-bold text-primary">
+                                    @if ($product->unit === 'sqm' && (isset($product->price_sqm) || isset($product->discount_price_sqm)))
+                                        @php $price = $product->discount_price_sqm ?? $product->price_sqm; @endphp
+                                        {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
+                                        {{ $product->quantity }} м²
+                                    @elseif ($product->unit === 'piece' && (isset($product->price_per_piece) || isset($product->discount_price_per_piece)))
+                                        @php $price = $product->discount_price_per_piece ?? $product->price_per_piece; @endphp
+                                        {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
+                                        {{ $product->quantity }} шт
+                                    @elseif ($product->unit === 'm3' && (isset($product->price_m3) || isset($product->discount_price_m3)))
+                                        @php $price = $product->discount_price_m3 ?? $product->price_m3; @endphp
+                                        {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за
+                                        {{ $product->quantity }} м³
+                                    @else
+                                        <span class="text-muted">Цена по запросу</span>
+                                    @endif
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
             @endforeach
         </div>
         <div class="rounded-3 bg-white shadow-sm p-4 mb-4">

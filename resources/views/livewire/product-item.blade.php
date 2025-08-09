@@ -21,10 +21,12 @@
             $hasPieceDiscount = isset($product->discount_price_per_piece);
             $hasSqm = isset($product->price_sqm);
             $hasSqmDiscount = isset($product->discount_price_sqm);
+            $hasM3 = isset($product->price_m3);
+            $hasM3Discount = isset($product->discount_price_m3);
         @endphp
 
         <div class="mt-auto">
-            @if ($hasPiece || $hasSqm)
+            @if ($hasPiece || $hasSqm || $hasM3)
                 @if ($hasPiece)
                     <div class="price-wrapper">
                         @if ($hasPieceDiscount)
@@ -47,6 +49,18 @@
                         @else
                             <span class="new-price ms-auto">{{ number_format($product->price_sqm, 0, ',', ' ') }}
                                 ₽/м²</span>
+                        @endif
+                    </div>
+                @endif
+                @if ($hasM3)
+                    <div class="price-wrapper">
+                        @if ($hasM3Discount)
+                            <span class="old-price">{{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³</span>
+                            <span class="new-price">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}
+                                ₽/м³</span>
+                        @else
+                            <span class="new-price ms-auto">{{ number_format($product->price_m3, 0, ',', ' ') }}
+                                ₽/м³</span>
                         @endif
                     </div>
                 @endif

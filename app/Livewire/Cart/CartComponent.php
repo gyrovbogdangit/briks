@@ -32,7 +32,7 @@ class CartComponent extends Component
     public function decrement($productId, $unit = 'piece')
     {
         $product = $this->products->first(function ($p) use ($productId, $unit) {
-            return $p->id == $productId;
+            return $p->id == $productId && $p->unit == $unit;
         });
 
         if (!$product) {
@@ -56,9 +56,7 @@ class CartComponent extends Component
 
     public function changeUnit($productId, $newUnit)
     {
-        $quantity = CartService::getQuantity($productId);
-        if ($quantity < 1) $quantity = 1;
-        CartService::changeUnit($productId, $newUnit, $quantity);
+        CartService::changeUnit($productId, $newUnit);
         $this->mount();
     }
 

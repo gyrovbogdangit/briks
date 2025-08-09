@@ -27,7 +27,14 @@
                             </a>
                         </td>
                         <td style="padding:8px;border:1px solid #dee2e6;">
-                            {{ $product->quantity }} {{ $product->unit === 'sqm' ? 'м²' : 'шт' }}
+                            {{ $product->quantity }}
+                            @if ($product->unit === 'sqm')
+                                м²
+                            @elseif ($product->unit === 'm3')
+                                м³
+                            @else
+                                шт
+                            @endif
                         </td>
                         <td style="padding:8px;border:1px solid #dee2e6;">
                             @if (isset($product->discount_price_sqm) || isset($product->price_sqm))
@@ -56,16 +63,35 @@
                                     @endif
                                 </div>
                             @endif
+                            @if (isset($product->discount_price_m3) || isset($product->price_m3))
+                                <div>
+                                    <span>м³: </span>
+                                    @if (isset($product->discount_price_m3))
+                                        <span
+                                            style="color:#dc3545;font-weight:bold;">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}₽</span>
+                                        <span
+                                            style="text-decoration:line-through;color:#6c757d;">{{ number_format($product->price_m3, 0, ',', ' ') }}₽</span>
+                                    @else
+                                        <span>{{ number_format($product->price_m3, 0, ',', ' ') }}₽</span>
+                                    @endif
+                                </div>
+                            @endif
                         </td>
                         <td style="padding:8px;border:1px solid #dee2e6;">
                             @if ($product->unit === 'sqm')
                                 @php $price = $product->discount_price_sqm ?? $product->price_sqm; @endphp
                                 {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за {{ $product->quantity }}
                                 м²
-                            @else
+                            @elseif ($product->unit === 'm3')
+                                @php $price = $product->discount_price_m3 ?? $product->price_m3; @endphp
+                                {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за {{ $product->quantity }}
+                                м³
+                            @elseif ($product->unit === 'piece')
                                 @php $price = $product->discount_price_per_piece ?? $product->price_per_piece; @endphp
                                 {{ number_format($price * $product->quantity, 0, ',', ' ') }}₽ за {{ $product->quantity }}
                                 шт
+                            @else
+                                <span>Цена по запросу</span>
                             @endif
                         </td>
                     </tr>

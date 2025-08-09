@@ -33,7 +33,17 @@ class ProductActions extends Component
         if (is_null($this->quantity) || !is_numeric($this->quantity) || $this->quantity < 1 || $this->quantity > 100) {
             $this->quantity = 1;
         }
-        $unit = $this->unit ?? (isset($this->product->price_per_piece) ? 'piece' : 'sqm');
+        if ($this->unit) {
+            $unit = $this->unit;
+        } elseif (isset($this->product->price_per_piece)) {
+            $unit = 'piece';
+        } elseif (isset($this->product->price_sqm)) {
+            $unit = 'sqm';
+        } elseif (isset($this->product->price_m3)) {
+            $unit = 'm3';
+        } else {
+            $unit = 'piece';
+        }
         CartService::add($this->product->id, $this->quantity, $unit);
         $this->dispatch('cartUpdated');
     }

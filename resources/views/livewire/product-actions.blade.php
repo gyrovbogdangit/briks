@@ -1,7 +1,7 @@
 <div class="mb-3">
     <div class="shadow-sm mb-2 bg-light rounded-3 p-3">
         <div class="mb-1">
-            @if (isset($product->price_per_piece) || isset($product->price_sqm))
+            @if (isset($product->price_per_piece) || isset($product->price_sqm) || isset($product->price_m3))
                 <form class="d-flex align-items-center gap-2 flex-wrap" wire:submit="addToCart">
                     @isset($quantity)
                         <a class="btn btn-info btn-lg flex-grow-1" href="{{ route('cart') }}">
@@ -14,13 +14,20 @@
                             <input type="radio" class="btn-check" name="unit" id="unit_piece{{ $product->id }}"
                                 value="piece" autocomplete="off" wire:model="unit"
                                 @if (!isset($product->price_per_piece)) disabled @endif
-                                @if (isset($product->price_per_piece) && (!isset($product->price_sqm) || $unit === 'piece' || !isset($unit))) checked @endif>
+                                @if (isset($product->price_per_piece) &&
+                                        ((!isset($product->price_sqm) && !isset($product->price_m3)) || $unit === 'piece' || !isset($unit))) checked @endif>
                             <label class="btn btn-outline-info fw-bolder" for="unit_piece{{ $product->id }}">шт</label>
                             <input type="radio" class="btn-check" name="unit" id="unit_sqm{{ $product->id }}"
                                 value="sqm" autocomplete="off" wire:model="unit"
                                 @if (!isset($product->price_sqm)) disabled @endif
-                                @if (isset($product->price_sqm) && (!isset($product->price_per_piece) || $unit === 'sqm')) checked @endif>
+                                @if (isset($product->price_sqm) &&
+                                        ((!isset($product->price_per_piece) && !isset($product->price_m3)) || $unit === 'sqm')) checked @endif>
                             <label class="btn btn-outline-info fw-bolder" for="unit_sqm{{ $product->id }}">м²</label>
+                            <input type="radio" class="btn-check" name="unit" id="unit_m3{{ $product->id }}"
+                                value="m3" autocomplete="off" wire:model="unit"
+                                @if (!isset($product->price_m3)) disabled @endif
+                                @if (isset($product->price_m3) && ((!isset($product->price_per_piece) && !isset($product->price_sqm)) || $unit === 'm3')) checked @endif>
+                            <label class="btn btn-outline-info fw-bolder" for="unit_m3{{ $product->id }}">м³</label>
                         </div>
                         <button class="btn btn-lg btn-outline-info flex-grow-1 fw-bolder w-50" type="button"
                             data-id="{{ $product->id }}" wire:click="addToCart">

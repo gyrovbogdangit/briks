@@ -54,6 +54,8 @@
                                                 $hasPieceDiscount = isset($product->discount_price_per_piece);
                                                 $hasSqm = isset($product->price_sqm);
                                                 $hasSqmDiscount = isset($product->discount_price_sqm);
+                                                $hasM3 = isset($product->price_m3);
+                                                $hasM3Discount = isset($product->discount_price_m3);
                                             @endphp
                                             @if ($hasPiece)
                                                 <div>
@@ -64,7 +66,7 @@
                                                             class="text-muted text-decoration-line-through small ms-1">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
                                                     @else
                                                         <span
-                                                            class="fs-6 fw-bold text-primary">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
+                                                            class="fs-6 fw-bold">{{ number_format($product->price_per_piece, 0, ',', ' ') }}₽/шт</span>
                                                     @endif
                                                 </div>
                                             @endif
@@ -77,7 +79,20 @@
                                                             class="text-muted text-decoration-line-through small ms-1">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
                                                     @else
                                                         <span
-                                                            class="fs-6 fw-bold text-primary">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
+                                                            class="fs-6 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }}₽/м²</span>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                            @if ($hasM3)
+                                                <div>
+                                                    @if ($hasM3Discount)
+                                                        <span
+                                                            class="fs-6 fw-bold text-danger">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}₽/м³</span>
+                                                        <span
+                                                            class="text-muted text-decoration-line-through small ms-1">{{ number_format($product->price_m3, 0, ',', ' ') }}₽/м³</span>
+                                                    @else
+                                                        <span
+                                                            class="fs-6 fw-bold">{{ number_format($product->price_m3, 0, ',', ' ') }}₽/м³</span>
                                                     @endif
                                                 </div>
                                             @endif

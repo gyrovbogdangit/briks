@@ -19,10 +19,12 @@
         $hasPieceDiscount = isset($product->discount_price_per_piece);
         $hasSqm = isset($product->price_sqm);
         $hasSqmDiscount = isset($product->discount_price_sqm);
+        $hasM3 = isset($product->price_m3);
+        $hasM3Discount = isset($product->discount_price_m3);
     @endphp
 
     <div class="mb-4 d-flex justify-content-end">
-        @if ($hasPiece || $hasSqm)
+        @if ($hasPiece || $hasSqm || $hasM3)
             <div>
                 @if ($hasPiece)
                     <div class="d-flex align-items-end justify-content-end gap-2 flex-wrap mb-1">
@@ -42,7 +44,7 @@
                     </div>
                 @endif
                 @if ($hasSqm)
-                    <div class="d-flex align-items-end justify-content-end gap-2 flex-wrap">
+                    <div class="d-flex align-items-end justify-content-end gap-2 flex-wrap mb-1">
                         @if ($hasSqmDiscount)
                             <span
                                 class="fs-5 fw-bold text-danger">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
@@ -53,8 +55,23 @@
                             <span
                                 class="badge bg-danger align-middle ms-2">-{{ floor(100 - ($product->discount_price_sqm / $product->price_sqm) * 100) }}%</span>
                         @else
-                            <span class="fs-5 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }}
-                                ₽/м²</span>
+                            <span class="fs-5 fw-bold">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
+                        @endif
+                    </div>
+                @endif
+                @if ($hasM3)
+                    <div class="d-flex align-items-end justify-content-end gap-2 flex-wrap mb-1">
+                        @if ($hasM3Discount)
+                            <span
+                                class="fs-5 fw-bold text-danger">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}
+                                ₽/м³</span>
+                            <span
+                                class="text-muted text-decoration-line-through">{{ number_format($product->price_m3, 0, ',', ' ') }}
+                                ₽/м³</span>
+                            <span
+                                class="badge bg-danger align-middle ms-2">-{{ floor(100 - ($product->discount_price_m3 / $product->price_m3) * 100) }}%</span>
+                        @else
+                            <span class="fs-5 fw-bold">{{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³</span>
                         @endif
                     </div>
                 @endif
@@ -81,7 +98,8 @@
     </div>
 
     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
-        <a class="btn btn-outline-primary rounded-3 px-4 py-2 shadow-sm w-100" href="#chars" data-bs-toggle="tab" data-bs-target="#chars" role="tab" aria-controls="chars">
+        <a class="btn btn-outline-primary rounded-3 px-4 py-2 shadow-sm w-100" href="#chars" data-bs-toggle="tab"
+            data-bs-target="#chars" role="tab" aria-controls="chars">
             <i class="fa-solid fa-down-long"></i> Все характеристики
         </a>
         @isset($product->article)

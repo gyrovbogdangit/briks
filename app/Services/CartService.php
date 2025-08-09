@@ -18,10 +18,9 @@ class CartService
     {
         $sessionCart = session('cart', []);
         $recordIndex = static::array_first_key($sessionCart, function ($value) use ($productId, $unit) {
-            return $value['product_id'] == $productId && $value['unit'] == $unit;
+            return $value['product_id'] == $productId;
         });
         if (is_null($recordIndex)) {
-            // Добавляем в конец, если такого товара с этим unit нет
             session()->put('cart', array_merge($sessionCart, [[
                 'product_id' => $productId,
                 'quantity' => $quantity,
@@ -142,6 +141,8 @@ class CartService
         return $products->sum(function ($product) {
             if ($product->unit === 'sqm') {
                 $price = $product->discount_price_sqm ?? $product->price_sqm;
+            } elseif ($product->unit === 'm3') {
+                $price = $product->discount_price_m3 ?? $product->price_m3;
             } else {
                 $price = $product->discount_price_per_piece ?? $product->price_per_piece;
             }
