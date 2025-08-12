@@ -500,3 +500,16 @@ footer a:hover {
 .product-actions a:hover {
     color: $gray-700;
 }
+
+.carousel-indicators [data-bs-target] {
+    position: relative;
+}
+
+.carousel-indicators [data-bs-target]::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    right: -16px;
+    bottom: -16px;
+}

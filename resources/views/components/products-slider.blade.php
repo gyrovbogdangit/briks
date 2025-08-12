@@ -7,7 +7,7 @@
                 <button
                     class="carousel-control-prev position-relative me-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-lg-flex"
                     type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="prev"
-                    style="z-index:2; min-width:44px; min-height:44px; height:44px;">
+                    aria-label="carousel-prev" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-arrow-left fs-4"></i>
                 </button>
             @endif
@@ -41,7 +41,7 @@
                 <button
                     class="carousel-control-next position-relative ms-2 text-bg-secondary rounded-3 p-1 flex-shrink-0 d-none d-lg-flex"
                     type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="next"
-                    style="z-index:2; min-width:44px; min-height:44px; height:44px;">
+                    aria-label="carousel-next" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-arrow-right fs-4"></i>
                 </button>
             @endif

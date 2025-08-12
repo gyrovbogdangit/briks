@@ -19,7 +19,7 @@
     <div class="container">
         <div class="d-flex d-xl-none w-100 align-items-center gap-2 py-2">
             <a class="navbar-brand flex-shrink-0 me-2" href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}"
-                    height="30" alt="БРИКС" aria-label="БРИКС"></a>
+                    width="139" height="30" alt="БРИКС" aria-label="БРИКС"></a>
             <div class="flex-grow-1 mx-0" role="search">
                 <livewire:search />
             </div>
@@ -31,7 +31,7 @@
 
         <div class="collapse navbar-collapse d-flex justify-content-between d-none d-xl-flex" id="navbarNav">
             <a class="navbar-brand me-2 flex-shrink-0" href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}"
-                    height="36" alt="БРИКС" aria-label="БРИКС"></a>
+                    width="139" height="36" alt="БРИКС" aria-label="БРИКС"></a>
             <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray fw-bold px-3 text-nowrap mx-2 mb-2 mb-lg-0"
                 href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu"
                 style="height:44px;padding-top:8px;">

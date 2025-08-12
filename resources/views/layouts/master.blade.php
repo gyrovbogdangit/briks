@@ -8,7 +8,12 @@
     @include('layouts.components.seo')
 
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-    <link href="/css/font-awesome/all.min.css" rel="stylesheet" />
+    <link rel="preload" href="/css/font-awesome/all.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/css/font-awesome/all.min.css" rel="stylesheet">
+    </noscript>
+
 
     <!-- Yandex.Metrika counter -->
     <meta name="yandex-verification" content="70e92b50ce025327" />

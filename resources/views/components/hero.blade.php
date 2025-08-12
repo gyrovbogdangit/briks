@@ -11,7 +11,7 @@
     <div class="carousel-inner">
         @foreach ($heroSliders as $slide)
             <div class="carousel-item @if ($loop->first) active @endif">
-                <a href="{{ $slide->url }}">
+                <a href="{{ $slide->url }}" aria-label="Перейти в каталог">
                     <div class="hero-banner d-flex align-items-center justify-content-center text-center"
                         style="background: url('{{ asset('storage/' . $slide->image) }}') center/cover no-repeat;
                             height: 500px;position: relative;">
