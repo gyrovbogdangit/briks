@@ -10,11 +10,12 @@
     </a>
 
     <div class="card-body p-3 d-flex flex-column h-100">
-        <h5 class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;"><a class="text-decoration-none"
+        <div class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;line-height: 1.2;"><a
+                class="text-decoration-none"
                 href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
                 {{ Illuminate\Support\Str::limit($product->name, 60) }}
             </a>
-        </h5>
+        </div>
 
         @php
             $hasPiece = isset($product->price_per_piece);

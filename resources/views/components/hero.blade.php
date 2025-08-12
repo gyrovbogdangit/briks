@@ -2,6 +2,7 @@
     <div class="carousel-indicators">
         @foreach ($heroSliders as $i => $slide)
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}"
+                aria-label="carousel-{{ $i }}"
                 @if ($loop->first) class="active"
                 aria-current="true" @endif
                 aria-label="Slide {{ $i }}"></button>
@@ -20,10 +21,12 @@
         @endforeach
     </div>
 
-    <button class="carousel-control-prev z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"
+        aria-label="carousel-prev">
         <span class="carousel-control-prev-icon"></span>
     </button>
-    <button class="carousel-control-next z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <button class="carousel-control-next z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"
+        aria-label="carousel-next">
         <span class="carousel-control-next-icon"></span>
     </button>
 </section>

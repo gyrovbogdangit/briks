@@ -8,9 +8,7 @@
     @include('layouts.components.seo')
 
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Unbounded:wght@700&display=swap"
-        rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="/css/font-awesome/all.min.css" rel="stylesheet" />
 
     <!-- Yandex.Metrika counter -->
     <meta name="yandex-verification" content="70e92b50ce025327" />

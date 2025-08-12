@@ -5,13 +5,36 @@ $info: #515558;
 @import "bootstrap/scss/bootstrap";
 @import "@fancyapps/fancybox/dist/jquery.fancybox.css";
 
+@font-face {
+    font-family: "Manrope";
+    src: url("/fonts/manrope/Manrope-Regular.woff2") format("woff2"),
+        url("/fonts/manrope/Manrope-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url("/fonts/manrope/Manrope-SemiBold.woff2") format("woff2"),
+        url("/fonts/manrope/Manrope-SemiBold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url("/fonts/manrope/Manrope-Bold.woff2") format("woff2"),
+        url("/fonts/manrope/Manrope-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* General Styles */
 body {
     font-family: "Manrope", sans-serif;
-}
-.navbar-brand {
-    font-family: "Unbounded", sans-serif;
-    font-size: 24px;
 }
 /* Section Titles */
 .section-title {
