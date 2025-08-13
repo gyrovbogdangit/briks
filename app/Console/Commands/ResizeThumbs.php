@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Services\ImageCompressor;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 
 class ResizeThumbs extends Command
@@ -13,7 +13,7 @@ class ResizeThumbs extends Command
      *
      * @var string
      */
-    protected $signature = 'app:resize-thumbs';
+    protected $signature = 'compress:resize-thumbs';
 
     /**
      * The console command description.
@@ -22,15 +22,12 @@ class ResizeThumbs extends Command
      */
     protected $description = 'Command description';
 
-    protected ImageCompressor $compressor;
+    protected ImageManager $imageManager;
 
-    protected int $maxWidth = 350;
-    protected int $maxHeight = 250;
-
-    public function __construct(ImageCompressor $compressor)
+    public function __construct()
     {
         parent::__construct();
-        $this->compressor = $compressor;
+        $this->imageManager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
     }
 
     public function handle()
@@ -49,13 +46,29 @@ class ResizeThumbs extends Command
         foreach ($files as $file) {
             $this->info("Processing: {$file}");
 
-            $compressedPath = $this->compressor->compress($file, 200, $this->maxWidth, $this->maxHeight);
+            $originalData = Storage::disk('public')->get($file);
+            $image = $this->imageManager->read($originalData);
 
-            if ($compressedPath) {
-                $this->info("Saved compressed: {$compressedPath}");
-            } else {
-                $this->error("Failed to compress: {$file}");
-            }
+            $maxWidth = 350;
+            $maxHeight = 250;
+
+            $originalWidth = $image->width();
+            $originalHeight = $image->height();
+
+            $ratio = min($maxWidth / $originalWidth, $maxHeight / $originalHeight);
+
+            $newWidth = (int) round($originalWidth * $ratio);
+            $newHeight = (int) round($originalHeight * $ratio);
+
+            $image->resize($newWidth, $newHeight, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $encoded = $image->encode(new \Intervention\Image\Encoders\WebpEncoder(quality: 80));
+            Storage::disk('public')->put($file, $encoded->toString());
+
+            $this->info("Saved resized: {$file}");
         }
 
         $this->info('Done.');

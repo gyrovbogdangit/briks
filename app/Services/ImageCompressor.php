@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Encoders\JpegEncoder;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Encoders\WebpEncoder;
 
 class ImageCompressor
@@ -31,24 +31,42 @@ class ImageCompressor
 
         $originalData = Storage::disk('public')->get($path);
 
+        $maxWidth = 350;
+        $maxHeight = 250;
+
         $quality = 60;
         $encoded = null;
         $sizeKB = 0;
 
+        $image = $this->imageManager->read($originalData);
+
+        $originalWidth = $image->width();
+        $originalHeight = $image->height();
+
+        $ratio = min($maxWidth / $originalWidth, $maxHeight / $originalHeight);
+
+        $newWidth = (int) round($originalWidth * $ratio);
+        $newHeight = (int) round($originalHeight * $ratio);
+
+        $image->resize($newWidth, $newHeight, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
         do {
-            $image = $this->imageManager->read($originalData);
             $encoded = $image->encode(new WebpEncoder(quality: $quality));
             $sizeKB = strlen($encoded->toString()) / 1024;
             $quality -= 10;
         } while ($sizeKB > $maxSizeKB && $quality > 10);
 
-        $compressedPath = static::getCompressedPath($path);
+        $compressedPath = Str::contains($path, '/thumbs')
+            ? $path
+            : static::getCompressedPath($path);
 
         Storage::disk('public')->put($compressedPath, $encoded->toString());
 
         return $compressedPath;
     }
-
 
     public static function getCompressedPath(string $path): ?string
     {

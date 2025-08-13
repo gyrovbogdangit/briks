@@ -8,7 +8,7 @@ use App\Services\ImageCompressor;
 
 class CompressProductImages extends Command
 {
-    protected $signature = 'compress:product-images {--max=200}';
+    protected $signature = 'compress:product-images {--max=200} {--id=}';
     protected $description = 'Сжать изображения товаров и сохранить в папке thumbs';
 
     public function handle()
@@ -19,8 +19,15 @@ class CompressProductImages extends Command
         $this->info("Начинаем сжатие изображений...");
 
         $count = 0;
-        $products = Product::whereNotNull('images')
-            ->get();
+        $products = Product::whereNotNull('images');
+
+        if ($this->option('id')) {
+            $productId = (int) $this->option('id');
+            $products = $products->where('id', $productId);
+        }
+
+        $products = $products->get();
+
         foreach ($products as $product) {
             $this->info("Обрабатываем товар: {$product->name} (ID: {$product->id})");
             $compressedImages = [];
