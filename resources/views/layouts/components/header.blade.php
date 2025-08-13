@@ -19,7 +19,7 @@
     <div class="container">
         <div class="d-flex d-xl-none w-100 align-items-center gap-2 py-2">
             <a class="navbar-brand flex-shrink-0 me-2" href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}"
-                    width="139" height="30" alt="БРИКС" aria-label="БРИКС"></a>
+                    width="139" height="36" alt="БРИКС" aria-label="БРИКС"></a>
             <div class="flex-grow-1 mx-0" role="search">
                 <livewire:search />
             </div>
