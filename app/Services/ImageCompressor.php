@@ -23,7 +23,7 @@ class ImageCompressor
      * @param int $maxSizeKB Максимальный размер в КБ
      * @return string|null Относительный путь до сжатого изображения в диске public или null при ошибке
      */
-    public function compress(string $path, int $maxSizeKB = 200, int $maxWidth = 350, int $maxHeight = 266): ?string
+    public function compress(string $path, int $maxSizeKB = 200): ?string
     {
         if (!Storage::disk('public')->exists($path)) {
             return null;
@@ -31,30 +31,20 @@ class ImageCompressor
 
         $originalData = Storage::disk('public')->get($path);
 
-        $image = $this->imageManager->read($originalData);
-        $image->resize($maxWidth, $maxHeight, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-
-        $tmpPath = 'tmp/resized.jpg';
-        Storage::disk('public')->put($tmpPath, (string) $image->encode(new JpegEncoder()));
-
-        $resizedData = Storage::disk('public')->get($tmpPath);
-        $resizedImage = $this->imageManager->read($resizedData);
-
         $quality = 60;
+        $encoded = null;
+        $sizeKB = 0;
+
         do {
-            $encoded = $resizedImage->encode(new WebpEncoder(quality: $quality), $quality);
-            $sizeKB = strlen($encoded) / 1024;
+            $image = $this->imageManager->read($originalData);
+            $encoded = $image->encode(new WebpEncoder(quality: $quality));
+            $sizeKB = strlen($encoded->toString()) / 1024;
             $quality -= 10;
         } while ($sizeKB > $maxSizeKB && $quality > 10);
 
-        $compressedPath = str_contains($path, 'thumbs/') ? $path : static::getCompressedPath($path);
+        $compressedPath = static::getCompressedPath($path);
 
-        Storage::disk('public')->put($compressedPath, $encoded);
-
-        Storage::disk('public')->delete($tmpPath);
+        Storage::disk('public')->put($compressedPath, $encoded->toString());
 
         return $compressedPath;
     }
