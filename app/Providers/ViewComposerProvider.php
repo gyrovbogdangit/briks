@@ -84,7 +84,7 @@ class ViewComposerProvider extends ServiceProvider
             $hotProducts = Product::where('is_hit_of_sales', true)
                 ->active()
                 ->with('subcategory.category.productType')
-                ->limit(20)
+                ->limit(10)
                 ->get();
             $view->with('hotProducts', $hotProducts);
         });
@@ -93,7 +93,7 @@ class ViewComposerProvider extends ServiceProvider
             $popularProducts = Product::orderBy('views', 'desc')
                 ->active()
                 ->with('subcategory.category.productType')
-                ->limit(20)
+                ->limit(10)
                 ->get();
             $view->with('popularProducts', $popularProducts);
         });
@@ -102,7 +102,7 @@ class ViewComposerProvider extends ServiceProvider
             $newProducts = Product::where('is_new', true)
                 ->active()
                 ->with('subcategory.category.productType')
-                ->limit(20)
+                ->limit(10)
                 ->get();
             $view->with('newProducts', $newProducts);
         });
