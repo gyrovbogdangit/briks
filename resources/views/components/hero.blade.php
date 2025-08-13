@@ -12,7 +12,7 @@
             <div class="carousel-item @if ($loop->first) active @endif">
                 <a href="{{ $slide->url }}" aria-label="Перейти в каталог">
                     <img src="{{ asset('storage/' . $slide->image) }}" class="d-block w-100"
-                        alt="{{ $slide->title ?? 'Слайд' }}" style="height: 500px; object-fit: cover;"
+                        alt="{{ $slide->title ?? 'Слайд' }}" style="height: 100%; max-height:500px; object-fit: cover;"
                         @if ($loop->first) fetchpriority="high"
                         @else loading="lazy" @endif>
                 </a>
