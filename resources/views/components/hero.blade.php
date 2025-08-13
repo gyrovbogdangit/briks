@@ -2,20 +2,17 @@
     <div class="carousel-indicators">
         @foreach ($heroSliders as $i => $slide)
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}"
-                aria-label="carousel-{{ $i }}"
-                @if ($loop->first) class="active"
-                aria-current="true" @endif
-                aria-label="Slide {{ $i }}"></button>
+                @if ($loop->first) class="active" aria-current="true" @endif
+                aria-label="Slide {{ $i + 1 }}"></button>
         @endforeach
     </div>
+
     <div class="carousel-inner">
         @foreach ($heroSliders as $slide)
             <div class="carousel-item @if ($loop->first) active @endif">
                 <a href="{{ $slide->url }}" aria-label="Перейти в каталог">
-                    <div class="hero-banner d-flex align-items-center justify-content-center text-center"
-                        style="background: url('{{ asset('storage/' . $slide->image) }}') center/cover no-repeat;
-                            height: 500px;position: relative;">
-                    </div>
+                    <img src="{{ asset('storage/' . $slide->image) }}" class="d-block w-100"
+                        alt="{{ $slide->title ?? 'Слайд' }}" style="height: 500px; object-fit: cover;" loading="lazy">
                 </a>
             </div>
         @endforeach
