@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Encoders\WebpEncoder;
 
@@ -22,7 +23,7 @@ class ImageCompressor
      * @param int $maxSizeKB Максимальный размер в КБ
      * @return string|null Относительный путь до сжатого изображения в диске public или null при ошибке
      */
-    public function compress(string $path, int $maxSizeKB = 200): ?string
+    public function compress(string $path, int $maxSizeKB = 200, int $maxWidth = 350, int $maxHeight = 266): ?string
     {
         if (!Storage::disk('public')->exists($path)) {
             return null;
@@ -30,23 +31,34 @@ class ImageCompressor
 
         $originalData = Storage::disk('public')->get($path);
 
-        $quality = 60;
-        $encoded = null;
-        $sizeKB = 0;
+        $image = $this->imageManager->read($originalData);
+        $image->resize($maxWidth, $maxHeight, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
 
+        $tmpPath = 'tmp/resized.jpg';
+        Storage::disk('public')->put($tmpPath, (string) $image->encode(new JpegEncoder()));
+
+        $resizedData = Storage::disk('public')->get($tmpPath);
+        $resizedImage = $this->imageManager->read($resizedData);
+
+        $quality = 60;
         do {
-            $image = $this->imageManager->read($originalData);
-            $encoded = $image->encode(new WebpEncoder(quality: $quality));
-            $sizeKB = strlen($encoded->toString()) / 1024;
+            $encoded = $resizedImage->encode(new WebpEncoder(quality: $quality), $quality);
+            $sizeKB = strlen($encoded) / 1024;
             $quality -= 10;
         } while ($sizeKB > $maxSizeKB && $quality > 10);
 
-        $compressedPath = static::getCompressedPath($path);
+        $compressedPath = str_contains($path, 'thumbs/') ? $path : static::getCompressedPath($path);
 
-        Storage::disk('public')->put($compressedPath, $encoded->toString());
+        Storage::disk('public')->put($compressedPath, $encoded);
+
+        Storage::disk('public')->delete($tmpPath);
 
         return $compressedPath;
     }
+
 
     public static function getCompressedPath(string $path): ?string
     {

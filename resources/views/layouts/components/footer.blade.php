@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-3">
-                <h5 class="fw-bold">О компании</h5>
+                <div class="fw-bold fs-5">О компании</div>
                 <p class="small fw-semibold">
                     БРИКС — ведущий поставщик облицовочных материалов. Мы предлагаем
                     широкий ассортимент качественных товаров для строительства и
@@ -11,7 +11,7 @@
             </div>
 
             <div class="col-md-4 mb-3">
-                <h5 class="fw-bold">Быстрые ссылки</h5>
+                <div class="fw-bold fs-5">Быстрые ссылки</div>
                 <ul class="list-unstyled fw-semibold">
                     @foreach ($pages as $page)
                         <li>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-md-4 mb-3">
-                <h5 class="fw-bold">Контакты</h5>
+                <div class="fw-bold fs-5">Контакты</div>
                 <ul class="list-unstyled fw-semibold">
                     <li>
                         <i class="fas fa-map-marker-alt me-2"></i> <a href="tel:{{ $addresses[0]->url }}"

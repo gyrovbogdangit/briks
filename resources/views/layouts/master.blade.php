@@ -66,7 +66,7 @@
     <div class="overflow-bg"></div> --}}
 
     @yield('js')
-    @livewireScripts
+    @livewireScripts(['defer' => true])
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (!localStorage.getItem('cookieAccepted')) {
