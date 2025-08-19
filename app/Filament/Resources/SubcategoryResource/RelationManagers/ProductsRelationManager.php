@@ -7,20 +7,17 @@ use Filament\Tables;
 use App\Models\Value;
 use App\Models\Category;
 use Filament\Forms\Form;
-use App\Models\Attribute;
 use Filament\Tables\Table;
-use App\Models\Subcategory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Tabs;
 use Filament\Tables\Actions\Action;
-use Filament\Forms\Components\Hidden;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use FilamentTiptapEditor\TiptapEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Tabs\Tab;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
@@ -30,6 +27,16 @@ use Filament\Resources\RelationManagers\RelationManager;
 class ProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'products';
+
+    public static function getModelLabel(): string
+    {
+        return 'товар';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'товаров';
+    }
 
     public function form(Form $form): Form
     {
@@ -137,14 +144,11 @@ class ProductsRelationManager extends RelationManager
                                             ->required(),
                                         Select::make('value_id')
                                             ->label('Значение')
-                                            ->options(function ($get) {
+                                            ->options(function (callable $get) {
                                                 $attributeId = $get('attribute_id');
-                                                if ($attributeId) {
-                                                    return Value::where('attribute_id', $attributeId)
-                                                        ->orderBy('value')
-                                                        ->pluck('value', 'id');
-                                                }
-                                                return [];
+                                                return \App\Models\Value::where('attribute_id', $attributeId)
+                                                    ->orderBy('value')
+                                                    ->pluck('value', 'id');
                                             })
                                             ->reactive()
                                             ->required()
@@ -170,8 +174,52 @@ class ProductsRelationManager extends RelationManager
                     ->sortable(),
             ])
             ->filters([
-                //
+                Filter::make('attributes')
+                    ->form([
+                        Repeater::make('attribute_filters')
+                            ->label('Атрибуты и значения')
+                            ->schema([
+                                Select::make('attribute_id')
+                                    ->label('Атрибут')
+                                    ->options(function ($get, $livewire) {
+                                        $subcategory = $livewire->getOwnerRecord();
+                                        return $subcategory->category->attributes()
+                                            ->orderBy('name')
+                                            ->pluck('attributes.name', 'attributes.id');
+                                    })
+                                    ->reactive()
+                                    ->required(),
+                                Select::make('value_ids')
+                                    ->label('Значения')
+                                    ->multiple()
+                                    ->options(function (callable $get) {
+                                        $attributeId = $get('attribute_id');
+                                        if (!$attributeId) {
+                                            return [];
+                                        }
+                                        return \App\Models\Value::where('attribute_id', $attributeId)
+                                            ->orderBy('value')
+                                            ->pluck('value', 'id');
+                                    })
+                                    ->required(),
+                            ])
+                            ->columns(2)
+                    ])
+                    ->columnSpanFull()
+                    ->query(function ($query, array $data) {
+                        if (!empty($data['attribute_filters'])) {
+                            foreach ($data['attribute_filters'] as $filter) {
+                                if (!empty($filter['attribute_id']) && !empty($filter['value_ids'])) {
+                                    $query->whereHas('attributeValues', function ($q) use ($filter) {
+                                        $q->where('attribute_id', $filter['attribute_id'])
+                                            ->whereIn('value_id', $filter['value_ids']);
+                                    });
+                                }
+                            }
+                        }
+                    }),
             ])
+            ->filtersFormColumns(3)
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])
