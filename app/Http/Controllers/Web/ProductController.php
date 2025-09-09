@@ -43,11 +43,13 @@ class ProductController extends Controller
             ->with('category', 'subcategory', 'attribute', 'value')
             ->get();
 
+        $dynamicSuffix = static::getDynamicSuffix($filter);
+
         $seo = new Seo(
-            "{$productType->name} — Строительные материалы БРИКС: кирпич, кровля, плитка",
-            'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от БРИКС. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
-            "{$productType->name} — Каталог строительных материалов БРИКС",
-            'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
+            "{$subcategory->name} — Строительные материалы БРИКС: кирпич, кровля, плитка{$dynamicSuffix}",
+            'Купить ' . mb_strtolower($subcategory->name) . ' для строительства и отделки от БРИКС. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
+            "{$subcategory->name} — Каталог строительных материалов БРИКС",
+            'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($subcategory->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
             asset('storage/' . $productType->image),
             route('products.index', ['productType' => $productType->slug, 'category' => $category, 'subcategory' => $subcategory]),
             'website',
@@ -108,5 +110,25 @@ class ProductController extends Controller
                 'relatedProducts' => $relatedProducts,
                 'seo' => $seo
             ]);
+    }
+
+    private static function getDynamicSuffix($filter)
+    {
+        if (empty(request()->query())) {
+            return '';
+        }
+
+        $sortTitles = [
+            'popular' => 'Сортировать по популярности',
+            'price' => 'Сортировать по цене',
+            'name' => 'Сортировать по названию',
+        ];
+
+        $sortPart = $sortTitles[$filter->sortBy] ?? null;
+        $pageSizePart = $filter->pageSize ? "Товаров на странице: {$filter->pageSize}" : null;
+        $pagePart = request()->query('page') && request()->query('page') > 1 ? 'Страница ' . request()->query('page') : null;
+
+        $dynamicParts = array_filter([$sortPart, $pageSizePart, $pagePart]);
+        return $dynamicParts ? ' (' . implode(', ', $dynamicParts) . ')' : '';
     }
 }

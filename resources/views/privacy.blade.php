@@ -87,7 +87,7 @@
             ИНН 3662302880, КПП 366201001<br>
             ОГРН 1223600020808<br>
             394026, ВОРОНЕЖСКАЯ ОБЛАСТЬ, г.о. Город Воронеж, г Воронеж, ул Солнечная, д. 12В, офис 46<br>
-            Тел.: <a href="{{ $phoneNumber->formattedLinkNumber() }}">+{{ $phoneNumber->formattedNumber() }}</a></p>
+            Тел.: <a href="tel:{{ $phoneNumber->formattedLinkNumber() }}">+{{ $phoneNumber->formattedNumber() }}</a></p>
 
     </div>
     </div>

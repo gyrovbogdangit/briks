@@ -6,3 +6,5 @@
 <meta property="og:url" content="{{ $seo->ogUrl ?? '' }}">
 <meta property="og:type" content="{{ $seo->ogType ?? '' }}">
 <meta property="og:site_name" content="{{ $seo->ogSiteName ?? '' }}">
+
+<link rel="canonical" href="{{ $seo->ogUrl ?? '' }}">

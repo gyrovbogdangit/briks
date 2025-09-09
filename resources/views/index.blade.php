@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+    <h1 class="visually-hidden">Магазин строительных материалов: кирпич, кровля, блоки</h1>
+
     <div class="container">
         @include('components.hero')
     </div>
