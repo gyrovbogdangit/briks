@@ -96,7 +96,7 @@ class ProductController extends Controller
             "{$product->name} от БРИКС. Качественный кирпич, кровля, плитка и другие строительные материалы с доставкой по России.",
             "{$product->name} — Купить в БРИКС",
             "{$product->name} для строительства и отделки. Закажите онлайн с доставкой по всей России от БРИКС.",
-            isset($subcategory->images[0]) ? asset('storage/' . $subcategory->images[0]) : asset('storage/' . $productType->image),
+            isset($product->images[0]) ? asset('storage/' . $product->images[0]) : asset('storage/' . $productType->image),
             route('products.show', ['productType' => $productType->slug, 'category' => $category->slug, 'subcategory' => $subcategory->slug, 'product' => $product->slug]),
             'product',
         );
