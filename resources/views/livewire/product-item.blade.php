@@ -1,21 +1,28 @@
-<div class="product-card rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100"
-    style="width:220px;min-height:330px">
-    <a
-        href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+<div class="product-card rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100" style="width:220px;min-height:330px"
+    vocab="https://schema.org/" typeof="Product" itemscope itemtype="https://schema.org/Product">
+
+    <a href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}"
+        itemprop="url">
         <img src="
             @if (isset($product->thumbs[0])) {{ Storage::url($product->thumbs[0]) }}
             @elseif (isset($product->images[0])) {{ Storage::url($product->images[0]) }}
             @else {{ asset('img/content/product-1.jpg') }} @endif"
-            loading="lazy" alt="{{ $product->name }}" class="rounded-top-2 w-100" />
+            loading="lazy" alt="{{ $product->name }}" class="rounded-top-2 w-100" property="image" itemprop="image" />
     </a>
 
     <div class="card-body p-3 d-flex flex-column h-100">
-        <div class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;line-height: 1.2;"><a
-                class="text-decoration-none"
-                href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}">
+        <div class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;line-height: 1.2;">
+            <a class="text-decoration-none"
+                href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}"
+                property="name" itemprop="name">
                 {{ Illuminate\Support\Str::limit($product->name, 60) }}
             </a>
         </div>
+
+        <meta property="brand" itemprop="brand" content="БРИКС" />
+        <meta property="category" itemprop="category" content="{{ $product->subcategory->name ?? 'Кирпич' }}" />
+        <meta property="description" itemprop="description"
+            content="{{ strip_tags($product->short_description ?? $product->name) }}" />
 
         @php
             $hasPiece = isset($product->price_per_piece);
@@ -26,48 +33,64 @@
             $hasM3Discount = isset($product->discount_price_m3);
         @endphp
 
-        <div class="mt-auto">
+        <div class="mt-auto" property="offers" typeof="Offer" itemprop="offers" itemscope
+            itemtype="https://schema.org/Offer">
             @if ($hasPiece || $hasSqm || $hasM3)
                 @if ($hasPiece)
                     <div class="price-wrapper">
                         @if ($hasPieceDiscount)
-                            <span class="old-price">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
-                                ₽/шт</span>
-                            <span class="new-price">{{ number_format($product->discount_price_per_piece, 0, ',', ' ') }}
-                                ₽/шт</span>
+                            <span class="old-price" property="price" content="{{ $product->price_per_piece }}">
+                                {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт
+                            </span>
+                            <span class="new-price" property="price"
+                                content="{{ $product->discount_price_per_piece }}">
+                                {{ number_format($product->discount_price_per_piece, 0, ',', ' ') }} ₽/шт
+                            </span>
                         @else
-                            <span class="new-price ms-auto">{{ number_format($product->price_per_piece, 0, ',', ' ') }}
-                                ₽/шт</span>
+                            <span class="new-price ms-auto" property="price" content="{{ $product->price_per_piece }}">
+                                {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт
+                            </span>
                         @endif
+                        <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
+                        <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
                     </div>
                 @endif
                 @if ($hasSqm)
                     <div class="price-wrapper">
                         @if ($hasSqmDiscount)
                             <span class="old-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
-                            <span class="new-price">{{ number_format($product->discount_price_sqm, 0, ',', ' ') }}
-                                ₽/м²</span>
+                            <span class="new-price" property="price" content="{{ $product->discount_price_sqm }}">
+                                {{ number_format($product->discount_price_sqm, 0, ',', ' ') }} ₽/м²
+                            </span>
                         @else
-                            <span class="new-price ms-auto">{{ number_format($product->price_sqm, 0, ',', ' ') }}
-                                ₽/м²</span>
+                            <span class="new-price ms-auto" property="price" content="{{ $product->price_sqm }}">
+                                {{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²
+                            </span>
                         @endif
+                        <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
+                        <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
                     </div>
                 @endif
                 @if ($hasM3)
                     <div class="price-wrapper">
                         @if ($hasM3Discount)
                             <span class="old-price">{{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³</span>
-                            <span class="new-price">{{ number_format($product->discount_price_m3, 0, ',', ' ') }}
-                                ₽/м³</span>
+                            <span class="new-price" property="price" content="{{ $product->discount_price_m3 }}">
+                                {{ number_format($product->discount_price_m3, 0, ',', ' ') }} ₽/м³
+                            </span>
                         @else
-                            <span class="new-price ms-auto">{{ number_format($product->price_m3, 0, ',', ' ') }}
-                                ₽/м³</span>
+                            <span class="new-price ms-auto" property="price" content="{{ $product->price_m3 }}">
+                                {{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³
+                            </span>
                         @endif
+                        <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
+                        <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
                     </div>
                 @endif
             @else
                 <div class="price-wrapper">
                     <span class="new-price">По запросу</span>
+                    <link property="availability" itemprop="availability" href="https://schema.org/PreOrder" />
                 </div>
             @endif
         </div>
@@ -108,6 +131,5 @@
                 @endif
             </div>
         @endif
-
     </div>
 </div>
