@@ -67,14 +67,21 @@
     </div>
 
     <section class="py-5 bg-white">
-        @include('products.components.recently-watched')
+        @include('components.description', [
+            'shortDescription' => $category->productType->short_text,
+            'longDescription' => $category->productType->long_text,
+        ])
     </section>
 
     <section class="py-5 bg-light">
-        @include('components.popular-products')
+        @include('products.components.recently-watched')
     </section>
 
     <section class="py-5 bg-white">
+        @include('components.popular-products')
+    </section>
+
+    <section class="py-5 bg-light">
         @include('components.new-products')
     </section>
 @endsection
