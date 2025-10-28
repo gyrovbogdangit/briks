@@ -15,7 +15,7 @@ class PageController extends Controller
             $page->description,
             $page->og_title,
             $page->og_description,
-            asset('img/logo.svg'),
+            asset('img/logo.webp'),
             route('page', ['page' => $page->slug]),
             'article',
         );
