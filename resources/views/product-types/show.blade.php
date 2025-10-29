@@ -63,12 +63,14 @@
         </div>
     </div>
 
-    <section class="py-5 bg-white">
-        @include('components.description', [
-            'shortDescription' => $productType->short_text,
-            'longDescription' => $productType->long_text,
-        ])
-    </section>
+    @if (isset($productType->short_text) && isset($productType->long_text))
+        <section class="py-5 bg-white">
+            @include('components.description', [
+                'shortDescription' => $productType->short_text,
+                'longDescription' => $productType->long_text,
+            ])
+        </section>
+    @endif
 
     <section class="py-5 bg-light">
         @include('products.components.recently-watched')

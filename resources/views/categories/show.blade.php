@@ -66,12 +66,14 @@
         </div>
     </div>
 
-    <section class="py-5 bg-white">
-        @include('components.description', [
-            'shortDescription' => $category->productType->short_text,
-            'longDescription' => $category->productType->long_text,
-        ])
-    </section>
+    @if (isset($category->productType->short_text) && isset($category->productType->long_text))
+        <section class="py-5 bg-white">
+            @include('components.description', [
+                'shortDescription' => $category->productType->short_text,
+                'longDescription' => $category->productType->long_text,
+            ])
+        </section>
+    @endif
 
     <section class="py-5 bg-light">
         @include('products.components.recently-watched')
