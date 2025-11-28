@@ -21,7 +21,7 @@
         $hasM3Discount = isset($product->discount_price_m3);
     @endphp
 
-    <div class="mb-4 d-flex justify-content-end" itemscope itemtype="https://schema.org/PriceSpecification">
+    <div class="mb-4 d-flex justify-content-end" itemscope itemtype="https://schema.org/Offer">
         @if ($hasPiece || $hasSqm || $hasM3)
             <div>
                 @if ($hasPiece)
