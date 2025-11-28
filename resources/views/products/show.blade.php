@@ -44,10 +44,11 @@
         ])
     </div>
 
-    <div class="container mb-4">
+    <div class="container mb-4" itemscope itemtype="https://schema.org/Product">
         <div class="row g-4">
-            <div class="col-md-6">
+            <div class="col-md-6" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
                 @include('products.components.show.slider')
+                <meta itemprop="url" content="{{ route('products.show', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory, 'product' => $product]) }}" />
             </div>
             <div class="col-md-6">
                 @include('products.components.show.short-info')

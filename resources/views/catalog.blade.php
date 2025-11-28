@@ -16,26 +16,26 @@
         ])
         <div class="row mb-4">
             <div class="col-12 text-center">
-                <h1 class="fw-bold mb-2">Каталог</h1>
+                <h1 class="fw-bold mb-2" itemprop="name">Каталог</h1>
                 <div class="text-muted mb-3">Выберите интересующий вас раздел</div>
             </div>
         </div>
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4 justify-content-center" itemscope itemtype="https://schema.org/CollectionPage">
             @foreach ($types as $type)
-                <div class="col-12 col-md-10 col-lg-8 mb-4">
+                <div class="col-12 col-md-10 col-lg-8 mb-4" itemscope itemtype="https://schema.org/Product">
                     <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
                             @isset($type->image)
                                 <div class="col-12 col-md-4 text-center bg-white py-3 px-2">
                                     <a href="{{ route('product-types.show', ['productType' => $type]) }}">
                                         <img src="{{ asset('storage/' . $type->image) }}" alt="Фото {{ $type->name }}"
-                                            class="img-fluid rounded-3" style="max-height:120px;object-fit:contain;">
+                                            class="img-fluid rounded-3" style="max-height:120px;object-fit:contain;" itemprop="image">
                                     </a>
                                 </div>
                             @endisset
                             <div class="col-12 col-md-8 p-3 @if (!isset($type->image)) ms-5 @endif">
-                                <h2 class="h5 fw-bold mb-2"><a class="text-decoration-none text-dark"
-                                        href="{{ route('product-types.show', ['productType' => $type]) }}">{{ $type->name }}</a>
+                                <h2 class="h5 fw-bold mb-2"><a class="text-decoration-none text-dark" itemprop="url"
+                                        href="{{ route('product-types.show', ['productType' => $type]) }}"><span itemprop="name">{{ $type->name }}</span></a>
                                 </h2>
                                 @if ($type->categories->count())
                                     <div class="d-flex flex-wrap gap-2 mb-2">

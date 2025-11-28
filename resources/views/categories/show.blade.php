@@ -26,16 +26,16 @@
             ],
         ])
         <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h1 class="fw-bold mb-2">{{ $category->name }}</h1>
+            <div class="col-12 text-center" itemscope itemtype="https://schema.org/Product">
+                <h1 class="fw-bold mb-2" itemprop="name">{{ $category->name }}</h1>
                 @if ($category->description)
-                    <div class="text-muted mb-3">{!! $category->description !!}</div>
+                    <div class="text-muted mb-3" itemprop="description">{!! $category->description !!}</div>
                 @endif
             </div>
         </div>
         <div class="row g-4 justify-content-center">
             @foreach ($subcategories as $subcategory)
-                <div class="col-12 col-md-10 col-lg-8 mb-4">
+                <div class="col-12 col-md-10 col-lg-8 mb-4" itemscope itemtype="https://schema.org/Product">
                     <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
                             @isset($subcategory->products[0]->images[0])
@@ -44,14 +44,14 @@
                                         href="{{ route('products.index', ['productType' => $category->productType, 'category' => $category, 'subcategory' => $subcategory]) }}">
                                         <img src="{{ asset('storage/' . $subcategory->products[0]->images[0]) }}"
                                             alt="{{ $subcategory->name }}" class="img-fluid rounded-3"
-                                            style="max-height:100px;object-fit:contain;">
+                                            style="max-height:100px;object-fit:contain;" itemprop="image">
                                     </a>
                                 </div>
                             @endisset
                             <div class="col-12 col-md-8 p-3 @if (!isset($subcategory->products[0]->images[0])) ms-5 @endif">
                                 <h2 class="h5 fw-bold mb-2"><a
                                         href="{{ route('products.index', ['productType' => $category->productType, 'category' => $category, 'subcategory' => $subcategory]) }}"
-                                        class="text-decoration-none text-dark">{{ $subcategory->name }}</a>
+                                        class="text-decoration-none text-dark" itemprop="url"><span itemprop="name">{{ $subcategory->name }}</span></a>
                                 </h2>
                                 <a href="{{ route('products.index', ['productType' => $category->productType, 'category' => $category, 'subcategory' => $subcategory]) }}"
                                     class="rounded-2 bg-primary-subtle text-primary text-decoration-none fw-normal px-2 py-1">
@@ -66,11 +66,11 @@
         </div>
     </div>
 
-    @if (isset($category->productType->short_text) && isset($category->productType->long_text))
+    @if ((isset($category->short_text) && isset($category->long_text)) || (isset($category->productType->short_text) && isset($category->productType->long_text)))
         <section class="py-5 bg-white">
             @include('components.description', [
-                'shortDescription' => $category->productType->short_text,
-                'longDescription' => $category->productType->long_text,
+                'shortDescription' => empty($category->short_text) ? $category->productType->short_text : $category->short_text,
+                'longDescription' => empty($category->long_text) ? $category->productType->long_text : $category->long_text,
             ])
         </section>
     @endif

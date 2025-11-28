@@ -1,5 +1,5 @@
  <div class="container">
-     <div class="products-grid">
+     <div class="products-grid" itemscope itemtype="https://schema.org/ItemList">
          @if ($products->count() > 0)
              @foreach ($products as $product)
                  <livewire:product-item :product="$product" />

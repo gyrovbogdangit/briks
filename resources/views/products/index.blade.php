@@ -36,11 +36,11 @@
     </div>
 
     <div class="container">
-        <h1 class="mb-3">{{ $subcategory->name }} <span class="text-muted fs-2">({{ $products->total() }})</span>
+        <h1 class="mb-3" itemscope itemtype="https://schema.org/CollectionPage" itemprop="name">{{ $subcategory->name }} <span class="text-muted fs-2">({{ $products->total() }})</span>
         </h1>
     </div>
 
-    <div class="container d-flex mb-5">
+    <div class="container d-flex mb-5" itemscope itemtype="https://schema.org/CollectionPage">
         <div class="d-none d-md-block col-md-3">
             @include('products.components.index.filters')
         </div>
@@ -76,11 +76,11 @@
     </div>
 
 
-    @if (isset($type->short_text) && isset($type->long_text))
+    @if ((isset($type->short_text) && isset($type->long_text)) || (isset($category->short_text) && isset($category->long_text)))
         <section class="py-5 bg-white">
-            @include('components.description', [
-                'shortDescription' => $type->short_text,
-                'longDescription' => $type->long_text,
+              @include('components.description', [
+                'shortDescription' => empty($category->short_text) ? $type->short_text : $category->short_text,
+                'longDescription' => empty($category->long_text) ? $type->long_text : $category->long_text,
             ])
         </section>
     @endif
