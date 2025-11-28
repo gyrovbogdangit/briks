@@ -28,7 +28,6 @@
     <div class="tab-content" id="productTabContent">
         <div class="tab-pane fade show active" id="desc" role="tabpanel">
             <div class="mb-3">
-                {{ debugbar()->info($product) }}
                 <p>{!! $product->description !!}</p>
             </div>
             @if (isset($product->docs) && count($product->docs) > 0)
