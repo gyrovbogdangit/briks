@@ -97,7 +97,7 @@ class GenerateYmlCatalog extends Command
         foreach ($products as $product) {
             $offer = $offersElement->addChild('offer');
             $offer->addAttribute('id', $product->id);
-            $offer->addAttribute('available', $product->stock > 0 ? 'true' : 'false');
+            $offer->addAttribute('available', $product->is_active ? 'true' : 'false');
 
             // Basic info
             $offer->addChild('name', htmlspecialchars($product->name, ENT_XML1));
