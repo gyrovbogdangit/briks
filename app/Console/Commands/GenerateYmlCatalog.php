@@ -138,6 +138,8 @@ class GenerateYmlCatalog extends Command
                 'product' => $product
             ]);
             $offer->addChild('url', $url);
+
+            $offer->addChild('sales_notes', 'Предоплата. Доставка по России.');
         }
     }
 
