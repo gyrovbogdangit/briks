@@ -3,7 +3,7 @@
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="fa-solid fa-circle-check me-2"></i>
             <div>
-                <b>Заявка отправлена</b><br>
+                <b>Заказ сформирован</b><br>
                 Вам перезвонят в течение 15 минут.
             </div>
         </div>
@@ -48,7 +48,7 @@
                 @enderror
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Оставить заявку</button>
+                <button type="submit" class="btn btn-primary">Оформить заказ</button>
             </div>
         </form>
     @endif

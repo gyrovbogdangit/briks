@@ -133,8 +133,8 @@
                     <span class="fs-6 text-secondary">({{ $totalQuantity }}
                         {{ trans_choice('товар|товара|товаров', $totalQuantity, [], 'ru') }})</span>
                 </div>
-                <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#requestCartModal">
-                    <i class="fa fa-paper-plane me-2"></i>Оставить заявку
+                <button class="btn btn-danger btn-lg px-4" data-bs-toggle="modal" data-bs-target="#requestCartModal">
+                    <i class="fa fa-paper-plane me-2"></i>Оформить заказ
                 </button>
             </div>
         </div>

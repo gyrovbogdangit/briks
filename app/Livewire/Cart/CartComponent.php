@@ -31,14 +31,6 @@ class CartComponent extends Component
 
     public function decrement($productId, $unit = 'piece')
     {
-        $product = $this->products->first(function ($p) use ($productId, $unit) {
-            return $p->id == $productId && $p->unit == $unit;
-        });
-
-        if (!$product) {
-            return;
-        }
-
         $quantity = CartService::getQuantity($productId, $unit);
         if ($quantity <= 1) {
             CartService::delete($productId, $unit);
