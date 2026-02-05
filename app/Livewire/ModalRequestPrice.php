@@ -32,6 +32,22 @@ class ModalRequestPrice extends Component
 
     public $emailSended = false;
 
+    public function getOrderData()
+    {
+        $quantity = $this->quantity ?? 1;
+        $orderText = "Запрос стоимости:\n";
+        $orderText .= "Товар:\n";
+        $orderText .= "- {$this->product->name}\n";
+        $orderText .= "  Количество: {$quantity} шт\n";
+        $orderText .= "Адрес доставки: " . (CustomerService::getCity() ?? 'Не указан') . "\n";
+        
+        if ($this->comment) {
+            $orderText .= "Комментарий: {$this->comment}\n";
+        }
+        
+        return $orderText;
+    }
+
     public function render()
     {
         return view('livewire.modal-request-price');

@@ -22,6 +22,7 @@
                 </div>
             </div>
             <form wire:submit="sendEmail" class="needs-validation" novalidate>
+                <input type="hidden" name="order" value="{{ $this->getOrderData() }}">
                 <div class="mb-3">
                     <label for="name" class="form-label">Имя</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -46,14 +47,14 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="quantity" class="form-label">Количество</label>
                     <input type="text" class="form-control @error('quantity') is-invalid @enderror" id="quantity"
                         name="quantity" placeholder="1 шт." wire:model="quantity">
                     @error('quantity')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="form-check mb-3">
                     <input class="form-check-input @error('privacy') is-invalid @enderror" type="checkbox"
                         id="privacy" wire:model="privacy">

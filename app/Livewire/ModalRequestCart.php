@@ -30,6 +30,43 @@ class ModalRequestCart extends Component
         return view('livewire.modal-request-cart');
     }
 
+    public function getOrderData()
+    {
+        $products = CartService::get();
+        $totalSum = CartService::getTotalSum();
+
+        $orderText = "Заказ:\n";
+        $orderText .= "Товары:\n";
+        
+        foreach ($products as $product) {
+            if ($product->unit === 'sqm') {
+                $price = $product->discount_price_sqm ?? $product->price_sqm;
+                $unit = 'м²';
+            } elseif ($product->unit === 'm3') {
+                $price = $product->discount_price_m3 ?? $product->price_m3;
+                $unit = 'м³';
+            } else {
+                $price = $product->discount_price_per_piece ?? $product->price_per_piece;
+                $unit = 'шт';
+            }
+            
+            $orderText .= "- {$product->name}\n";
+            $orderText .= "  Количество: {$product->quantity} {$unit}\n";
+            $orderText .= "  Цена за единицу: {$price} руб.\n";
+            $orderText .= "  Сумма: " . ($price * $product->quantity) . " руб.\n\n";
+        }
+        
+        $orderText .= "Общая сумма: {$totalSum} руб.\n";
+        $orderText .= "Доставка: Не указано\n";
+        $orderText .= "Адрес доставки: " . (CustomerService::getCity() ?? 'Не указан') . "\n";
+        
+        if ($this->comment) {
+            $orderText .= "Комментарий: {$this->comment}\n";
+        }
+        
+        return $orderText;
+    }
+
     public function sendEmail()
     {
         $this->validate();

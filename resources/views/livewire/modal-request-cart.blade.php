@@ -12,6 +12,7 @@
         </div>
     @else
         <form wire:submit="sendEmail" class="needs-validation" novalidate>
+            <input type="hidden" name="order" value="{{ $this->getOrderData() }}">
             <div class="mb-3">
                 <label for="name" class="form-label">Имя</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
