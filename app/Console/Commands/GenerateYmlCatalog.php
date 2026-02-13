@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 
 class GenerateYmlCatalog extends Command
 {
+    protected $categoryIdMap = [];
     /**
      * The name and signature of the console command.
      *
@@ -70,17 +71,43 @@ class GenerateYmlCatalog extends Command
     protected function addCategories($shop)
     {
         $categoriesElement = $shop->addChild('categories');
+        $currentId = 1;
+        $categoryIdMap = [];
 
+        // Add product types
+        $productTypes = \App\Models\ProductType::all();
+        foreach ($productTypes as $productType) {
+            $categoryElement = $categoriesElement->addChild('category', htmlspecialchars($productType->name, ENT_XML1));
+            $categoryElement->addAttribute('id', $currentId);
+            $categoryIdMap['pt_' . $productType->id] = $currentId;
+            $currentId++;
+        }
+
+        // Add categories
+        $categories = \App\Models\Category::with('productType')->get();
+        foreach ($categories as $category) {
+            $categoryElement = $categoriesElement->addChild('category', htmlspecialchars($category->name, ENT_XML1));
+            $categoryElement->addAttribute('id', $currentId);
+            if ($category->product_type_id && isset($categoryIdMap['pt_' . $category->product_type_id])) {
+                $categoryElement->addAttribute('parentId', $categoryIdMap['pt_' . $category->product_type_id]);
+            }
+            $categoryIdMap['c_' . $category->id] = $currentId;
+            $currentId++;
+        }
+
+        // Add subcategories
         $subcategories = \App\Models\Subcategory::with('category')->get();
-
         foreach ($subcategories as $subcategory) {
             $categoryElement = $categoriesElement->addChild('category', htmlspecialchars($subcategory->name, ENT_XML1));
-            $categoryElement->addAttribute('id', $subcategory->id);
-
-            if ($subcategory->category_id) {
-                $categoryElement->addAttribute('parentId', $subcategory->category_id);
+            $categoryElement->addAttribute('id', $currentId);
+            if ($subcategory->category_id && isset($categoryIdMap['c_' . $subcategory->category_id])) {
+                $categoryElement->addAttribute('parentId', $categoryIdMap['c_' . $subcategory->category_id]);
             }
+            $categoryIdMap['sc_' . $subcategory->id] = $currentId;
+            $currentId++;
         }
+
+        $this->categoryIdMap = $categoryIdMap;
     }
 
     /**
@@ -110,8 +137,8 @@ class GenerateYmlCatalog extends Command
             }
 
             // Category
-            if ($product->subcategory) {
-                $offer->addChild('categoryId', $product->subcategory->id);
+            if ($product->subcategory && isset($this->categoryIdMap['sc_' . $product->subcategory->id])) {
+                $offer->addChild('categoryId', $this->categoryIdMap['sc_' . $product->subcategory->id]);
             }
 
             // Description
