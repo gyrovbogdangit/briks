@@ -71,14 +71,14 @@ class GenerateYmlCatalog extends Command
     {
         $categoriesElement = $shop->addChild('categories');
 
-        $categories = Category::all();
+        $subcategories = \App\Models\Subcategory::with('category')->get();
 
-        foreach ($categories as $category) {
-            $categoryElement = $categoriesElement->addChild('category', htmlspecialchars($category->name, ENT_XML1));
-            $categoryElement->addAttribute('id', $category->id);
+        foreach ($subcategories as $subcategory) {
+            $categoryElement = $categoriesElement->addChild('category', htmlspecialchars($subcategory->name, ENT_XML1));
+            $categoryElement->addAttribute('id', $subcategory->id);
 
-            if ($category->parent_id) {
-                $categoryElement->addAttribute('parentId', $category->parent_id);
+            if ($subcategory->category_id) {
+                $categoryElement->addAttribute('parentId', $subcategory->category_id);
             }
         }
     }
@@ -110,8 +110,8 @@ class GenerateYmlCatalog extends Command
             }
 
             // Category
-            if ($product->category) {
-                $offer->addChild('categoryId', $product->category->id);
+            if ($product->subcategory) {
+                $offer->addChild('categoryId', $product->subcategory->id);
             }
 
             // Description
