@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use App\Models\Attribute;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Resources\AttributeResource\Pages;
 use App\Filament\Resources\AttributeResource\RelationManagers\ValuesRelationManager;
+use App\Models\Attribute;
+use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class AttributeResource extends Resource
 {
@@ -46,6 +47,9 @@ class AttributeResource extends Resource
                     ->multiple()
                     ->relationship('categories', 'name')
                     ->required(),
+                Checkbox::make('show_in_filters')
+                    ->label('Показывать в фильтрах')
+                    ->default(true)
             ]);
     }
 
@@ -62,6 +66,10 @@ class AttributeResource extends Resource
                 Tables\Columns\TextColumn::make('categories.name')
                     ->label('Категории')
                     ->formatStateUsing(fn($state) => is_string($state) ? $state : $state->pluck('name')->join(', ')),
+                Tables\Columns\IconColumn::make('show_in_filters')
+                    ->label('Показывать в фильтрах')
+                    ->boolean()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

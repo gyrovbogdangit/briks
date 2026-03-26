@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AttributeResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -22,6 +23,9 @@ class ValuesRelationManager extends RelationManager
                     ->label('Значение')
                     ->required()
                     ->maxLength(255),
+                ColorPicker::make('color')
+                    ->label('Цвет')
+                    ->hidden(fn(RelationManager $livewire) => $livewire->getOwnerRecord()->name !== 'Цвет'),
             ]);
     }
 
@@ -32,6 +36,10 @@ class ValuesRelationManager extends RelationManager
             ->recordTitleAttribute('value')
             ->columns([
                 Tables\Columns\TextColumn::make('value'),
+                Tables\Columns\ColorColumn::make('color')
+                    ->label('Цвет')
+                    ->copyable()
+                    ->copyMessage('HEX код скопирован'),
             ])
             ->filters([
                 //

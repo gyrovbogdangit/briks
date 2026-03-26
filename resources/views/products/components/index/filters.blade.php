@@ -47,11 +47,18 @@
                                     <li
                                         class="list-group-item p-0 border-0 bg-transparent @if ($i >= 5) d-none more-values-{{ $attribute->id }} @endif">
                                         <div class="form-check d-flex">
-                                            <input type="checkbox" class="form-check-input filter-checkbox me-2"
+                                            @if ($value->color)
+                                                <div class="border-light border"
+                                                    style="width: 22px; height:22px; border-radius: 100%; background-color: {{ $value->color }}; position: absolute; left: -10px;">
+                                                </div>
+                                            @endif
+                                            <input type="checkbox"
+                                                class="form-check-input filter-checkbox  @if ($value->color) ms-1 @endif me-2"
                                                 name="{{ $attribute->slug }}[]" value="{{ $value->slug }}"
                                                 id="filter-{{ $attribute->id }}-{{ $value->id }}"
                                                 @if ($value->products_count === 0) disabled @endif
                                                 data-filter-id="{{ $value->slug }}" @checked($filter->inAttributeValues($attribute->slug, $value->slug)) />
+
                                             <label class="form-check-label"
                                                 for="filter-{{ $attribute->id }}-{{ $value->id }}">{{ $value->value }}</label>
                                             @isset($value->products_count)

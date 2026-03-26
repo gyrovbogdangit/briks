@@ -13,6 +13,10 @@ class Attribute extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'show_in_filters' => 'boolean',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -45,6 +49,7 @@ class Attribute extends Model
         $attributes = $filter
             ->category
             ->attributes()
+            ->where('show_in_filters', true)
             ->with(['values' => function ($query) use ($filter) {
                 $query->orderBy('value')->distinct();
                 $query->whereHas('products', function ($query) use ($filter) {
