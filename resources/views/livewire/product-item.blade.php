@@ -1,4 +1,4 @@
-<div class="product-card rounded-3 bg-white shadow-sm h-100 d-flex flex-column w-100" style="width:220px;min-height:330px"
+<div class="product-card p-2 bg-white shadow-sm h-100 d-flex flex-column w-100" style="width:220px;min-height:330px"
     vocab="https://schema.org/" typeof="Product" itemscope itemtype="https://schema.org/Product">
 
     <a href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}"
@@ -7,12 +7,12 @@
             @if (isset($product->thumbs[0])) {{ Storage::url($product->thumbs[0]) }}
             @elseif (isset($product->images[0])) {{ Storage::url($product->images[0]) }}
             @else {{ asset('img/content/product-1.jpg') }} @endif"
-            loading="lazy" alt="{{ $product->name }}" class="rounded-top-2 w-100" property="image" itemprop="image" />
+            loading="lazy" alt="{{ $product->name }}" class="w-100 d-block" property="image" itemprop="image" />
     </a>
 
-    <div class="card-body p-3 d-flex flex-column h-100">
-        <div class="card-title text-primary fs-6 fw-bold" style="max-height: 60px;line-height: 1.2;">
-            <a class="text-decoration-none"
+    <div class="card-body px-2 pt-2 d-flex flex-column h-100">
+        <div class="card-title fs-6 fw-bold" style="max-height: 60px;line-height: 1.2;">
+            <a class="text-decoration-none link-dark"
                 href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}"
                 property="name" itemprop="name">
                 {{ Illuminate\Support\Str::limit($product->name, 60) }}
@@ -39,49 +39,87 @@
                 @if ($hasPiece)
                     <div class="price-wrapper">
                         @if ($hasPieceDiscount)
-                            <span class="old-price" property="price" content="{{ $product->price_per_piece }}">
-                                {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт
-                            </span>
-                            <span class="new-price" property="price"
-                                content="{{ $product->discount_price_per_piece }}">
-                                {{ number_format($product->discount_price_per_piece, 0, ',', ' ') }} ₽/шт
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->discount_price_per_piece }}">
+                                    {{ number_format($product->discount_price_per_piece, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/шт</span>
+                            </div>
+                            <div>
+                                <span class="old-price" property="price" content="{{ $product->price_per_piece }}">
+                                    {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽
+                                    <span class="price-units">/шт</span>
+                                </span>
+                            </div>
                         @else
-                            <span class="new-price ms-auto" property="price" content="{{ $product->price_per_piece }}">
-                                {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽/шт
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->price_per_piece }}">
+                                    {{ number_format($product->price_per_piece, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/шт</span>
+                            </div>
                         @endif
                         <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
                         <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
                     </div>
                 @endif
+
                 @if ($hasSqm)
                     <div class="price-wrapper">
                         @if ($hasSqmDiscount)
-                            <span class="old-price">{{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²</span>
-                            <span class="new-price" property="price" content="{{ $product->discount_price_sqm }}">
-                                {{ number_format($product->discount_price_sqm, 0, ',', ' ') }} ₽/м²
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->discount_price_sqm }}">
+                                    {{ number_format($product->discount_price_sqm, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/м²</span>
+                            </div>
+                            <div>
+                                <span class="old-price" property="price" content="{{ $product->price_sqm }}">
+                                    {{ number_format($product->price_sqm, 0, ',', ' ') }} ₽
+                                    <span class="price-units">/м²</span>
+                                </span>
+                            </div>
                         @else
-                            <span class="new-price ms-auto" property="price" content="{{ $product->price_sqm }}">
-                                {{ number_format($product->price_sqm, 0, ',', ' ') }} ₽/м²
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->price_sqm }}">
+                                    {{ number_format($product->price_sqm, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/м²</span>
+                            </div>
                         @endif
                         <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
                         <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
                     </div>
                 @endif
+
                 @if ($hasM3)
                     <div class="price-wrapper">
                         @if ($hasM3Discount)
-                            <span class="old-price">{{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³</span>
-                            <span class="new-price" property="price" content="{{ $product->discount_price_m3 }}">
-                                {{ number_format($product->discount_price_m3, 0, ',', ' ') }} ₽/м³
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->discount_price_m3 }}">
+                                    {{ number_format($product->discount_price_m3, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/м³</span>
+                            </div>
+                            <div>
+                                <span class="old-price" property="price" content="{{ $product->price_m3 }}">
+                                    {{ number_format($product->price_m3, 0, ',', ' ') }} ₽
+                                    <span class="price-units">/м³</span>
+                                </span>
+                            </div>
                         @else
-                            <span class="new-price ms-auto" property="price" content="{{ $product->price_m3 }}">
-                                {{ number_format($product->price_m3, 0, ',', ' ') }} ₽/м³
-                            </span>
+                            <div>
+                                <span class="new-price price-amount" property="price"
+                                    content="{{ $product->price_m3 }}">
+                                    {{ number_format($product->price_m3, 0, ',', ' ') }} ₽
+                                </span>
+                                <span class="price-units">/м³</span>
+                            </div>
                         @endif
                         <meta property="priceCurrency" itemprop="priceCurrency" content="RUB" />
                         <link property="availability" itemprop="availability" href="https://schema.org/InStock" />
@@ -95,14 +133,7 @@
             @endif
         </div>
 
-        <div class="action-icons bg-light rounded-2 p-2 border mt-2">
-            @if ($quantity)
-                <a class="fas fa-cart-plus icon active text-decoration-none" href="{{ route('cart') }}"
-                    title="В корзине"></a>
-            @else
-                <i class="fas fa-cart-plus icon" title="В корзину" wire:click="addToCart"></i>
-            @endif
-
+        <div class="action-icons">
             @if ($inComparison)
                 <a class="fas fa-chart-simple icon active text-decoration-none text-warning" title="Убрать из сравнения"
                     wire:click="deleteFromComparison"></a>
@@ -111,14 +142,17 @@
             @endif
 
             @if ($inFavorites)
-                <a class="fas fa-heart icon favorite active text-decoration-none text-danger"
+                <a class="far fa-heart icon favorite active text-decoration-none text-danger"
                     title="Убрать из избранного" wire:click="deleteFromFavorites"></a>
             @else
-                <i class="fas fa-heart icon favorite" title="Добавить в избранное" wire:click="addToFavorites"></i>
+                <i class="far fa-heart icon favorite" title="Добавить в избранное" wire:click="addToFavorites"></i>
             @endif
         </div>
 
-        @if ($product->is_new || (isset($product->price_per_piece) && isset($product->discount_price_per_piece)))
+        @if (
+            $product->is_new ||
+                $product->is_hit_of_sales ||
+                (isset($product->price_per_piece) && isset($product->discount_price_per_piece)))
             <div class="product-labels">
                 @if ($product->is_new)
                     <div class="badge text-bg-secondary"><i class="fa-solid fa-plus"></i> Новинка</div>
@@ -132,4 +166,14 @@
             </div>
         @endif
     </div>
+    @if ($quantity)
+        <a class="btn btn-outline-primary mt-2 border-3 border-box text-decoration-none cart-button"
+            href="{{ route('cart') }}">
+            <i class="fas fa-shopping-cart icon" title="В корзине"></i> В корзине
+        </a>
+    @else
+        <button class="btn btn-primary mt-2 border-3 cart-button" wire:click="addToCart">
+            <i class="fas fa-shopping-cart icon" title="В корзину"></i> В корзину
+        </button>
+    @endif
 </div>

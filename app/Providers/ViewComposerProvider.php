@@ -37,6 +37,9 @@ class ViewComposerProvider extends ServiceProvider
         View::composer(
             [
                 'layouts.components.catalog-menu',
+                'layouts.components.header',
+                'layouts.components.footer',
+                'components.hero',
                 'catalog'
             ],
             function ($view) {

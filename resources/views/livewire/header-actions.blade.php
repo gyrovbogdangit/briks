@@ -6,7 +6,7 @@
                  <span
                      class="badge-counter position-absolute translate-middle badge rounded-pill bg-danger">{{ $favoritesQuantity }}</span>
              @endif
-             <div class="icon-label mt-0 text-light-emphasis fw-semibold">Избранное</div>
+             <div class="icon-label mt-0 fw-semibold">Избранное</div>
          </a>
      </div>
      <div class="icon-item text-center border-white">
@@ -16,7 +16,7 @@
                  <span
                      class="badge-counter position-absolute translate-middle badge rounded-pill bg-danger">{{ $comparisonQuantity }}</span>
              @endif
-             <div class="icon-label mt-0 text-light-emphasis fw-semibold">Сравнение</div>
+             <div class="icon-label mt-0 fw-semibold">Сравнение</div>
          </a>
      </div>
      <div class="icon-item text-center border-white">
@@ -26,7 +26,7 @@
                  <span
                      class="badge-counter position-absolute translate-middle badge rounded-pill bg-danger">{{ $cartQuantity }}</span>
              @endif
-             <div class="icon-label mt-0 text-light-emphasis fw-semibold">Корзина</div>
+             <div class="icon-label mt-0 fw-semibold">Корзина</div>
          </a>
      </div>
  </div>

@@ -3,23 +3,23 @@
 @section('content')
     <h1 class="visually-hidden">Магазин строительных материалов: кирпич, кровля, блоки</h1>
 
-    <div class="container">
+    <div>
         @include('components.hero')
     </div>
 
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-white">
         @include('components.hot-products')
     </section>
 
-    <section class="py-5 bg-white">
+    <section class="py-5 bg-light">
         @include('components.popular-products')
     </section>
 
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-white">
         @include('components.new-products')
     </section>
 
-    <section class="py-5 bg-white">
+    <section class="py-5 bg-light">
         @include('components.why-choose-us')
     </section>
 

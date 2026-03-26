@@ -1,97 +1,114 @@
-<nav id="catalog-menu" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="catalogMenuLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="catalogMenuLabel"><a href="{{ route('catalog') }}"
-                class="text-decoration-none text-dark">Каталог</h5></a>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<nav id="catalog-menu" class="offcanvas catalog-modal" tabindex="-1">
+    <div class="offcanvas-header border-bottom py-3 px-4 d-lg-none">
+        <h5 class="offcanvas-title fw-bold" id="catalogMenuLabel">
+            <a href="{{ route('catalog') }}" class="text-decoration-none text-dark">Каталог материалов</a>
+        </h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body p-0">
+
+    <div class="offcanvas-body offcanvas-body-catalog p-0 ">
         <div class="catalog-mega-menu d-none d-lg-flex">
-            <ul class="catalog-types list-group border-end">
+            <aside class="catalog-sidebar border-right border-light-subtle">
+                <div class="sidebar-label px-4 pt-4 pb-2 text-uppercase fw-bold text-muted">
+                    Категории
+                </div>
+                <ul class="list-unstyled flex-column gap-1 p-3">
+                    @foreach ($types as $type)
+                        <li>
+                            <a class="catalog-type-btn w-100 border-0 d-flex align-items-center gap-3 text-decoration-none transition-all @if ($loop->first) active @endif"
+                                href="{{ route('product-types.show', ['productType' => $type]) }}"
+                                data-type-target="{{ $type->id }}">
+                                @isset($type->image)
+                                    <img src="{{ asset('storage/' . $type->image) }}" alt="{{ $type->name }}"
+                                        class="type-icon">
+                                @endisset
+                                <span class="fw-semibold small">{{ $type->name }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </aside>
+
+            <main class="catalog-content flex-grow-1 bg-white p-5">
+                <div class="text-end position-absolute end-0 pe-5">
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
                 @foreach ($types as $type)
-                    <li class="list-group-item px-3 py-2 border-0 catalog-type-item position-relative">
-                        <a href="{{ route('product-types.show', ['productType' => $type]) }}"
-                            class="text-decoration-none d-block w-100 catalog-type-link"
-                            data-type-id="{{ $type->id }}">
-                            {{ $type->name }}
-                            <i class="fa-solid fa-chevron-right float-end mt-1"></i>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-            @foreach ($types as $type)
-                @if (!empty($type->categories))
-                    <div class="catalog-categories-menu" data-categories-for="{{ $type->id }}">
-                        <ul class="catalog-categories list-group border-start border-end">
+                    <div class="catalog-pane @if (!$loop->first) d-none @endif"
+                        id="pane-{{ $type->id }}">
+                        <div class="pane-header mb-4">
+                            <h2 class="fw-bold mb-2">{{ $type->name }}</h2>
+                            <p class="text-muted" style="max-width: 32rem;">Широкий ассортимент кирпича для любых
+                                строительных задач: от фундамента до декоративной отделки фасадов.</p>
+                        </div>
+
+                        <div class="row g-4">
                             @foreach ($type->categories as $category)
-                                <li class="list-group-item px-3 py-2 border-0 catalog-category-item">
-                                    <a href="{{ route('categories.show', ['productType' => $type, 'category' => $category]) }}"
-                                        class="text-decoration-none d-block w-100 catalog-category-link"
-                                        data-category-id="{{ $category->id }}">
-                                        {{ $category->name }}
-                                        <i class="fa-solid fa-chevron-right float-end mt-1"></i>
-                                    </a>
-                                </li>
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="category-group">
+                                        <h6 class="fw-bold d-flex align-items-center gap-2 mb-3">
+                                            <span class="dot bg-primary"></span>
+                                            <a href="{{ route('categories.show', ['productType' => $type, 'category' => $category]) }}"
+                                                class="link-dark text-decoration-none">{{ $category->name }}</a>
+                                        </h6>
+                                        <ul class="list-unstyled d-flex flex-column gap-2 ms-3">
+                                            @foreach ($category->subcategories as $subcategory)
+                                                <li>
+                                                    <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
+                                                        class="subcategory-link text-decoration-none text-muted hover-primary">
+                                                        {{ $subcategory->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
                             @endforeach
-                        </ul>
-                        @foreach ($type->categories as $category)
-                            @if (!empty($category->subcategories))
-                                <div class="catalog-subcategories-menu" data-subcategories-for="{{ $category->id }}">
-                                    <ul class="catalog-subcategories list-group">
-                                        @foreach ($category->subcategories as $subcategory)
-                                            <li class="list-group-item px-3 py-2 border-0">
-                                                <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
-                                                    class="text-decoration-none d-block w-100 catalog-subcategory-link">
+                        </div>
+                    </div>
+                @endforeach
+            </main>
+        </div>
+
+        <div class="d-block d-lg-none p-3">
+            <div class="accordion accordion-flush" id="mobileCatalog">
+                @foreach ($types as $type)
+                    <div class="accordion-item border-0 mb-2">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed rounded-3 shadow-none bg-light fw-bold"
+                                type="button" data-bs-toggle="collapse"
+                                data-bs-target="#mob-type-{{ $type->id }}">
+                                @isset($type->image)
+                                    <img src="{{ asset('storage/' . $type->image) }}" class="me-2"
+                                        style="height:24px;margin-bottom:5px;">
+                                @endisset
+                                {{ $type->name }}
+                            </button>
+                        </h2>
+                        <div id="mob-type-{{ $type->id }}" class="accordion-collapse collapse"
+                            data-bs-parent="#mobileCatalog">
+                            <div class="accordion-body pe-2 ps-3">
+                                @foreach ($type->categories as $category)
+                                    <div class="mb-3">
+                                        <div class="fw-bold mb-2"><a class="text-dark text-decoration-none"
+                                                href="{{ route('categories.show', ['productType' => $type, 'category' => $category]) }}">{{ $category->name }}</a>
+                                        </div>
+                                        <div class="list-group list-group-flush ps-2">
+                                            @foreach ($category->subcategories as $subcategory)
+                                                <a href="{{ route('products.index', ['productType' => $type, 'category' => $category, 'subcategory' => $subcategory]) }}"
+                                                    class="list-group-item list-group-item-action border-0 py-1 text-muted">
                                                     {{ $subcategory->name }}
                                                 </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-            @endforeach
-        </div>
-        <div class="d-block d-lg-none p-2">
-            <ul class="list-group">
-                @foreach ($types as $type)
-                    <li class="list-group-item p-0 border-0">
-                        <a class="d-block px-3 py-2 fw-bold text-decoration-none" data-bs-toggle="collapse"
-                            href="#mobile-type-{{ $type->id }}" role="button" aria-expanded="false"
-                            aria-controls="mobile-type-{{ $type->id }}">
-                            {{ $type->name }}
-                        </a>
-                        @if (!empty($type->categories))
-                            <ul class="collapse list-group ms-2" id="mobile-type-{{ $type->id }}">
-                                @foreach ($type->categories as $category)
-                                    <li class="list-group-item p-0 border-0">
-                                        <a class="d-block px-3 py-2 text-decoration-none text-dark"
-                                            data-bs-toggle="collapse" href="#mobile-cat-{{ $category->id }}"
-                                            role="button" aria-expanded="false"
-                                            aria-controls="mobile-cat-{{ $category->id }}">
-                                            {{ $category->name }}
-                                        </a>
-                                        @if (!empty($category->subcategories))
-                                            <ul class="collapse list-group ms-2 show"
-                                                id="mobile-cat-{{ $category->id }}">
-                                                @foreach ($category->subcategories as $subcategory)
-                                                    <li class="list-group-item p-0 border-0">
-                                                        <a href="{{ route('products.index', ['productType' => $type['slug'], 'category' => $category->slug, 'subcategory' => $subcategory['slug']]) }}"
-                                                            class="d-block px-3 py-2 text-decoration-none text-dark">
-                                                            {{ $subcategory->name }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 @endforeach
-                            </ul>
-                        @endif
-                    </li>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-            </ul>
+            </div>
         </div>
     </div>
 </nav>

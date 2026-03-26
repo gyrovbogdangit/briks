@@ -1,27 +1,29 @@
 <div class="top-nav py-2 d-none d-xl-block">
-    <div class="container d-flex justify-content-between align-items-center fw-bolder">
-        <div class="d-flex">
+    <div class="container d-flex justify-content-between align-items-center ">
+        <div class="d-flex gap-2">
             <livewire:city-name />
+            <a href="{{ $addresses[0]->url }}" rel="noopener noreferrer" target="_blank" itemprop="address"
+                class="text-decoration-none">
+                </i> {{ $addresses[0]->address }}
+            </a>
+        </div>
+        <div itemscope itemtype="https://schema.org/Organization" class="gap-4 d-flex">
             @foreach ($pages as $page)
                 <a href="{{ route('page', ['page' => $page]) }}" title="{{ $page->meta_title ?? $page->title }}">
                     {{ $page->title }}
                 </a>
             @endforeach
-        </div>
-        <div itemscope itemtype="https://schema.org/Organization">
             <meta itemprop="name" content="БРИКС">
-            <a href="tel:{{ $phoneNumbers[0]->number }}" itemprop="telephone" class="text-decoration-none">
-                <i class="fas fa-phone me-1"></i> {{ $phoneNumbers[0]->number }}
+            <a href="tel:{{ $phoneNumbers[0]->number }}" itemprop="telephone"
+                class="text-decoration-none text-dark fw-semibold">
+                {{ $phoneNumbers[0]->number }}
             </a>
-            <a href="{{ $addresses[0]->url }}" rel="noopener noreferrer" target="_blank" itemprop="address"
-                class="text-decoration-none">
-                <i class="fas fa-shop me-1"></i> {{ $addresses[0]->address }}
-            </a>
+
         </div>
     </div>
 </div>
 
-<nav class="navbar border-bottom" aria-label="Главное меню">
+<nav class="navbar border-bottom border-light-subtle" aria-label="Главное меню">
     <div class="container">
         <div class="d-flex d-xl-none w-100 align-items-center gap-2 py-2">
             <a class="navbar-brand flex-shrink-0 me-2" href="{{ route('home') }}" rel="home">
@@ -37,15 +39,14 @@
             </button>
         </div>
 
-        <div class="collapse navbar-collapse d-flex justify-content-between d-none d-xl-flex" id="navbarNav">
+        <div class="collapse navbar-collapse d-flex justify-content-between d-none d-xl-flex gap-2" id="navbarNav">
             <a class="navbar-brand me-2 flex-shrink-0" href="{{ route('home') }}" rel="home">
                 <img src="{{ asset('img/logo.webp') }}" width="139" height="36"
                     alt="БРИКС — строительные материалы" aria-label="БРИКС — строительные материалы">
             </a>
 
-            <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray fw-bold px-3 text-nowrap mx-2 mb-2 mb-lg-0"
-                href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu" aria-controls="catalog-menu"
-                aria-expanded="false" style="height:44px;padding-top:8px;">
+            <a class="btn btn-primary px-4 fw-bold text-nowrap mx-2 mb-2 mb-lg-0" href="#" id="catalog-toggle-btn"
+                style="height:48px;padding-top:10px;padding-bottom:8px;border-radius:0.75rem;">
                 <i class="fa-solid fa-bars me-2"></i>Каталог
             </a>
 
@@ -56,6 +57,20 @@
         </div>
     </div>
 </nav>
+{{--
+<div class="border-bottom border-light-subtle bg-white">
+    <nav class="container-xl">
+        <ul class="nav flex-nowrap align-items-center fs-7 fw-semibold overflow-x-auto text-nowrap"
+            style="gap:2.5rem;list-style:none;padding-top:10px;padding-bottom:10px;">
+            @foreach ($types as $type)
+                <li class="nav-item">
+                    <a class="nav-link p-0 bottom-nav-link transition"
+                        href="{{ route('product-types.show', ['productType' => $type]) }}">{{ $type->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </nav>
+</div> --}}
 
 <div class="offcanvas offcanvas-end d-xl-none" tabindex="-1" id="mobileHeaderMenu"
     aria-labelledby="mobileHeaderMenuLabel">
@@ -68,7 +83,7 @@
             <livewire:city-name />
         </div>
 
-        <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray fw-bold px-3 text-nowrap w-100 mb-3"
+        <a class="btn btn-white text-secondary rounded-2 border border-2 border-gray px-3 text-nowrap w-100 mb-3"
             href="#" data-bs-toggle="offcanvas" data-bs-target="#catalog-menu" aria-controls="catalog-menu"
             aria-expanded="false">
             <i class="fa-solid fa-bars me-2"></i>Каталог

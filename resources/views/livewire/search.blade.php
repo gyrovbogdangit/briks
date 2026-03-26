@@ -1,7 +1,7 @@
 <div class="flex-grow-1 mx-0 mx-lg-3 order-3 order-lg-2">
     <div class="position-relative d-flex align-items-center w-100">
         <input type="text" id="search-input"
-            class="search-input big-search rounded-2 border border-2 border-gray fw-semibold w-100" placeholder="Поиск..."
+            class="search-input big-search border border-1 border-light-subtle w-100" style="border-radius: 0.75rem;" placeholder="Поиск..."
             wire:model.live="search" />
         <i class="fas fa-search search-icon"></i>
         @if (isset($products))

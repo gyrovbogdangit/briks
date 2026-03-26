@@ -1,31 +1,15 @@
-<section id="heroCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        @foreach ($heroSliders as $i => $slide)
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}"
-                @if ($loop->first) class="active" aria-current="true" @endif
-                aria-label="Slide {{ $i + 1 }}"></button>
-        @endforeach
-    </div>
-
-    <div class="carousel-inner">
-        @foreach ($heroSliders as $slide)
-            <div class="carousel-item @if ($loop->first) active @endif">
-                <a href="{{ $slide->url }}" aria-label="Перейти в каталог">
-                    <img src="{{ asset('storage/' . $slide->image) }}" class="d-block w-100"
-                        alt="{{ $slide->title ?? 'Слайд' }}" style="height: 100%; max-height:500px; object-fit: cover;"
-                        @if ($loop->first) fetchpriority="high"
-                        @else loading="lazy" @endif>
+<section class="py-lg-5 px-2 py-3">
+    <div class="container position-relative">
+        <div class="grid-scroll-container overflow-x-auto d-md-flex gap-md-2">
+            @foreach ($types as $type)
+                <a href="{{ route('product-types.show', ['productType' => $type]) }}" class="text-decoration-none">
+                    <div class="card-custom bg-white rounded-5 p-lg-4 p-3 position-relative overflow-hidden">
+                        <h3 class="small fw-bold text-dark position-absolute z-index-10" style="max-width: 80%">{{ $type->name }}</h3>
+                        <img src="{{ asset('storage/' . $type->image) }}" alt=""
+                            class="card-img-bottom-custom transition">
+                    </div>
                 </a>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
-
-    <button class="carousel-control-prev z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"
-        aria-label="carousel-prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next z-3" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"
-        aria-label="carousel-next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
 </section>
