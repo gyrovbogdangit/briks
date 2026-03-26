@@ -1,3 +1,4 @@
+@php $sliderKey = $key @endphp
 <div class="container position-relative">
     <h2 class="section-title mb-4 mb-md-1">{{ $title }}</h2>
     @if ($products->count())
@@ -6,7 +7,7 @@
             @if ($products->count() > 5)
                 <button
                     class="carousel-control-prev me-2 flex-shrink-0 d-none d-lg-flex"
-                    type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="prev"
+                    type="button" data-bs-target="#{{ $sliderKey }}Carousel" data-bs-slide="prev"
                     aria-label="carousel-prev" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-chevron-left fs-5"></i>
                 </button>
@@ -31,7 +32,7 @@
                 <div class="d-flex flex-nowrap gap-3 overflow-auto pb-2" style="scroll-snap-type: x mandatory;">
                     @foreach ($products as $product)
                         <div style="min-width: 85vw; max-width: 90vw; scroll-snap-align: start;" class="flex-shrink-0">
-                            <livewire:product-item :product="$product" :wire:key="'{$key}-mob-'.$product->id" />
+                            <livewire:product-item :product="$product" :wire:key="$key . '-mob-' . $product->id" />
                         </div>
                     @endforeach
                 </div>
@@ -40,7 +41,7 @@
             @if ($products->count() > 5)
                 <button
                     class="carousel-control-next ms-2 p-1 flex-shrink-0 d-none d-lg-flex"
-                    type="button" data-bs-target="#{{ $key }}Carousel" data-bs-slide="next"
+                    type="button" data-bs-target="#{{ $sliderKey }}Carousel" data-bs-slide="next"
                     aria-label="carousel-next" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
                     <i class="fa-solid fa-chevron-right fs-5"></i>
                 </button>
