@@ -1,6 +1,30 @@
 {
+  "public/fonts/manrope/Manrope-Bold.woff": {
+    "file": "assets/Manrope-Bold-DWbLxjwo.woff",
+    "src": "public/fonts/manrope/Manrope-Bold.woff"
+  },
+  "public/fonts/manrope/Manrope-Bold.woff2": {
+    "file": "assets/Manrope-Bold-CoB-3sSZ.woff2",
+    "src": "public/fonts/manrope/Manrope-Bold.woff2"
+  },
+  "public/fonts/manrope/Manrope-Regular.woff": {
+    "file": "assets/Manrope-Regular-CPWVi_1N.woff",
+    "src": "public/fonts/manrope/Manrope-Regular.woff"
+  },
+  "public/fonts/manrope/Manrope-Regular.woff2": {
+    "file": "assets/Manrope-Regular-Cj6D3zta.woff2",
+    "src": "public/fonts/manrope/Manrope-Regular.woff2"
+  },
+  "public/fonts/manrope/Manrope-SemiBold.woff": {
+    "file": "assets/Manrope-SemiBold-rFY-lDGw.woff",
+    "src": "public/fonts/manrope/Manrope-SemiBold.woff"
+  },
+  "public/fonts/manrope/Manrope-SemiBold.woff2": {
+    "file": "assets/Manrope-SemiBold-D4uUPHcs.woff2",
+    "src": "public/fonts/manrope/Manrope-SemiBold.woff2"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-DegOY5K1.js",
+    "file": "assets/app-AaU67raQ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -21,7 +45,7 @@
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-CLFt-FTh.css",
+    "file": "assets/app-DJ3N-CJ5.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
