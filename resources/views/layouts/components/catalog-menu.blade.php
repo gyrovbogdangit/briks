@@ -71,7 +71,7 @@
             </main>
         </div>
 
-        <div class="d-block d-lg-none p-3">
+        <div class="d-block d-lg-none p-3 mb-5">
             <div class="accordion accordion-flush" id="mobileCatalog">
                 @foreach ($types as $type)
                     <div class="accordion-item border-0 mb-2">
