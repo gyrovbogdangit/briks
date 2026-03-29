@@ -2,6 +2,7 @@ import './bootstrap';
 import 'jquery-ui/dist/jquery-ui.min.js'
 import '@fancyapps/fancybox';
 import * as bootstrap from 'bootstrap';
+import { initSwiperSliders, registerLivewireSwiperIntegration } from './swiper-sliders';
 
 const catalogEl = document.getElementById('catalog-menu');
 const toggleBtn = document.getElementById('catalog-toggle-btn');
@@ -95,4 +96,14 @@ $(function () {
     });
 
 
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    initSwiperSliders();
+});
+
+registerLivewireSwiperIntegration();
+
+document.addEventListener('livewire:navigated', () => {
+    initSwiperSliders();
 });

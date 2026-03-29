@@ -8,6 +8,7 @@
     "devDependencies": {
         "axios": "^1.7.4",
         "laravel-vite-plugin": "^1.0",
+        "sass-embedded": "^1.98.0",
         "vite": "^5.0"
     },
     "dependencies": {
@@ -19,6 +20,7 @@
         "jscrollpane": "^2.2.3-rc.2",
         "mmenu-js": "^9.3.0",
         "slick-carousel": "^1.8.1",
+        "swiper": "^11.2.10",
         "theia-sticky-sidebar": "^1.7.0"
     }
 }

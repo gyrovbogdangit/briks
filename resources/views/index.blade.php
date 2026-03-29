@@ -7,19 +7,19 @@
         @include('components.hero')
     </div>
 
-    <section class="py-5 bg-white">
+    <section class="py-4 bg-light">
         @include('components.hot-products')
     </section>
 
-    <section class="py-5 bg-light">
+    <section class="py-4 bg-white">
         @include('components.popular-products')
     </section>
 
-    <section class="py-5 bg-white">
+    <section class="py-4 bg-light">
         @include('components.new-products')
     </section>
 
-    <section class="py-5 bg-light">
+    <section class="py-4 bg-white">
         @include('components.why-choose-us')
     </section>
 

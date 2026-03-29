@@ -1,4 +1,4 @@
-<div class="product-card p-2 bg-white shadow-sm h-100 d-flex flex-column w-100" style="width:220px;min-height:330px"
+<div class="product-card p-2 bg-white shadow-sm h-100 d-flex flex-column w-100" style="width:220px;"
     vocab="https://schema.org/" typeof="Product" itemscope itemtype="https://schema.org/Product">
 
     <a href="{{ route('products.show', ['productType' => $product->subcategory->productType, 'category' => $product->subcategory->category, 'subcategory' => $product->subcategory, 'product' => $product]) }}"
@@ -155,7 +155,7 @@
                 (isset($product->price_per_piece) && isset($product->discount_price_per_piece)))
             <div class="product-labels">
                 @if ($product->is_new)
-                    <div class="badge text-bg-secondary"><i class="fa-solid fa-plus"></i> Новинка</div>
+                    <div class="badge text-bg-secondary">Новинка</div>
                 @endif
                 @if ($product->is_hit_of_sales)
                     <div class="badge text-bg-danger">Хит продаж</div>
@@ -167,7 +167,7 @@
         @endif
     </div>
     @if ($quantity)
-        <a class="btn btn-outline-primary mt-2 border-3 border-box text-decoration-none cart-button"
+        <a class="btn btn-outline-primary mt-2 border-3 border-box text-decoration-none cart-button cart-button-active"
             href="{{ route('cart') }}">
             <i class="fas fa-shopping-cart icon" title="В корзине"></i> В корзине
         </a>

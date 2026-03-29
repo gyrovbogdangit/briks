@@ -2,48 +2,34 @@
 <div class="container position-relative">
     <h2 class="section-title mb-4 mb-md-1">{{ $title }}</h2>
     @if ($products->count())
-        <div class="d-flex align-items-center position-relative carousel-products-row flex-column flex-sm-row"
-            style="min-height: 420px;">
+        <div
+            class="d-flex align-items-center position-relative carousel-products-row flex-column flex-lg-row w-100">
             @if ($products->count() > 5)
                 <button
-                    class="carousel-control-prev me-2 flex-shrink-0 d-none d-lg-flex"
-                    type="button" data-bs-target="#{{ $sliderKey }}Carousel" data-bs-slide="prev"
-                    aria-label="carousel-prev" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
-                    <i class="fa-solid fa-chevron-left fs-5"></i>
+                    type="button"
+                    class="products-swiper-prev swiper-button-prev me-2 flex-shrink-0 d-none d-lg-flex btn btn-light rounded-circle shadow-sm border-0 p-0"
+                    aria-label="Предыдущие товары"
+                    style="z-index:2; min-width:44px; min-height:44px; width:44px; height:44px;">
+                    <i class="fa-solid fa-chevron-left fs-5 text-secondary"></i>
                 </button>
             @endif
-            <div id="{{ $key }}Carousel" class="carousel slide flex-grow-1 d-none d-lg-block">
-                <div class="carousel-inner w-100">
-                    @foreach ($products->chunk(5) as $chunkIndex => $chunk)
-                        <div class="carousel-item @if ($chunkIndex === 0) active @endif">
-                            <div
-                                class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center align-items-stretch h-100 m-0 py-1">
-                                @foreach ($chunk as $product)
-                                    <div class="col d-flex align-items-stretch">
-                                        <livewire:product-item :product="$product" :wire:key="'{$key}-'.$product->id" />
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="d-lg-none w-100">
-                <div class="d-flex flex-nowrap gap-3 overflow-auto pb-2" style="scroll-snap-type: x mandatory;">
+            <div class="swiper products-swiper flex-grow-1 w-100 min-w-0" data-products-slider>
+                <div class="swiper-wrapper">
                     @foreach ($products as $product)
-                        <div style="min-width: 85vw; max-width: 90vw; scroll-snap-align: start;" class="flex-shrink-0">
-                            <livewire:product-item :product="$product" :wire:key="$key . '-mob-' . $product->id" />
+                        <div class="swiper-slide h-auto">
+                            <livewire:product-item :product="$product" :wire:key="'{$key}-'.$product->id" />
                         </div>
                     @endforeach
                 </div>
-                <div class="text-center text-muted small mt-1">Свайпните влево/вправо для просмотра</div>
+                <div class="swiper-pagination products-swiper-pagination d-lg-none"></div>
             </div>
             @if ($products->count() > 5)
                 <button
-                    class="carousel-control-next ms-2 p-1 flex-shrink-0 d-none d-lg-flex"
-                    type="button" data-bs-target="#{{ $sliderKey }}Carousel" data-bs-slide="next"
-                    aria-label="carousel-next" style="z-index:2; min-width:44px; min-height:44px; height:44px;">
-                    <i class="fa-solid fa-chevron-right fs-5"></i>
+                    type="button"
+                    class="products-swiper-next swiper-button-next ms-2 flex-shrink-0 d-none d-lg-flex btn btn-light rounded-circle shadow-sm border-0 p-0"
+                    aria-label="Следующие товары"
+                    style="z-index:2; min-width:44px; min-height:44px; width:44px; height:44px;">
+                    <i class="fa-solid fa-chevron-right fs-5 text-secondary"></i>
                 </button>
             @endif
         </div>

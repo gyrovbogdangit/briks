@@ -1,4 +1,8 @@
 {
+  "_jquery-DSeW5pzn.js": {
+    "file": "assets/jquery-DSeW5pzn.js",
+    "name": "jquery"
+  },
   "public/fonts/manrope/Manrope-Bold.woff": {
     "file": "assets/Manrope-Bold-DWbLxjwo.woff",
     "src": "public/fonts/manrope/Manrope-Bold.woff"
@@ -24,19 +28,23 @@
     "src": "public/fonts/manrope/Manrope-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-AaU67raQ.js",
+    "file": "assets/app-DwOOjzUO.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "resources/js/bootstrap.js"
+      "_jquery-DSeW5pzn.js",
+      "resources/js/swiper-sliders.js"
     ]
   },
   "resources/js/bootstrap.js": {
-    "file": "assets/bootstrap-CmKkmueb.js",
+    "file": "assets/bootstrap-F3cOe3jZ.js",
     "name": "bootstrap",
     "src": "resources/js/bootstrap.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_jquery-DSeW5pzn.js"
+    ]
   },
   "resources/js/pages/comparison.js": {
     "file": "assets/comparison-BRrp6PfJ.js",
@@ -44,8 +52,14 @@
     "src": "resources/js/pages/comparison.js",
     "isEntry": true
   },
+  "resources/js/swiper-sliders.js": {
+    "file": "assets/swiper-sliders-Ct5dy93j.js",
+    "name": "swiper-sliders",
+    "src": "resources/js/swiper-sliders.js",
+    "isEntry": true
+  },
   "resources/scss/app.scss": {
-    "file": "assets/app-Zlt_D4z0.css",
+    "file": "assets/app-Cy2Hxkf1.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
