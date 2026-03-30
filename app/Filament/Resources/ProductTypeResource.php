@@ -91,6 +91,10 @@ class ProductTypeResource extends Resource
                 FileUpload::make('image')
                     ->label('Изображение')
                     ->image()
+                    ->directory('product-types'),
+                FileUpload::make('main_page_image')
+                    ->label('Изображение для главной страницы')
+                    ->image()
                     ->directory('product-types')
             ]);
     }
