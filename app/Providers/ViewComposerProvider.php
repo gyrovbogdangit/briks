@@ -29,7 +29,6 @@ class ViewComposerProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Кешируем города на сутки (86400 сек)
         View::composer('components.cities', function ($view) {
             $citiesGrouped = Cache::remember('cities_grouped', 86400, function () {
                 $cities = City::orderBy('name')->get();
@@ -38,7 +37,6 @@ class ViewComposerProvider extends ServiceProvider
             $view->with('citiesGrouped', $citiesGrouped);
         });
 
-        // Меню каталога (сложный запрос с вложениями) — на 1 час
         View::composer(
             ['layouts.components.catalog-menu', 'layouts.components.header', 'layouts.components.footer', 'components.hero', 'catalog'],
             function ($view) {
@@ -54,7 +52,6 @@ class ViewComposerProvider extends ServiceProvider
             }
         );
 
-        // Контактные данные и страницы — на 1 час
         View::composer([
             'layouts.components.header',
             'layouts.components.footer',
@@ -73,8 +70,6 @@ class ViewComposerProvider extends ServiceProvider
             $view->with($sharedData);
         });
 
-        // Популярные/Новые/Хиты — на 30 минут
-        // Для этих блоков удобно использовать один подход
         $productBlocks = [
             'components.hot-products'     => ['key' => 'products_hot', 'scope' => fn($q) => $q->where('is_hit_of_sales', true)],
             'components.popular-products' => ['key' => 'products_popular', 'scope' => fn($q) => $q->orderBy('views', 'desc')],
@@ -94,8 +89,6 @@ class ViewComposerProvider extends ServiceProvider
             });
         }
 
-        // ВНИМАНИЕ: Recently Viewed кешировать глобально НЕЛЬЗЯ, 
-        // так как это персональные данные пользователя (обычно хранятся в сессии/куках).
         View::composer('products.components.recently-watched', function ($view) {
             $view->with('recentlyViewedProducts', RecentlyViewedService::getProducts());
         });
