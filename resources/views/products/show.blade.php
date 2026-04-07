@@ -73,6 +73,10 @@
     @include('products.components.show.modal-one-click-order')
     @include('products.components.modal-request-price')
 
+    <section class="bg-light">
+        @include('components.review-form')
+    </section>
+
     <section class="py-5 bg-white">
         @include('products.components.recently-watched')
     </section>

@@ -75,6 +75,11 @@ class Product extends Model
         return $this->belongsTo(Subcategory::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function discountPercentage()
     {
         return floor(100 - ($this->discount_price_per_piece / $this->price_per_piece) * 100);

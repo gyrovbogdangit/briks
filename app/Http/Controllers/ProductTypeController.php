@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductType;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ProductTypeController extends Controller
@@ -17,6 +18,11 @@ class ProductTypeController extends Controller
             }])
             ->get();
 
+        $reviews = Review::published()
+            ->whereHas('product.subcategory.category', fn($q) => $q->where('product_type_id', $productType->id))
+            ->with('product.subcategory.category.productType')
+            ->latest()->limit(6)->get();
+
         $seo = new \App\Helpers\Seo(
             $productType->name . ' — Каталог строительных материалов БРИКС',
             'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
@@ -29,8 +35,9 @@ class ProductTypeController extends Controller
 
         return view('product-types.show', [
             'productType' => $productType,
-            'categories' => $categories,
-            'seo' => $seo,
+            'categories'  => $categories,
+            'seo'         => $seo,
+            'latestReviews' => $reviews,
         ]);
     }
 }

@@ -8,6 +8,7 @@
             </a>
         </div>
         <div itemscope itemtype="https://schema.org/Organization" class="gap-4 d-flex">
+            <a href="{{ route('reviews.index') }}">Отзывы</a>
             @foreach ($pages as $page)
                 <a href="{{ route('page', ['page' => $page]) }}" title="{{ $page->meta_title ?? $page->title }}">
                     {{ $page->title }}
@@ -102,6 +103,10 @@
                         {{ $page->title }}
                     </a>
                 @endforeach
+                <a href="{{ route('reviews.index') }}"
+                    class="d-block bg-light mb-2 text-decoration-none text-center text-secondary py-1">
+                    Отзывы
+                </a>
             </div>
         </div>
 

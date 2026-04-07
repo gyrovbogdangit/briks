@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\ProductType;
+use App\Models\Review;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -30,10 +31,16 @@ class CategoryController extends Controller
             'website',
         );
 
+        $reviews = Review::published()
+            ->whereHas('product.subcategory', fn($q) => $q->where('category_id', $category->id))
+            ->with('product.subcategory.category.productType')
+            ->latest()->limit(6)->get();
+
         return view('categories.show', [
-            'category' => $category,
+            'category'      => $category,
             'subcategories' => $subcategories,
-            'seo' => $seo,
+            'seo'           => $seo,
+            'latestReviews' => $reviews,
         ]);
     }
 }

@@ -87,6 +87,10 @@
     @endif
 
     <section class="py-5 bg-light">
+        @include('components.latest-reviews')
+    </section>
+
+    <section class="py-5 bg-light">
         @include('products.components.recently-watched')
     </section>
 

@@ -44,7 +44,7 @@
                                 @isset($subcategory->products[0]->images[0])
                                     <img src="{{ asset('storage/' . $subcategory->products[0]->images[0]) }}"
                                         alt="{{ $subcategory->name }}" class="img-fluid rounded-2"
-                                        style="max-height: 140px; object-fit: contain;"                                         itemprop="image">
+                                        style="max-height: 140px; object-fit: contain;" itemprop="image">
                                 @else
                                     <span class="catalog-card-media-placeholder" aria-hidden="true"><i
                                             class="fa-solid fa-images"></i></span>
@@ -72,24 +72,34 @@
         </div>
     </div>
 
-    @if ((isset($category->short_text) && isset($category->long_text)) || (isset($category->productType->short_text) && isset($category->productType->long_text)))
+    @if (
+        (isset($category->short_text) && isset($category->long_text)) ||
+            (isset($category->productType->short_text) && isset($category->productType->long_text)))
         <section class="py-5 bg-white">
             @include('components.description', [
-                'shortDescription' => empty($category->short_text) ? $category->productType->short_text : $category->short_text,
-                'longDescription' => empty($category->long_text) ? $category->productType->long_text : $category->long_text,
+                'shortDescription' => empty($category->short_text)
+                    ? $category->productType->short_text
+                    : $category->short_text,
+                'longDescription' => empty($category->long_text)
+                    ? $category->productType->long_text
+                    : $category->long_text,
             ])
         </section>
     @endif
 
     <section class="py-5 bg-light">
-        @include('products.components.recently-watched')
+        @include('components.latest-reviews')
     </section>
 
     <section class="py-5 bg-white">
-        @include('components.popular-products')
+        @include('products.components.recently-watched')
     </section>
 
     <section class="py-5 bg-light">
+        @include('components.popular-products')
+    </section>
+
+    <section class="py-5 bg-white">
         @include('components.new-products')
     </section>
 @endsection

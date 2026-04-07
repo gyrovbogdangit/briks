@@ -24,7 +24,7 @@
     "src": "public/fonts/manrope/Manrope-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BDPUpe3F.js",
+    "file": "assets/app-C_PQ6xHC.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -52,7 +52,7 @@
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-Cy2Hxkf1.css",
+    "file": "assets/app-8Cdmtkfe.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }

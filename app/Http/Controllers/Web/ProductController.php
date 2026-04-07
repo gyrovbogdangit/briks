@@ -10,6 +10,7 @@ use App\Models\ProductType;
 use App\Models\Subcategory;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
+use App\Models\Review;
 use App\Services\RecentlyViewedService;
 
 class ProductController extends Controller
@@ -38,6 +39,11 @@ class ProductController extends Controller
 
         $products = $products->paginate($filter->pageSize);
 
+        $latestReviews = Review::published()
+                    ->whereHas('product', fn($q) => $q->where('subcategory_id', $subcategory->id))
+                    ->with('product.subcategory.category.productType')
+                    ->latest()->limit(6)->get();
+
         $quickFilters = $subcategory
             ->quickFilters()
             ->with('category', 'subcategory', 'attribute', 'value')
@@ -65,7 +71,8 @@ class ProductController extends Controller
                 'attributes' => $attributes,
                 'filter' => $filter,
                 'quickFilters' => $quickFilters,
-                'seo' => $seo
+                'seo' => $seo,
+                'latestReviews' => $latestReviews,
             ]);
     }
 
@@ -76,6 +83,13 @@ class ProductController extends Controller
             'attributeValues.attribute',
             'attributeValues.value'
         );
+
+        $reviews = $product->reviews()->published()->latest()->get();
+        $avgRating = $reviews->avg('rating');
+        $ratingStats = $reviews->groupBy('rating')->map->count();
+        $starsCount = collect([5, 4, 3, 2, 1])->mapWithKeys(function ($star) use ($ratingStats) {
+            return [$star => $ratingStats->get($star, 0)];
+        });
 
         if (!RecentlyViewedService::inProducts($product)) {
             $product->update(['views' => $product->views + 1]);
@@ -107,6 +121,9 @@ class ProductController extends Controller
                 'category' => $category,
                 'subcategory' => $subcategory,
                 'product' => $product,
+                'reviews' => $reviews,
+                'avgRating' => $avgRating,
+                'starsCount' => $starsCount,
                 'relatedProducts' => $relatedProducts,
                 'seo' => $seo
             ]);
