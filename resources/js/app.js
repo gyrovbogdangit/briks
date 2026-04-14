@@ -1,6 +1,6 @@
 import './bootstrap';
 import 'jquery-ui/dist/jquery-ui.min.js'
-import '@fancyapps/fancybox';
+/* import '@fancyapps/fancybox'; */
 import * as bootstrap from 'bootstrap';
 import { initSwiperSliders, registerLivewireSwiperIntegration } from './swiper-sliders';
 
