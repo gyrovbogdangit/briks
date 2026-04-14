@@ -14,6 +14,8 @@
         <link href="/css/font-awesome/all.min.css" rel="stylesheet">
     </noscript>
 
+    <script src="https://app2.gnzs.ru/site-integration/js/script.v3.js" data-platform="amo" data-account="32871390"
+        data-token="c4f7824a-15b7-4a04-8dae-ed5a2addbef3"></script>
 
     <!-- Yandex.Metrika counter -->
     <meta name="yandex-verification" content="70e92b50ce025327" />
@@ -86,8 +88,6 @@
         });
     </script>
 
-    {{--  <script defer src="https://app2.gnzs.ru/site-integration/js/script.v3.js" data-platform="amo" data-account="32871390"
-        data-token="c4f7824a-15b7-4a04-8dae-ed5a2addbef3"></script> --}}
 </body>
 
 </html>
