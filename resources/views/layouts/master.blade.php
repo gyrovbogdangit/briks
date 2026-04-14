@@ -86,7 +86,8 @@
         });
     </script>
 
-    <script defer src="https://app2.gnzs.ru/site-integration/js/script.v3.js" data-platform="amo" data-account="32871390" data-token="c4f7824a-15b7-4a04-8dae-ed5a2addbef3"></script>
+    {{--  <script defer src="https://app2.gnzs.ru/site-integration/js/script.v3.js" data-platform="amo" data-account="32871390" data-token="c4f7824a-15b7-4a04-8dae-ed5a2addbef3"></script>
+ --}}
 </body>
 
 </html>
