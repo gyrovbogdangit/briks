@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductType;
 use App\Models\Review;
-use Illuminate\Http\Request;
 
 class ProductTypeController extends Controller
 {
@@ -24,8 +23,8 @@ class ProductTypeController extends Controller
             ->latest()->limit(6)->get();
 
         $seo = new \App\Helpers\Seo(
-            $productType->name . ' — Каталог строительных материалов БРИКС',
-            'Купить ' . mb_strtolower($productType->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
+            $productType->name . ' в Воронеже — каталог, цены, наличие в БРИКС',
+            $productType->name . " для строительства и отделки от БРИКС. {$productType->name} для любых строительных задач. Доставка по Воронежу и области.",
             $productType->name . ' — Каталог БРИКС',
             'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($productType->name) . ', кровля, плитка, фасадные материалы. Доставка по всей России.',
             isset($productType->image) ? asset('storage/' . $productType->image) : '',

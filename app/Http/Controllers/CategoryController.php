@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ProductType;
 use App\Models\Review;
-use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -22,8 +22,8 @@ class CategoryController extends Controller
             ->get();
 
         $seo = new \App\Helpers\Seo(
-            $category->name . ' — Каталог строительных материалов БРИКС',
-            'Купить ' . mb_strtolower($category->name) . ' для строительства и отделки от БРИКС. Большой выбор, выгодные цены, быстрая доставка.',
+            $category->name . ' в Воронеже — купить по цене от производителя в БРИКС',
+            $category->name . " для строительства и отделки от БРИКС. В каталоге БРИКС представлен большой выбор позиций в разделе «{$category->name}». Актуальные цены и наличие в Воронеже.",
             $category->name . ' — Каталог БРИКС',
             'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($category->name) . ', кровля, плитка, фасадные материалы. Доставка по всей России.',
             isset($category->image) ? asset('storage/' . $category->image) : '',

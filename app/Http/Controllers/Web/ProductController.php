@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Helpers\Seo;
 use App\Helpers\Filter;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\ProductType;
-use App\Models\Subcategory;
+use App\Helpers\Seo;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductType;
 use App\Models\Review;
+use App\Models\Subcategory;
 use App\Services\RecentlyViewedService;
 
 class ProductController extends Controller
@@ -51,11 +51,12 @@ class ProductController extends Controller
 
         $dynamicSuffix = static::getDynamicSuffix($filter);
 
+        $description = "{$subcategory->name} для строительства и отделки. В каталоге БРИКС: выгодные цены, широкий ассортимент и доставка по Воронежу и области. Узнайте стоимость и наличие на сайте!";
         $seo = new Seo(
-            "{$subcategory->name} — Строительные материалы БРИКС: кирпич, кровля, плитка{$dynamicSuffix}",
-            'Купить ' . mb_strtolower($subcategory->name) . ' для строительства и отделки от БРИКС. Кирпич, кровля, тротуарная плитка, фасадные материалы с доставкой по всей России.',
+            "{$subcategory->name} купить в Воронеже по выгодной цене — каталог строительных материалов БРИКС{$dynamicSuffix}",
+            $description,
             "{$subcategory->name} — Каталог строительных материалов БРИКС",
-            'Ознакомьтесь с ассортиментом БРИКС: ' . mb_strtolower($subcategory->name) . ', кровля, плитка, фасадные материалы. Большой выбор, выгодные цены, быстрая доставка.',
+            $description,
             asset('storage/' . $productType->image),
             route('products.index', ['productType' => $productType->slug, 'category' => $category, 'subcategory' => $subcategory]),
             'website',
@@ -105,11 +106,13 @@ class ProductController extends Controller
             ->limit(5)
             ->get();
 
+        $description = "{$product->name} в интернет-магазине БРИКС. Актуальные цены, полные характеристики и фото. Доставка по Воронежу и области, товар в наличии. Звоните!";
+
         $seo = new Seo(
-            "{$product->name} — Купить строительные материалы БРИКС",
-            "{$product->name} от БРИКС. Качественный кирпич, кровля, плитка и другие строительные материалы с доставкой по России.",
+            "{$product->name} купить в Воронеже — цена, характеристики в БРИКС",
+            $description,
             "{$product->name} — Купить в БРИКС",
-            "{$product->name} для строительства и отделки. Закажите онлайн с доставкой по всей России от БРИКС.",
+            $description,
             isset($product->images[0]) ? asset('storage/' . $product->images[0]) : asset('storage/' . $productType->image),
             route('products.show', ['productType' => $productType->slug, 'category' => $category->slug, 'subcategory' => $subcategory->slug, 'product' => $product->slug]),
             'product',
